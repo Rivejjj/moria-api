@@ -4,7 +4,7 @@ metadata:
   name: apiconfig
 data:
   APP_MODE: production
-  DATABASE_URL: <TELEGRAM_TOKEN>
+  DATABASE_URL: postgresql://MoriaTestDb_owner:tkKsMgzw3Wp1@ep-billowing-frog-a5qqh9bz.us-east-2.aws.neon.tech/MoriaTestDb?sslmode=require
   LOG_LEVEL: debug
-  LOG_URL: <URL_SUMOLOGIC_ENDPOINT>
+  LOG_URL: https://endpoint4.collection.sumologic.com/receiver/v1/http/ZaVnC4dhaV2t5M3dhRZ7ZBuSQ0tjEjuXIrFq2n3iqRnXUXu-DTIWxzZOTYBwFDvlu0-GSKcZtzmF1l9Nwm56pHeGPUTCTb6Ecp1uixwJZG9pSbYM7eEJ_g==
   PORT: 3000
