@@ -24,7 +24,7 @@ spec:
               name: apiconfig
         resources:
           requests:
-            memory: "64Mi"
+            memory: "32Mi"
           limits:
             memory: "250Mi"
         livenessProbe:
