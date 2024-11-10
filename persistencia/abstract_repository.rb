@@ -31,7 +31,6 @@ class AbstractRepository
   end
 
   def first
-    load_collection dataset.where(is_active: true)
     load_object dataset.first
   end
 

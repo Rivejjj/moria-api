@@ -1,6 +1,7 @@
 class Sistema
-  def initialize(repositorio_usuarios)
+  def initialize(repositorio_usuarios, repositorio_contenido)
     @repositorio_usuarios = repositorio_usuarios
+    @repositorio_contenido = repositorio_contenido
   end
 
   def crear_usuario(nombre_de_usuario, email, id_plataforma)
@@ -9,6 +10,13 @@ class Sistema
 
     @repositorio_usuarios.save(usuario)
     usuario
+  end
+
+  def crear_cancion(nombre, autor, anio, duracion, genero)
+    info_cancion = InformacionCancion.new(nombre, autor, anio, duracion, genero)
+    cancion = Cancion.new(info_cancion)
+    @repositorio_contenido.save(cancion)
+    cancion
   end
 
   def usuarios
