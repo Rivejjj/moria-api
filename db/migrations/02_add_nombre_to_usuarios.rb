@@ -1,6 +1,6 @@
 Sequel.migration do
   up do
-    add_column :usuarios, :nombre, String
+    add_column :usuarios, :nombre, String, unique: true
   end
 
   down do

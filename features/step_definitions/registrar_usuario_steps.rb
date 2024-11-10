@@ -1,4 +1,4 @@
-ID_PLATAFORMA_PRUEBA = 141_733_544
+ID_PLATAFORMA_PRUEBA = '141733544'.freeze
 
 Dado('que no hay usuarios en el sistema') do
   repo_usuarios = RepositorioUsuarios.new
