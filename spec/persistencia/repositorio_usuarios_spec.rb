@@ -3,16 +3,16 @@ require_relative '../../dominio/usuario'
 require_relative '../../persistencia/repositorio_usuarios'
 
 describe RepositorioUsuarios do
-  xit 'deberia guardar y asignar id si el usuario es nuevo' do
-    juan = Usuario.new('juan@test.com')
+  it 'deberia guardar y asignar id si el usuario es nuevo' do
+    juan = Usuario.new('juan', 'juan@test.com', 1)
     described_class.new.save(juan)
     expect(juan.id).not_to be_nil
   end
 
-  xit 'deberia recuperar todos' do
+  it 'deberia recuperar todos' do
     repositorio = described_class.new
     cantidad_de_usuarios_iniciales = repositorio.all.size
-    juan = Usuario.new('juan@test.com')
+    juan = Usuario.new('juan', 'juan@test.com', 1)
     repositorio.save(juan)
     expect(repositorio.all.size).to be(cantidad_de_usuarios_iniciales + 1)
   end
