@@ -45,7 +45,7 @@ get '/usuarios' do
 end
 
 post '/usuarios' do
-  usuario = sistema.crear_usuario(@params['email'])
+  sistema.crear_usuario(@params['nombre_de_usuario'], @params['email'], @params['id_plataforma'])
+
   status 201
-  { id: usuario.id, email: usuario.email }.to_json
 end
