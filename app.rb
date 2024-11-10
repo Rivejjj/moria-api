@@ -45,7 +45,7 @@ get '/usuarios' do
 end
 
 post '/usuarios' do
-  sistema.crear_usuario(@params['nombre_de_usuario'], @params['email'], @params['id_plataforma'])
+  sistema.crear_usuario(@params[:nombre_de_usuario], @params[:email], @params[:id_plataforma])
   status 201
 rescue NombreDeUsuarioEnUsoError
   status 409

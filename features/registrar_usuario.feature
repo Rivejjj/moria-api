@@ -7,6 +7,7 @@ Característica: Registrar usuario
     Entonces la registracion es exitosa
 
   Escenario: US1:2 - Una persona intenta registrarse en el sistema con un nombre de usuario utilizado
-    Dado que existe un usuario "Kevin"
+    Dado que no hay usuarios en el sistema
+    Y que existe un usuario "Kevin"
     Cuando una persona se registra con el usuario "Kevin" y mail "kevin@mail.com"
     Entonces la registracion falla
