@@ -4,6 +4,11 @@ class RepositorioUsuarios < AbstractRepository
   self.table_name = :usuarios
   self.model_class = 'Usuario'
 
+  def find_by_nombre(nombre)
+    row = dataset.first(nombre:)
+    load_object(row) unless row.nil?
+  end
+
   protected
 
   def load_object(a_hash)

@@ -26,4 +26,14 @@ describe RepositorioUsuarios do
     expect(juan.email).to eq('juan@test.com')
     expect(juan.id_plataforma).to eq(1)
   end
+
+  it 'deberia encontrar un usuario por su nombre' do
+    repositorio = described_class.new
+    juan = Usuario.new('juan', 'juan@test.com', 1)
+    repositorio.save(juan)
+    juan = repositorio.find_by_nombre('juan')
+    expect(juan.nombre).to eq('juan')
+    expect(juan.email).to eq('juan@test.com')
+    expect(juan.id_plataforma).to eq(1)
+  end
 end

@@ -11,3 +11,13 @@ end
 Entonces('la registracion es exitosa') do
   expect(@response.status).to eq(201)
 end
+
+Dado('que existe un usuario {string}') do |nombre_de_usuario|
+  repo_usuarios = RepositorioUsuarios.new
+  usuario = Usuario.new(nombre_de_usuario, 'email@email.com', 141_733_544)
+  repo_usuarios.save(usuario)
+end
+
+Entonces('la registracion falla') do
+  expect(@response.status).to eq(409)
+end
