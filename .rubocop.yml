@@ -35,5 +35,6 @@ Style/NumericPredicate:
   Enabled: false  
 Style/GuardClause:
   Enabled: false
-
+RSpec/ExampleLength:
+  Max: 8
    

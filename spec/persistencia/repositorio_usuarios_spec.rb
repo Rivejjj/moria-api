@@ -16,4 +16,14 @@ describe RepositorioUsuarios do
     repositorio.save(juan)
     expect(repositorio.all.size).to be(cantidad_de_usuarios_iniciales + 1)
   end
+
+  it 'deberia recuperar todos los datos del usuario' do
+    repositorio = described_class.new
+    juan = Usuario.new('juan', 'juan@test.com', 1)
+    repositorio.save(juan)
+    juan = repositorio.find(juan.id)
+    expect(juan.nombre).to eq('juan')
+    expect(juan.email).to eq('juan@test.com')
+    expect(juan.id_plataforma).to eq(1)
+  end
 end
