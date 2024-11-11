@@ -31,3 +31,9 @@ Finalmente para ejecutar la aplicación (ejecución de migrations y web):
 
     ./start_app.sh
 
+Status page
+-----------------
+
+Para ver el estado de la aplicación se puede acceder a la URL:
+
+    https://stats.uptimerobot.com/YXS4d2679i
