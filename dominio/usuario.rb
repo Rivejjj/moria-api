@@ -13,4 +13,8 @@ class Usuario
   def agregar_a_playlist(contenido)
     @playlist << contenido
   end
+
+  def tiene_cancion_en_playlist(nombre_cancion)
+    @playlist.any? { |cancion| cancion.nombre == nombre_cancion }
+  end
 end
