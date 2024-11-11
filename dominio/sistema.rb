@@ -22,6 +22,11 @@ class Sistema
   def usuarios
     @repositorio_usuarios.all
   end
+
+  def reset
+    @repositorio_usuarios.delete_all
+    @repositorio_contenido.delete_all
+  end
 end
 
 class NombreDeUsuarioEnUsoError < StandardError; end

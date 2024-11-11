@@ -33,6 +33,7 @@ get '/version' do
 end
 
 post '/reset' do
+  sistema.reset
   status 200
 end
 
