@@ -9,6 +9,11 @@ class RepositorioUsuarios < AbstractRepository
     load_object(row) unless row.nil?
   end
 
+  def find_by_id_plataforma(id_plataforma)
+    row = dataset.first(id_plataforma:)
+    load_object(row) unless row.nil?
+  end
+
   protected
 
   def load_object(a_hash)
