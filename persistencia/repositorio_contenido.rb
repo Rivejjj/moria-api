@@ -4,6 +4,16 @@ class RepositorioContenido < AbstractRepository
   self.table_name = :contenido
   self.model_class = 'Cancion'
 
+  def find_playlist_by_usuario(usuario)
+    playlists_usuarios_contenido = DB[:playlists_usuarios_contenido]
+    playlists_usuarios_contenido_filtrado = playlists_usuarios_contenido.where(id_usuario: usuario.id)
+    playlist = []
+    playlists_usuarios_contenido_filtrado.each do |fila|
+      playlist << find(fila[:id_contenido])
+    end
+    playlist
+  end
+
   protected
 
   def load_object(a_hash)

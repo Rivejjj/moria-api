@@ -46,4 +46,16 @@ describe RepositorioUsuarios do
     expect(juan.email).to eq('juan@test.com')
     expect(juan.id_plataforma).to eq('1')
   end
+
+  it 'deberia recuperar al usuario con su playlist' do
+    cancion = Cancion.new(InformacionCancion.new('cancion', 'autor', 2020, 180, 'rock'))
+    RepositorioContenido.new.save(cancion)
+
+    repositorio = described_class.new
+    juan = Usuario.new('juan', 'juan@test.com', '1')
+    juan.agregar_a_playlist(cancion)
+    repositorio.save(juan)
+    juan = repositorio.find(juan.id)
+    expect(juan.tiene_cancion_en_playlist('cancion')).to eq true
+  end
 end
