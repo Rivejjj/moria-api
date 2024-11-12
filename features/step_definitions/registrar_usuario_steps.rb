@@ -23,8 +23,8 @@ end
 
 Dado('que existe un usuario {string}') do |nombre_de_usuario|
   repo_usuarios = RepositorioUsuarios.new
-  usuario = Usuario.new(nombre_de_usuario, 'mail@existente.com', ID_PLATAFORMA_PRUEBA)
-  repo_usuarios.save(usuario)
+  @usuario = Usuario.new(nombre_de_usuario, 'mail@existente.com', ID_PLATAFORMA_PRUEBA)
+  repo_usuarios.save(@usuario)
 end
 
 Entonces('la registracion falla') do
