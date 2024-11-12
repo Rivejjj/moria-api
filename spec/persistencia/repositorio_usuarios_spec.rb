@@ -58,4 +58,16 @@ describe RepositorioUsuarios do
     juan = repositorio.find(juan.id)
     expect(juan.tiene_cancion_en_playlist('cancion')).to eq true
   end
+
+  it 'deberia recuperar al usuario con sus reproducciones' do
+    cancion = Cancion.new(InformacionCancion.new('cancion', 'autor', 2020, 180, 'rock'))
+    RepositorioContenido.new.save(cancion)
+
+    repositorio = described_class.new
+    juan = Usuario.new('juan', 'juan@test.com', '1')
+    juan.agregar_reproduccion(cancion)
+    repositorio.save(juan)
+    juan = repositorio.find(juan.id)
+    expect(juan.reproducciones.map(&:id)).to include(cancion.id)
+  end
 end

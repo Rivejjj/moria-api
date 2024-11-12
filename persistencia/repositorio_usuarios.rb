@@ -11,11 +11,13 @@ class RepositorioUsuarios < AbstractRepository
       insert(usuario)
     end
     save_playlist(usuario)
+    save_reproducciones(usuario)
     usuario
   end
 
   def delete_all
     DB[:playlists_usuarios_contenido].delete
+    DB[:reproducciones].delete
     dataset.delete
   end
 
@@ -41,12 +43,42 @@ class RepositorioUsuarios < AbstractRepository
     end
   end
 
-  def load_object(a_hash)
-    usuario = Usuario.new(a_hash[:nombre], a_hash[:email], a_hash[:id_plataforma], a_hash[:id])
+  def save_reproducciones(usuario)
+    reproducciones = DB[:reproducciones]
+    usuario.reproducciones.each do |contenido|
+      reproducciones.insert(id_usuario: usuario.id, id_contenido: contenido.id)
+    end
+  end
+
+  def find_reproducciones(usuario)
+    repositorio_contenido = RepositorioContenido.new
+    reproducciones = DB[:reproducciones]
+    reproducciones_filtrado = reproducciones.where(id_usuario: usuario.id)
+    reproducciones = []
+    reproducciones_filtrado.each do |fila|
+      reproducciones << repositorio_contenido.find(fila[:id_contenido])
+    end
+    reproducciones
+  end
+
+  def load_playlist(usuario)
     playlist = RepositorioContenido.new.find_playlist_by_usuario(usuario)
     playlist.each do |contenido|
       usuario.agregar_a_playlist(contenido)
     end
+  end
+
+  def load_reproducciones(usuario)
+    reproducciones = find_reproducciones(usuario)
+    reproducciones.each do |contenido|
+      usuario.agregar_reproduccion(contenido)
+    end
+  end
+
+  def load_object(a_hash)
+    usuario = Usuario.new(a_hash[:nombre], a_hash[:email], a_hash[:id_plataforma], a_hash[:id])
+    load_playlist(usuario)
+    load_reproducciones(usuario)
     usuario
   end
 
