@@ -22,4 +22,11 @@ describe Usuario do
     usuario.agregar_a_playlist(cancion)
     expect(usuario.tiene_cancion_en_playlist('cancion')).to eq(true)
   end
+
+  it 'puede agregar una reproduccion de cancion' do
+    usuario = described_class.new('nombre', 'email@email.com', '1')
+    cancion = instance_double('Cancion', nombre: 'cancion')
+    usuario.agregar_reproduccion(cancion)
+    expect(usuario.reproducciones).to include(cancion)
+  end
 end

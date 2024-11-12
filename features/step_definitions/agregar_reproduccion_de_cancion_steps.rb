@@ -12,7 +12,7 @@ Cuando('reproduce una cancion con id: {int}') do |id_cancion|
 end
 
 Entonces('se registra la reproduccion') do
-  expect(@response.status).to eq(201) 
+  expect(@response.status).to eq(201)
   repo_usuarios = RepositorioUsuarios.new
   usuario = repo_usuarios.find_by_nombre(@nombre_de_usuario)
   expect(usuario.reprodujo_cancion?(@id_cancion)).to eq true
