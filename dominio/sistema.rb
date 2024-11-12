@@ -27,6 +27,13 @@ class Sistema
     contenido.nombre
   end
 
+  def recomendar_contenido(id_plataforma)
+    usuario = @repositorio_usuarios.find_by_id_plataforma(id_plataforma)
+    recomendador_de_contenido = RecomendadorDeContenido.new
+    contenido_recomendado = recomendador_de_contenido.recomendar_contenido(usuario)
+    contenido_recomendado.map { |contenido| [contenido.id, contenido.nombre] }
+  end
+
   def reproducir_cancion(id_contenido, nombre_usuario)
     usuario = @repositorio_usuarios.find_by_nombre(nombre_usuario)
     contenido = @repositorio_contenido.find(id_contenido)

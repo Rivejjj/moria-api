@@ -72,3 +72,12 @@ post '/usuarios/:id_plataforma/playlist' do |id_plataforma|
 rescue CancionNoEncontradaError
   status 404
 end
+
+get '/usuarios/:id_plataforma/recomendacion' do |id_plataforma|
+  recomendacion = sistema.recomendar_contenido(id_plataforma)
+  respuesta_recomendacion = []
+  recomendacion.map { |c| respuesta_recomendacion << { 'id_cancion': c[0], 'nombre_cancion': c[1] } }
+  respuesta = { 'recomendacion': respuesta_recomendacion }
+  status 200
+  json(respuesta)
+end
