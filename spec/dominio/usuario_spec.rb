@@ -29,4 +29,13 @@ describe Usuario do
     usuario.agregar_reproduccion(cancion)
     expect(usuario.reproducciones).to include(cancion)
   end
+
+  it 'puede agregar una reproduccion dos canciones' do
+    usuario = described_class.new('nombre', 'email@email.com', '1')
+    cancion = instance_double('Cancion', nombre: 'cancion')
+    cancion2 = instance_double('Cancion2', nombre: 'cancion2')
+    usuario.agregar_reproduccion(cancion)
+    usuario.agregar_reproduccion(cancion2)
+    expect(usuario.reproducciones).to include(cancion, cancion2)
+  end
 end

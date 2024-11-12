@@ -16,7 +16,7 @@ class Usuario
   end
 
   def agregar_reproduccion(contenido)
-    @reproducciones = [contenido]
+    @reproducciones << contenido
   end
 
   def tiene_cancion_en_playlist(nombre_cancion)
