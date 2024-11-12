@@ -13,7 +13,7 @@ class RepositorioContenido < AbstractRepository
 
   def find_playlist_by_usuario(usuario)
     playlists_usuarios_contenido = DB[:playlists_usuarios_contenido]
-    playlists_usuarios_contenido_filtrado = playlists_usuarios_contenido.where(id_usuario: usuario.id)
+    playlists_usuarios_contenido_filtrado = playlists_usuarios_contenido.where(id_usuario: usuario.id).order(:orden)
     playlist = []
     playlists_usuarios_contenido_filtrado.each do |fila|
       playlist << find(fila[:id_contenido])

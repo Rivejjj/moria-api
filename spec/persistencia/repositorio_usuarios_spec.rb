@@ -59,6 +59,19 @@ describe RepositorioUsuarios do
     expect(juan.tiene_cancion_en_playlist('cancion')).to eq true
   end
 
+  it 'deberia recuperar al usuario con su playlist en orden' do
+    cancion1 = guardar_cancion(1)
+    cancion2 = guardar_cancion(2)
+
+    juan = Usuario.new('juan', 'juan@test.com', '1')
+    agregar_a_playlist_y_guardar(juan, cancion2)
+    agregar_a_playlist_y_guardar(juan, cancion1)
+    juan = described_class.new.find(juan.id)
+
+    expect(juan.playlist.first.id).to eq cancion2.id
+    expect(juan.playlist.last.id).to eq cancion1.id
+  end
+
   it 'deberia recuperar al usuario con sus reproducciones' do
     cancion = Cancion.new(InformacionCancion.new('cancion', 'autor', 2020, 180, 'rock'))
     RepositorioContenido.new.save(cancion)
@@ -74,8 +87,8 @@ describe RepositorioUsuarios do
   it 'deberia agregar reproduccion para usuario ya insertado' do
     juan = Usuario.new('juan', 'juan@test.com', '1')
 
-    cancion1 = guardar_cancion(juan, 1)
-    cancion2 = guardar_cancion(juan, 2)
+    cancion1 = guardar_cancion_y_agregar_reproduccion(juan, 1)
+    cancion2 = guardar_cancion_y_agregar_reproduccion(juan, 2)
     juan = described_class.new.find(juan.id)
 
     expect(juan.reproducciones.map(&:id)).to include(cancion1.id, cancion2.id)
@@ -83,11 +96,20 @@ describe RepositorioUsuarios do
   end
 end
 
-def guardar_cancion(usuario, numero_cancion)
-  repositorio = RepositorioUsuarios.new
+def guardar_cancion(numero_cancion)
   cancion = Cancion.new(InformacionCancion.new("cancion#{numero_cancion}", 'autor', 2020, 180, 'rock'))
   RepositorioContenido.new.save(cancion)
+  cancion
+end
+
+def agregar_a_playlist_y_guardar(usuario, cancion)
+  usuario.agregar_a_playlist(cancion)
+  RepositorioUsuarios.new.save(usuario)
+end
+
+def guardar_cancion_y_agregar_reproduccion(usuario, numero_cancion)
+  cancion = guardar_cancion(numero_cancion)
   usuario.agregar_reproduccion(cancion)
-  repositorio.save(usuario)
+  RepositorioUsuarios.new.save(usuario)
   cancion
 end

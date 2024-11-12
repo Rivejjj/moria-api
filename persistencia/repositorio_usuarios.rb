@@ -34,24 +34,49 @@ class RepositorioUsuarios < AbstractRepository
   protected
 
   def save_playlist(usuario)
-    save_usario_contenido(DB[:playlists_usuarios_contenido], usuario.id, usuario.playlist)
+    contenido_nuevo_playlist = filtrar_contenido_nuevo_playlist(usuario)
+    max_orden = obtener_max_orden_playlist(usuario)
+    insertar_contenido_nuevo(usuario, contenido_nuevo_playlist, max_orden)
+  end
+
+  def filtrar_contenido_nuevo_playlist(usuario)
+    ids_contenido_playlist_guardada = obtener_ids_contenido_playlist_guardada(usuario)
+    usuario.playlist.reject { |contenido| ids_contenido_playlist_guardada.include?(contenido.id) }
+  end
+
+  def obtener_ids_contenido_playlist_guardada(usuario)
+    DB[:playlists_usuarios_contenido].where(id_usuario: usuario.id).select_map(:id_contenido)
+  end
+
+  def obtener_max_orden_playlist(usuario)
+    DB[:playlists_usuarios_contenido].where(id_usuario: usuario.id).max(:orden) || 0
+  end
+
+  def insertar_contenido_nuevo(usuario, contenido_nuevo_playlist, max_orden)
+    contenido_nuevo_playlist.each_with_index do |contenido, i|
+      DB[:playlists_usuarios_contenido].insert(
+        id_usuario: usuario.id,
+        id_contenido: contenido.id,
+        orden: max_orden + i + 1
+      )
+    end
   end
 
   def save_reproducciones(usuario)
-    save_usario_contenido(DB[:reproducciones], usuario.id, usuario.reproducciones)
+    save_usuario_contenido(DB[:reproducciones], usuario.id, usuario.reproducciones)
   end
 
-  def save_usario_contenido(db, usuario_id, contenidos)
+  def save_usuario_contenido(db, id_usuario, contenidos)
     contenidos.each do |contenido|
-      db.insert(id_usuario: usuario_id, id_contenido: contenido.id) unless cancion_reproducida?(contenido.id, usuario_id)
+      db.insert(id_usuario:, id_contenido: contenido.id) unless cancion_reproducida?(contenido.id, id_usuario)
     end
   end
 
   def cancion_reproducida?(id_contenido, id_usuario)
-    usario_contenido_en_db?(DB[:reproducciones], id_contenido, id_usuario)
+    usuario_contenido_en_db?(DB[:reproducciones], id_contenido, id_usuario)
   end
 
-  def usario_contenido_en_db?(db, id_contenido, id_usuario)
+  def usuario_contenido_en_db?(db, id_contenido, id_usuario)
     reproducciones_filtrado = db.where(id_usuario:, id_contenido:)
     !reproducciones_filtrado.first.nil?
   end
