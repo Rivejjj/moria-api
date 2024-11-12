@@ -16,7 +16,7 @@ class Sistema
     info_cancion = InformacionCancion.new(nombre, autor, anio, duracion, genero)
     cancion = Cancion.new(info_cancion)
     @repositorio_contenido.save(cancion)
-    cancion
+    cancion.id
   end
 
   def agregar_a_playlist(id_contenido, id_plataforma)

@@ -53,8 +53,10 @@ rescue NombreDeUsuarioEnUsoError
 end
 
 post '/canciones' do
-  sistema.crear_cancion(@params[:nombre], @params[:autor], @params[:anio], @params[:duracion], @params[:genero])
+  id_cancion = sistema.crear_cancion(@params[:nombre], @params[:autor], @params[:anio], @params[:duracion], @params[:genero])
+  respuesta = { id_cancion: }
   status 201
+  json(respuesta)
 end
 
 post '/usuarios/:id_plataforma/playlist' do |id_plataforma|
