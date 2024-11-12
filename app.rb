@@ -64,4 +64,6 @@ post '/usuarios/:id_plataforma/playlist' do |id_plataforma|
   respuesta = { nombre_cancion: }
   status 201
   json(respuesta)
+rescue CancionNoEncontradaError
+  status 404
 end

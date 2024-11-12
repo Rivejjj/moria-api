@@ -7,7 +7,6 @@ Característica: Agregar canción a playlist
     Cuando el usuario agrega la cancion con id 1 a su playlist
     Entonces se agrega la cancion "Beat it" a la playlist
   
-  @wip
   Escenario: US16:2 - Usuario agrega una cancion que no existe a su playlist
     Dado que existe un usuario "Kevin"
     Cuando el usuario agrega la cancion con id 1 a su playlist
