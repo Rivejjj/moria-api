@@ -27,6 +27,13 @@ class Sistema
     contenido.nombre
   end
 
+  def reproducir_cancion(id_contenido, nombre_usuario)
+    usuario = @repositorio_usuarios.find_by_nombre(nombre_usuario)
+    contenido = @repositorio_contenido.find(id_contenido)
+    usuario.agregar_reproduccion(contenido)
+    @repositorio_usuarios.save(usuario)
+  end
+
   def usuarios
     @repositorio_usuarios.all
   end

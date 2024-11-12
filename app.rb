@@ -59,6 +59,11 @@ post '/canciones' do
   json(respuesta)
 end
 
+post '/canciones/:id_cancion/reproduccion' do |id_cancion|
+  sistema.reproducir_cancion(id_cancion, @params[:nombre_usuario])
+  status 201
+end
+
 post '/usuarios/:id_plataforma/playlist' do |id_plataforma|
   nombre_cancion = sistema.agregar_a_playlist(@params[:id_cancion], id_plataforma)
   respuesta = { nombre_cancion: }

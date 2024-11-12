@@ -7,13 +7,13 @@ end
 
 Cuando('reproduce una cancion con id: {int}') do |id_cancion|
   @id_cancion = id_cancion
-  request_body = { 'nombre_usuario' => @nombre_de_usuario }.to_json
+  request_body = { 'nombre_usuario' => @usuario.nombre }.to_json
   @response = Faraday.post("/canciones/#{id_cancion}/reproduccion", request_body, { 'Content-Type' => 'application/json' })
 end
 
 Entonces('se registra la reproduccion') do
   expect(@response.status).to eq(201)
   repo_usuarios = RepositorioUsuarios.new
-  usuario = repo_usuarios.find_by_nombre(@nombre_de_usuario)
-  expect(usuario.reprodujo_cancion?(@id_cancion)).to eq true
+  usuario = repo_usuarios.find_by_nombre(@usuario.nombre)
+  expect(usuario.reproducciones.map(&:id)).to include(@id_cancion)
 end
