@@ -63,21 +63,15 @@ class RepositorioUsuarios < AbstractRepository
   end
 
   def save_reproducciones(usuario)
-    save_usuario_contenido(DB[:reproducciones], usuario.id, usuario.reproducciones)
-  end
-
-  def save_usuario_contenido(db, id_usuario, contenidos)
-    contenidos.each do |contenido|
-      db.insert(id_usuario:, id_contenido: contenido.id) unless cancion_reproducida?(contenido.id, id_usuario)
+    reproducciones = DB[:reproducciones]
+    usuario.reproducciones.each do |contenido|
+      reproducciones.insert(id_usuario: usuario.id, id_contenido: contenido.id) unless cancion_reproducida?(contenido.id, usuario.id)
     end
   end
 
   def cancion_reproducida?(id_contenido, id_usuario)
-    usuario_contenido_en_db?(DB[:reproducciones], id_contenido, id_usuario)
-  end
-
-  def usuario_contenido_en_db?(db, id_contenido, id_usuario)
-    reproducciones_filtrado = db.where(id_usuario:, id_contenido:)
+    reproducciones = DB[:reproducciones]
+    reproducciones_filtrado = reproducciones.where(id_usuario:, id_contenido:)
     !reproducciones_filtrado.first.nil?
   end
 
