@@ -34,25 +34,25 @@ class RepositorioUsuarios < AbstractRepository
   protected
 
   def save_playlist(usuario)
-    playlists_usuarios_contenido = DB[:playlists_usuarios_contenido]
-    playlist_vieja = playlists_usuarios_contenido.where(id_usuario: usuario.id)
-    playlist_vieja.delete
-
-    usuario.playlist.each do |contenido|
-      playlists_usuarios_contenido.insert(id_usuario: usuario.id, id_contenido: contenido.id)
-    end
+    save_usario_contenido(DB[:playlists_usuarios_contenido], usuario.id, usuario.playlist)
   end
 
   def save_reproducciones(usuario)
-    reproducciones = DB[:reproducciones]
-    usuario.reproducciones.each do |contenido|
-      reproducciones.insert(id_usuario: usuario.id, id_contenido: contenido.id) unless cancion_reproducida?(contenido.id, usuario.id)
+    save_usario_contenido(DB[:reproducciones], usuario.id, usuario.reproducciones)
+  end
+
+  def save_usario_contenido(db, usuario_id, contenidos)
+    contenidos.each do |contenido|
+      db.insert(id_usuario: usuario_id, id_contenido: contenido.id) unless cancion_reproducida?(contenido.id, usuario_id)
     end
   end
 
   def cancion_reproducida?(id_contenido, id_usuario)
-    reproducciones = DB[:reproducciones]
-    reproducciones_filtrado = reproducciones.where(id_usuario:, id_contenido:)
+    usario_contenido_en_db?(DB[:reproducciones], id_contenido, id_usuario)
+  end
+
+  def usario_contenido_en_db?(db, id_contenido, id_usuario)
+    reproducciones_filtrado = db.where(id_usuario:, id_contenido:)
     !reproducciones_filtrado.first.nil?
   end
 

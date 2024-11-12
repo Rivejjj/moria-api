@@ -72,6 +72,7 @@ describe RepositorioUsuarios do
   end
 
   it 'deberia agregar reproduccion para usuario ya insertado' do
+    puts 'aca'
     juan = Usuario.new('juan', 'juan@test.com', '1')
 
     cancion1 = guardar_cancion(juan, 1)
