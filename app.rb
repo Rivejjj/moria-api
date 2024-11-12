@@ -56,3 +56,10 @@ post '/canciones' do
   sistema.crear_cancion(@params[:nombre], @params[:autor], @params[:anio], @params[:duracion], @params[:genero])
   status 201
 end
+
+post '/usuarios/:id_plataforma/playlist' do |id_plataforma|
+  nombre_cancion = sistema.agregar_a_playlist(@params[:id_cancion], id_plataforma)
+  respuesta = { nombre_cancion: }
+  status 201
+  json(respuesta)
+end

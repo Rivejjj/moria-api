@@ -19,6 +19,14 @@ class Sistema
     cancion
   end
 
+  def agregar_a_playlist(id_contenido, id_plataforma)
+    usuario = @repositorio_usuarios.find_by_id_plataforma(id_plataforma)
+    contenido = @repositorio_contenido.find(id_contenido)
+    usuario.agregar_a_playlist(contenido)
+    @repositorio_usuarios.save(usuario)
+    contenido.nombre
+  end
+
   def usuarios
     @repositorio_usuarios.all
   end
