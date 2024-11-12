@@ -70,4 +70,24 @@ describe RepositorioUsuarios do
     juan = repositorio.find(juan.id)
     expect(juan.reproducciones.map(&:id)).to include(cancion.id)
   end
+
+  it 'deberia agregar reproduccion para usuario ya insertado' do
+    juan = Usuario.new('juan', 'juan@test.com', '1')
+
+    cancion1 = guardar_cancion(juan, 1)
+    cancion2 = guardar_cancion(juan, 2)
+    juan = described_class.new.find(juan.id)
+
+    expect(juan.reproducciones.map(&:id)).to include(cancion1.id, cancion2.id)
+    expect(juan.reproducciones.length).to eq(2)
+  end
+end
+
+def guardar_cancion(usuario, numero_cancion)
+  repositorio = RepositorioUsuarios.new
+  cancion = Cancion.new(InformacionCancion.new("cancion#{numero_cancion}", 'autor', 2020, 180, 'rock'))
+  RepositorioContenido.new.save(cancion)
+  usuario.agregar_reproduccion(cancion)
+  repositorio.save(usuario)
+  cancion
 end

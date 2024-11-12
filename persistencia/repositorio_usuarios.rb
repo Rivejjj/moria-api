@@ -46,8 +46,14 @@ class RepositorioUsuarios < AbstractRepository
   def save_reproducciones(usuario)
     reproducciones = DB[:reproducciones]
     usuario.reproducciones.each do |contenido|
-      reproducciones.insert(id_usuario: usuario.id, id_contenido: contenido.id)
+      reproducciones.insert(id_usuario: usuario.id, id_contenido: contenido.id) unless cancion_reproducida?(contenido.id, usuario.id)
     end
+  end
+
+  def cancion_reproducida?(id_contenido, id_usuario)
+    reproducciones = DB[:reproducciones]
+    reproducciones_filtrado = reproducciones.where(id_usuario:, id_contenido:)
+    !reproducciones_filtrado.first.nil?
   end
 
   def find_reproducciones(usuario)
