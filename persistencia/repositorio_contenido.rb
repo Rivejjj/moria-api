@@ -4,6 +4,13 @@ class RepositorioContenido < AbstractRepository
   self.table_name = :contenido
   self.model_class = 'Cancion'
 
+  def find(id_contenido)
+    fila_cancion = dataset.first(pk_column => id_contenido)
+    raise CancionNoEncontradaError if fila_cancion.nil?
+
+    load_object dataset.first(fila_cancion)
+  end
+
   def find_playlist_by_usuario(usuario)
     playlists_usuarios_contenido = DB[:playlists_usuarios_contenido]
     playlists_usuarios_contenido_filtrado = playlists_usuarios_contenido.where(id_usuario: usuario.id)
@@ -38,4 +45,7 @@ class RepositorioContenido < AbstractRepository
       genero: cancion.genero
     }
   end
+end
+
+class CancionNoEncontradaError < StandardError
 end
