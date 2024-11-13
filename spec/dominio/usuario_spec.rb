@@ -38,4 +38,11 @@ describe Usuario do
     usuario.agregar_reproduccion(cancion2)
     expect(usuario.reproducciones).to include(cancion, cancion2)
   end
+
+  it 'puede dar me gusta a una cancion' do
+    usuario = described_class.new('nombre', 'email@email.com', '1')
+    cancion = instance_double('Cancion', nombre: 'cancion')
+    usuario.me_gusta(cancion)
+    expect(usuario.me_gustas).to include(cancion)
+  end
 end
