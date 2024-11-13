@@ -58,8 +58,14 @@ class RepositorioContenidoDeUsuario
   def save_me_gustas(usuario)
     me_gustas = DB[:me_gustas]
     usuario.me_gustas.each do |contenido|
-      me_gustas.insert(id_usuario: usuario.id, id_contenido: contenido.id)
+      me_gustas.insert(id_usuario: usuario.id, id_contenido: contenido.id) unless cancion_me_gusta?(contenido.id, usuario.id)
     end
+  end
+
+  def cancion_me_gusta?(id_contenido, id_usuario)
+    me_gustas = DB[:me_gustas]
+    me_gustas_filtrado = me_gustas.where(id_usuario:, id_contenido:)
+    !me_gustas_filtrado.first.nil?
   end
 
   def cancion_reproducida?(id_contenido, id_usuario)

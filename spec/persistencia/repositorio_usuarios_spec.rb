@@ -112,6 +112,17 @@ describe RepositorioUsuarios do
     juan = repositorio.find(juan.id)
     expect(juan.me_gustas.map(&:id)).to include(cancion.id)
   end
+
+  it 'deberia agregar me gusta para usuario ya registrado' do
+    juan = Usuario.new('juan', 'juan@test.com', '1')
+
+    cancion1 = guardar_cancion_y_dar_me_gusta(juan, 1)
+    cancion2 = guardar_cancion_y_dar_me_gusta(juan, 2)
+    juan = described_class.new.find(juan.id)
+
+    expect(juan.me_gustas.map(&:id)).to include(cancion1.id, cancion2.id)
+    expect(juan.me_gustas.length).to eq(2)
+  end
 end
 
 def guardar_cancion(numero_cancion)
@@ -128,6 +139,13 @@ end
 def guardar_cancion_y_agregar_reproduccion(usuario, numero_cancion)
   cancion = guardar_cancion(numero_cancion)
   usuario.agregar_reproduccion(cancion)
+  RepositorioUsuarios.new.save(usuario)
+  cancion
+end
+
+def guardar_cancion_y_dar_me_gusta(usuario, numero_cancion)
+  cancion = guardar_cancion(numero_cancion)
+  usuario.me_gusta(cancion)
   RepositorioUsuarios.new.save(usuario)
   cancion
 end
