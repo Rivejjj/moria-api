@@ -13,3 +13,8 @@ end
 Entonces('se le informa que la calificacion fue registrada') do
   expect(@response.status).to eq(201)
 end
+
+Cuando('la persona le da me gusta a una cancion con id {int}') do |id_cancion|
+  request_body = { id_plataforma: '123456789' }.to_json
+  @response = Faraday.post("/canciones/#{id_cancion}/megusta", request_body, { 'Content-Type' => 'application/json' })
+end
