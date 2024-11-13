@@ -47,6 +47,12 @@ describe RepositorioUsuarios do
     expect(juan.id_plataforma).to eq('1')
   end
 
+  it 'deberia levantar un error cuando el usuario no es encontrado' do
+    repositorio = described_class.new
+    repositorio.delete_all
+    expect { repositorio.find_by_id_plataforma('1') }.to raise_error(UsuarioNoEncontradoError)
+  end
+
   it 'deberia recuperar al usuario con su playlist' do
     cancion = Cancion.new(InformacionCancion.new('cancion', 'autor', 2020, 180, 'rock'))
     RepositorioContenido.new.save(cancion)

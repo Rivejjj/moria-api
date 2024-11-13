@@ -31,7 +31,9 @@ class RepositorioUsuarios < AbstractRepository
 
   def find_by_id_plataforma(id_plataforma)
     row = dataset.first(id_plataforma:)
-    load_object(row) unless row.nil?
+    raise UsuarioNoEncontradoError if row.nil?
+
+    load_object(row)
   end
 
   protected
@@ -145,3 +147,5 @@ class RepositorioUsuarios < AbstractRepository
   end
 end
 # rubocop:enable Metrics/ClassLength
+
+class UsuarioNoEncontradoError < StandardError; end
