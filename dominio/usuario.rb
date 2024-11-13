@@ -25,6 +25,6 @@ class Usuario
   end
 
   def me_gusta(cancion)
-    @me_gustas = [cancion]
+    @me_gustas << cancion
   end
 end

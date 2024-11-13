@@ -30,7 +30,7 @@ describe Usuario do
     expect(usuario.reproducciones).to include(cancion)
   end
 
-  it 'puede agregar una reproduccion dos canciones' do
+  it 'puede agregar dos reproduccion de canciones' do
     usuario = described_class.new('nombre', 'email@email.com', '1')
     cancion = instance_double('Cancion', nombre: 'cancion')
     cancion2 = instance_double('Cancion2', nombre: 'cancion2')
@@ -44,5 +44,14 @@ describe Usuario do
     cancion = instance_double('Cancion', nombre: 'cancion')
     usuario.me_gusta(cancion)
     expect(usuario.me_gustas).to include(cancion)
+  end
+
+  it 'puede dar me gusta a 2 canciones' do
+    usuario = described_class.new('nombre', 'email@email.com', '1')
+    cancion = instance_double('Cancion', nombre: 'cancion')
+    cancion2 = instance_double('Cancion2', nombre: 'cancion2')
+    usuario.me_gusta(cancion)
+    usuario.me_gusta(cancion2)
+    expect(usuario.me_gustas).to include(cancion, cancion2)
   end
 end
