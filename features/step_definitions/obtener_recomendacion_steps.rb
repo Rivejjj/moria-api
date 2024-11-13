@@ -12,7 +12,7 @@ Dado('que tiene {int} canciones en su playlist') do |cantidad_canciones_en_playl
 end
 
 Cuando('pide una recomendacion') do
-  @response = Faraday.get("/usuarios/#{@usuario.id_plataforma}/recomendacion")
+  @response = Faraday.get("/usuarios/#{ID_PLATAFORMA_PRUEBA}/recomendacion")
 end
 
 Entonces('obtiene las ultimas {int} canciones de su playlist') do |cantidad_canciones_recomendadas|

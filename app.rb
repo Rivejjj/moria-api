@@ -82,6 +82,8 @@ get '/usuarios/:id_plataforma/recomendacion' do |id_plataforma|
   respuesta = { 'recomendacion': respuesta_recomendacion }
   status 200
   json(respuesta)
+rescue UsuarioNoEncontradoError
+  status 401
 end
 
 post '/canciones/:id_cancion/megusta' do |id_cancion|
