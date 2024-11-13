@@ -25,6 +25,25 @@ class RepositorioContenidoDeUsuario
     insertar_contenido_nuevo(usuario, contenido_nuevo_playlist, max_orden)
   end
 
+  def save_contenido_de_usuario(db, usuario_id, contenidos)
+    contenidos.each do |contenido|
+      db.insert(id_usuario: usuario_id, id_contenido: contenido.id) unless contenido_de_usuario_ya_en_db?(db, contenido.id, usuario_id)
+    end
+  end
+
+  def save_reproducciones(usuario)
+    save_contenido_de_usuario(DB[:reproducciones], usuario.id, usuario.reproducciones)
+  end
+
+  def save_me_gustas(usuario)
+    save_contenido_de_usuario(DB[:me_gustas], usuario.id, usuario.me_gustas)
+  end
+
+  def contenido_de_usuario_ya_en_db?(db, id_contenido, id_usuario)
+    db_filtrado = db.where(id_usuario:, id_contenido:)
+    !db_filtrado.first.nil?
+  end
+
   def filtrar_contenido_nuevo_playlist(usuario)
     ids_contenido_playlist_guardada = obtener_ids_contenido_playlist_guardada(usuario)
     usuario.playlist.reject { |contenido| ids_contenido_playlist_guardada.include?(contenido.id) }
@@ -46,32 +65,6 @@ class RepositorioContenidoDeUsuario
         orden: max_orden + i + 1
       )
     end
-  end
-
-  def save_reproducciones(usuario)
-    reproducciones = DB[:reproducciones]
-    usuario.reproducciones.each do |contenido|
-      reproducciones.insert(id_usuario: usuario.id, id_contenido: contenido.id) unless cancion_reproducida?(contenido.id, usuario.id)
-    end
-  end
-
-  def save_me_gustas(usuario)
-    me_gustas = DB[:me_gustas]
-    usuario.me_gustas.each do |contenido|
-      me_gustas.insert(id_usuario: usuario.id, id_contenido: contenido.id) unless cancion_me_gusta?(contenido.id, usuario.id)
-    end
-  end
-
-  def cancion_me_gusta?(id_contenido, id_usuario)
-    me_gustas = DB[:me_gustas]
-    me_gustas_filtrado = me_gustas.where(id_usuario:, id_contenido:)
-    !me_gustas_filtrado.first.nil?
-  end
-
-  def cancion_reproducida?(id_contenido, id_usuario)
-    reproducciones = DB[:reproducciones]
-    reproducciones_filtrado = reproducciones.where(id_usuario:, id_contenido:)
-    !reproducciones_filtrado.first.nil?
   end
 
   def find_reproducciones(usuario)
