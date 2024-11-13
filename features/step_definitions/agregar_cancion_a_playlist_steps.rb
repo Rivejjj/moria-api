@@ -23,3 +23,12 @@ Entonces('no se agrega la cancion a la playlist') do
   usuario = repo_usuarios.find_by_id_plataforma(ID_PLATAFORMA_PRUEBA)
   expect(usuario.playlist.size).to eq 0
 end
+
+Dado('que una persona no esta registrada') do
+  # No hacer nada
+end
+
+Cuando('la persona agrega la cancion con id {int} a su playlist') do |id_cancion|
+  request_body = { 'id_cancion' => id_cancion }.to_json
+  @response = Faraday.post("/usuarios/#{ID_PLATAFORMA_PRUEBA}/playlist", request_body, { 'Content-Type' => 'application/json' })
+end
