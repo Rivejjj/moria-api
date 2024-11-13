@@ -32,3 +32,7 @@ Cuando('la persona agrega la cancion con id {int} a su playlist') do |id_cancion
   request_body = { 'id_cancion' => id_cancion }.to_json
   @response = Faraday.post("/usuarios/#{ID_PLATAFORMA_PRUEBA}/playlist", request_body, { 'Content-Type' => 'application/json' })
 end
+
+Entonces('la persona debe registrarse') do
+  expect(@response.status).to eq(401)
+end

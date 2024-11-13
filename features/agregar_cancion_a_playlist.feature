@@ -12,9 +12,8 @@ Característica: Agregar canción a playlist
     Cuando el usuario agrega la cancion con id 1 a su playlist
     Entonces no se agrega la cancion a la playlist
 
-  @wip
   Escenario: US16:3 - Persona no registrada agrega una cancion a su playlist
     Dado que una persona no esta registrada
     Y existe una cancion "Beat it" con id 1
     Cuando la persona agrega la cancion con id 1 a su playlist
-    Entonces no se agrega la cancion a la playlist
+    Entonces la persona debe registrarse

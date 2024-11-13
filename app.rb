@@ -71,6 +71,8 @@ post '/usuarios/:id_plataforma/playlist' do |id_plataforma|
   json(respuesta)
 rescue CancionNoEncontradaError
   status 404
+rescue UsuarioNoEncontradoError
+  status 401
 end
 
 get '/usuarios/:id_plataforma/recomendacion' do |id_plataforma|
