@@ -1,6 +1,6 @@
 # language: es
 Característica: Dar me gusta a cancion
-    @wip
+
     Escenario: US2:1 Usuario le da me gusta a una cancion
         Dado que existe un usuario "Kevin"
         Y existe una cancion con id: 1

@@ -41,6 +41,13 @@ class Sistema
     @repositorio_usuarios.save(usuario)
   end
 
+  def dar_me_gusta_a_cancion(id_contenido, id_plataforma)
+    usuario = @repositorio_usuarios.find_by_id_plataforma(id_plataforma)
+    cancion = @repositorio_contenido.find(id_contenido)
+    usuario.me_gusta(cancion)
+    @repositorio_usuarios.save(usuario)
+  end
+
   def usuarios
     @repositorio_usuarios.all
   end

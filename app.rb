@@ -83,3 +83,8 @@ get '/usuarios/:id_plataforma/recomendacion' do |id_plataforma|
   status 200
   json(respuesta)
 end
+
+post '/canciones/:id_cancion/megusta' do |id_cancion|
+  sistema.dar_me_gusta_a_cancion(id_cancion, @params[:id_plataforma])
+  status 201
+end
