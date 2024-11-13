@@ -94,6 +94,18 @@ describe RepositorioUsuarios do
     expect(juan.reproducciones.map(&:id)).to include(cancion1.id, cancion2.id)
     expect(juan.reproducciones.length).to eq(2)
   end
+
+  it 'deberia recuperar al usuario con sus me gusta' do
+    cancion = Cancion.new(InformacionCancion.new('cancion', 'autor', 2020, 180, 'rock'))
+    RepositorioContenido.new.save(cancion)
+
+    repositorio = described_class.new
+    juan = Usuario.new('juan', 'juan@test.com', '1')
+    juan.me_gusta(cancion)
+    repositorio.save(juan)
+    juan = repositorio.find(juan.id)
+    expect(juan.me_gustas.map(&:id)).to include(cancion.id)
+  end
 end
 
 def guardar_cancion(numero_cancion)

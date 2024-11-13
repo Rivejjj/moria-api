@@ -1,5 +1,6 @@
 require_relative './abstract_repository'
 
+# rubocop:disable Metrics/ClassLength
 class RepositorioUsuarios < AbstractRepository
   self.table_name = :usuarios
   self.model_class = 'Usuario'
@@ -12,12 +13,14 @@ class RepositorioUsuarios < AbstractRepository
     end
     save_playlist(usuario)
     save_reproducciones(usuario)
+    save_me_gustas(usuario)
     usuario
   end
 
   def delete_all
     DB[:playlists_usuarios_contenido].delete
     DB[:reproducciones].delete
+    DB[:me_gustas].delete
     dataset.delete
   end
 
@@ -69,6 +72,13 @@ class RepositorioUsuarios < AbstractRepository
     end
   end
 
+  def save_me_gustas(usuario)
+    me_gustas = DB[:me_gustas]
+    usuario.me_gustas.each do |contenido|
+      me_gustas.insert(id_usuario: usuario.id, id_contenido: contenido.id)
+    end
+  end
+
   def cancion_reproducida?(id_contenido, id_usuario)
     reproducciones = DB[:reproducciones]
     reproducciones_filtrado = reproducciones.where(id_usuario:, id_contenido:)
@@ -86,6 +96,17 @@ class RepositorioUsuarios < AbstractRepository
     reproducciones
   end
 
+  def find_me_gustas(usuario)
+    repositorio_contenido = RepositorioContenido.new
+    me_gustas = DB[:me_gustas]
+    me_gustas_filtrado = me_gustas.where(id_usuario: usuario.id)
+    me_gustas = []
+    me_gustas_filtrado.each do |fila|
+      me_gustas << repositorio_contenido.find(fila[:id_contenido])
+    end
+    me_gustas
+  end
+
   def load_playlist(usuario)
     playlist = RepositorioContenido.new.find_playlist_by_usuario(usuario)
     playlist.each do |contenido|
@@ -100,10 +121,18 @@ class RepositorioUsuarios < AbstractRepository
     end
   end
 
+  def load_me_gustas(usuario)
+    me_gustas = find_me_gustas(usuario)
+    me_gustas.each do |contenido|
+      usuario.me_gusta(contenido)
+    end
+  end
+
   def load_object(a_hash)
     usuario = Usuario.new(a_hash[:nombre], a_hash[:email], a_hash[:id_plataforma], a_hash[:id])
     load_playlist(usuario)
     load_reproducciones(usuario)
+    load_me_gustas(usuario)
     usuario
   end
 
@@ -115,3 +144,4 @@ class RepositorioUsuarios < AbstractRepository
     }
   end
 end
+# rubocop:enable Metrics/ClassLength
