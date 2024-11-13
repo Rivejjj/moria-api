@@ -8,7 +8,6 @@ Característica: Dar me gusta a cancion
         Entonces se registra el me gusta
         Y se le informa que la calificacion fue registrada
 
-    @wip
     Escenario: US2:2 Persona no registrada le da me gusta a una cancion
         Dado que una persona no esta registrada
         Cuando la persona le da me gusta a una cancion con id 1
