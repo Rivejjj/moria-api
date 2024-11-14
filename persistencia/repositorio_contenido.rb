@@ -1,6 +1,7 @@
 require_relative './abstract_repository'
 
 class RepositorioContenido < AbstractRepository
+  TIPO_CANCION = 'c'.freeze
   self.table_name = :contenido
   self.model_class = 'Cancion'
 
@@ -42,7 +43,8 @@ class RepositorioContenido < AbstractRepository
       autor: cancion.autor,
       anio: cancion.anio,
       duracion: cancion.duracion,
-      genero: cancion.genero
+      genero: cancion.genero,
+      tipo: TIPO_CANCION
     }
   end
 end

@@ -1,6 +1,7 @@
 require_relative './abstract_repository'
 
 class RepositorioPodcasts < AbstractRepository
+  TIPO_PODCAST = 'p'.freeze
   self.table_name = :contenido
   self.model_class = 'Podcast'
 
@@ -12,7 +13,8 @@ class RepositorioPodcasts < AbstractRepository
       autor: podcast.autor,
       anio: podcast.anio,
       duracion: podcast.duracion,
-      genero: podcast.genero
+      genero: podcast.genero,
+      tipo: TIPO_PODCAST
     }
   end
 end
