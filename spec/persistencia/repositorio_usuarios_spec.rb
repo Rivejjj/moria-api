@@ -54,7 +54,7 @@ describe RepositorioUsuarios do
   end
 
   it 'deberia recuperar al usuario con su playlist' do
-    cancion = Cancion.new(InformacionCancion.new('cancion', 'autor', 2020, 180, 'rock'))
+    cancion = Cancion.new(InformacionContenido.new('cancion', 'autor', 2020, 180, 'rock'))
     RepositorioContenido.new.save(cancion)
 
     repositorio = described_class.new
@@ -79,7 +79,7 @@ describe RepositorioUsuarios do
   end
 
   it 'deberia recuperar al usuario con sus reproducciones' do
-    cancion = Cancion.new(InformacionCancion.new('cancion', 'autor', 2020, 180, 'rock'))
+    cancion = Cancion.new(InformacionContenido.new('cancion', 'autor', 2020, 180, 'rock'))
     RepositorioContenido.new.save(cancion)
 
     repositorio = described_class.new
@@ -102,7 +102,7 @@ describe RepositorioUsuarios do
   end
 
   it 'deberia recuperar al usuario con sus me gusta' do
-    cancion = Cancion.new(InformacionCancion.new('cancion', 'autor', 2020, 180, 'rock'))
+    cancion = Cancion.new(InformacionContenido.new('cancion', 'autor', 2020, 180, 'rock'))
     RepositorioContenido.new.save(cancion)
 
     repositorio = described_class.new
@@ -126,7 +126,7 @@ describe RepositorioUsuarios do
 end
 
 def guardar_cancion(numero_cancion)
-  cancion = Cancion.new(InformacionCancion.new("cancion#{numero_cancion}", 'autor', 2020, 180, 'rock'))
+  cancion = Cancion.new(InformacionContenido.new("cancion#{numero_cancion}", 'autor', 2020, 180, 'rock'))
   RepositorioContenido.new.save(cancion)
   cancion
 end

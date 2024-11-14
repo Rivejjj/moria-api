@@ -13,7 +13,7 @@ class Sistema
   end
 
   def crear_cancion(nombre, autor, anio, duracion, genero)
-    info_cancion = InformacionCancion.new(nombre, autor, anio, duracion, genero)
+    info_cancion = InformacionContenido.new(nombre, autor, anio, duracion, genero)
     cancion = Cancion.new(info_cancion)
     @repositorio_contenido.save(cancion)
     cancion.id

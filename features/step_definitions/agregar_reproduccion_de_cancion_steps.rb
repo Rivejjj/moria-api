@@ -1,6 +1,6 @@
 Dado('existe una cancion con id: {int}') do |id|
   repo_canciones = RepositorioContenido.new
-  info_cancion = InformacionCancion.new('Thriller', 'Michael Jackson', 1982, 42, 'Pop')
+  info_cancion = InformacionContenido.new('Thriller', 'Michael Jackson', 1982, 42, 'Pop')
   cancion = Cancion.new(info_cancion, id)
   repo_canciones.save(cancion)
 end

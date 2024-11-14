@@ -32,7 +32,7 @@ class RepositorioContenido < AbstractRepository
   end
 
   def load_object(a_hash)
-    info_cancion = InformacionCancion.new(a_hash[:nombre], a_hash[:autor], a_hash[:anio], a_hash[:duracion], a_hash[:genero])
+    info_cancion = InformacionContenido.new(a_hash[:nombre], a_hash[:autor], a_hash[:anio], a_hash[:duracion], a_hash[:genero])
     Cancion.new(info_cancion, a_hash[:id])
   end
 

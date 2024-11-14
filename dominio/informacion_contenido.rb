@@ -1,4 +1,4 @@
-class InformacionCancion
+class InformacionContenido
   attr_reader :nombre, :autor, :anio, :duracion, :genero
 
   def initialize(nombre, autor, anio, duracion, genero)
