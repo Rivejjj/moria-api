@@ -1,7 +1,7 @@
 Cuando('el usuario le da me gusta a una cancion con id: {int}') do |id_cancion|
   @id_cancion = id_cancion
   request_body = { id_plataforma: @usuario.id_plataforma }.to_json
-  @response = Faraday.post("/canciones/#{id_cancion}/megusta", request_body, { 'Content-Type' => 'application/json' })
+  @response = Faraday.post("/contenidos/#{id_cancion}/megusta", request_body, { 'Content-Type' => 'application/json' })
 end
 
 Entonces('se registra el me gusta') do
@@ -16,5 +16,5 @@ end
 
 Cuando('la persona le da me gusta a una cancion con id {int}') do |id_cancion|
   request_body = { id_plataforma: '123456789' }.to_json
-  @response = Faraday.post("/canciones/#{id_cancion}/megusta", request_body, { 'Content-Type' => 'application/json' })
+  @response = Faraday.post("/contenidos/#{id_cancion}/megusta", request_body, { 'Content-Type' => 'application/json' })
 end

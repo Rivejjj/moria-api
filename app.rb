@@ -86,8 +86,8 @@ rescue UsuarioNoEncontradoError
   status 401
 end
 
-post '/canciones/:id_cancion/megusta' do |id_cancion|
-  sistema.dar_me_gusta_a_cancion(id_cancion, @params[:id_plataforma])
+post '/contenidos/:id_contenido/megusta' do |id_contenido|
+  sistema.dar_me_gusta_a_cancion(id_contenido, @params[:id_plataforma])
   status 201
 rescue CancionNoEncontradaError
   status 404
