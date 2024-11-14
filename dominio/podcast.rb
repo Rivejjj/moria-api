@@ -18,4 +18,8 @@ class Podcast
   def duracion
     @info_podcast.duracion
   end
+
+  def genero
+    @info_podcast.genero
+  end
 end

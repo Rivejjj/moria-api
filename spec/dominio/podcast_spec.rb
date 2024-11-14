@@ -32,4 +32,10 @@ describe Podcast do
     podcast = described_class.new(info_podcast)
     expect(podcast.duracion).to eq(info_podcast.duracion)
   end
+
+  it 'se puede obtener el genero del podcast' do
+    info_podcast = InformacionContenido.new('nombre', 'autor', 2021, 180, 'rock')
+    podcast = described_class.new(info_podcast)
+    expect(podcast.genero).to eq(info_podcast.genero)
+  end
 end
