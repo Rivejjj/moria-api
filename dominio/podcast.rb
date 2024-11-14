@@ -14,4 +14,8 @@ class Podcast
   def anio
     @info_podcast.anio
   end
+
+  def duracion
+    @info_podcast.duracion
+  end
 end
