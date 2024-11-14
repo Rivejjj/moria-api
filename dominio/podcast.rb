@@ -10,4 +10,8 @@ class Podcast
   def autor
     @info_podcast.autor
   end
+
+  def anio
+    @info_podcast.anio
+  end
 end

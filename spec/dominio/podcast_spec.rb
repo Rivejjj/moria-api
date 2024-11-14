@@ -20,4 +20,10 @@ describe Podcast do
     podcast = described_class.new(info_podcast)
     expect(podcast.autor).to eq(info_podcast.autor)
   end
+
+  it 'se puede obtener el anio del podcast' do
+    info_podcast = InformacionContenido.new('nombre', 'autor', 2021, 180, 'rock')
+    podcast = described_class.new(info_podcast)
+    expect(podcast.anio).to eq(info_podcast.anio)
+  end
 end
