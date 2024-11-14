@@ -7,6 +7,11 @@ class RepositorioPodcasts < AbstractRepository
 
   protected
 
+  def load_object(a_hash)
+    info_podcast = InformacionContenido.new(a_hash[:nombre], a_hash[:autor], a_hash[:anio], a_hash[:duracion], a_hash[:genero])
+    Podcast.new(info_podcast, a_hash[:id])
+  end
+
   def changeset(podcast)
     {
       nombre: podcast.nombre,

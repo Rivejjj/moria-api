@@ -14,7 +14,7 @@ configure do
   set :logger, customer_logger
   set :default_content_type, :json
   set :environment, ENV['APP_MODE'].to_sym
-  set :sistema, Sistema.new(RepositorioUsuarios.new, RepositorioContenido.new)
+  set :sistema, Sistema.new(RepositorioUsuarios.new, RepositorioContenido.new, RepositorioPodcasts.new)
 end
 
 before do
@@ -93,4 +93,11 @@ rescue CancionNoEncontradaError
   status 404
 rescue UsuarioNoEncontradoError
   status 401
+end
+
+post '/podcasts' do
+  id_podcast = sistema.crear_podcast(@params[:nombre], @params[:autor], @params[:anio], @params[:duracion], @params[:genero])
+  respuesta = { id_podcast: }
+  status 201
+  json(respuesta)
 end

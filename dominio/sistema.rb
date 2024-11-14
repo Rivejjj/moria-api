@@ -1,7 +1,8 @@
 class Sistema
-  def initialize(repositorio_usuarios, repositorio_contenido)
+  def initialize(repositorio_usuarios, repositorio_contenido, repositorio_podcasts)
     @repositorio_usuarios = repositorio_usuarios
     @repositorio_contenido = repositorio_contenido
+    @repositorio_podcasts = repositorio_podcasts
   end
 
   def crear_usuario(nombre_de_usuario, email, id_plataforma)
@@ -17,6 +18,13 @@ class Sistema
     cancion = Cancion.new(info_cancion)
     @repositorio_contenido.save(cancion)
     cancion.id
+  end
+
+  def crear_podcast(nombre, autor, anio, duracion, genero)
+    info_podcast = InformacionContenido.new(nombre, autor, anio, duracion, genero)
+    podcast = Podcast.new(info_podcast)
+    @repositorio_podcasts.save(podcast)
+    podcast.id
   end
 
   def agregar_a_playlist(id_contenido, id_plataforma)
