@@ -6,4 +6,8 @@ class Podcast
   def nombre
     @info_podcast.nombre
   end
+
+  def autor
+    @info_podcast.autor
+  end
 end

@@ -14,4 +14,10 @@ describe Podcast do
     podcast = described_class.new(info_podcast)
     expect(podcast.nombre).to eq(info_podcast.nombre)
   end
+
+  it 'se puede obtener el autor del podcast' do
+    info_podcast = InformacionContenido.new('nombre', 'autor', 2021, 180, 'rock')
+    podcast = described_class.new(info_podcast)
+    expect(podcast.autor).to eq(info_podcast.autor)
+  end
 end
