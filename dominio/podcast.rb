@@ -1,6 +1,10 @@
 class Podcast
-  def initialize(info_podcast)
+  attr_reader :updated_on, :created_on
+  attr_accessor :id
+
+  def initialize(info_podcast, id = nil)
     @info_podcast = info_podcast
+    @id = id
   end
 
   def nombre
