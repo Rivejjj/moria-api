@@ -26,4 +26,8 @@ class Contenido
   def genero
     @info_contenido.genero
   end
+
+  def tipo_contenido
+    raise 'Subclass must implement'
+  end
 end

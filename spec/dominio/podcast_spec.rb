@@ -38,4 +38,10 @@ describe Podcast do
     podcast = described_class.new(info_podcast)
     expect(podcast.genero).to eq(info_podcast.genero)
   end
+
+  it 'deberia devolver tipo contenido podcast' do
+    info_podcast = InformacionContenido.new('nombre', 'autor', 2021, 180, 'rock')
+    podcast = described_class.new(info_podcast)
+    expect(podcast.tipo_contenido).to eq(:podcast)
+  end
 end
