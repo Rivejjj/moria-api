@@ -26,4 +26,8 @@ class Contenido
   def genero
     @info_contenido.genero
   end
+
+  def es_una_cancion?
+    false
+  end
 end
