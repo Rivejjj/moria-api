@@ -17,4 +17,5 @@ Entonces('se da de alta la cancion') do
   expect(cancion.anio).to eq(@request_body[:anio])
   expect(cancion.duracion).to eq(@request_body[:duracion])
   expect(cancion.genero).to eq(@request_body[:genero])
+  expect(cancion.es_una_cancion?).to eq(true)
 end

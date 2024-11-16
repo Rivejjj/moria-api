@@ -23,4 +23,13 @@ describe RepositorioContenido do
     described_class.new.save(podcast)
     expect(podcast.id).not_to be_nil
   end
+
+  it 'deberia encontrar un podcast' do
+    info_podcast = InformacionContenido.new('nombre', 'autor', 2024, 360_000, 'ciencia')
+    podcast = Podcast.new(info_podcast)
+    repo_contenido = described_class.new
+    repo_contenido.save(podcast)
+    podcast_encontrado = repo_contenido.first
+    expect(podcast_encontrado.es_una_cancion?).to eq(false)
+  end
 end

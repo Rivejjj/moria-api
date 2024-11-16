@@ -35,8 +35,12 @@ class RepositorioContenido < AbstractRepository
 
   def load_object(a_hash)
     info_contenido = InformacionContenido.new(a_hash[:nombre], a_hash[:autor], a_hash[:anio], a_hash[:duracion], a_hash[:genero])
-
-    Cancion.new(info_contenido, a_hash[:id])
+    case a_hash[:tipo]
+    when TIPO_CANCION
+      Cancion.new(info_contenido, a_hash[:id])
+    when TIPO_PODCAST
+      Podcast.new(info_contenido, a_hash[:id])
+    end
   end
 
   def changeset(contenido)
