@@ -1,5 +1,5 @@
 Dado('que no hay podcasts registrados') do
-  repo_podcasts = RepositorioPodcasts.new
+  repo_podcasts = RepositorioContenido.new
   repo_podcasts.delete_all
 end
 
@@ -10,7 +10,7 @@ end
 
 Entonces('se da de alta el podcast') do
   expect(@response.status).to eq(201)
-  repo_podcasts = RepositorioPodcasts.new
+  repo_podcasts = RepositorioContenido.new
   podcast = repo_podcasts.first
   expect(podcast.nombre).to eq(@request_body[:nombre])
   expect(podcast.autor).to eq(@request_body[:autor])

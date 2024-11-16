@@ -16,4 +16,11 @@ describe RepositorioContenido do
     repo_contenido.delete_all
     expect { repo_contenido.find(1) }.to raise_error(CancionNoEncontradaError)
   end
+
+  it 'deberia guardar y asignar id a un podcast' do
+    info_podcast = InformacionContenido.new('nombre', 'autor', 2024, 360_000, 'ciencia')
+    podcast = Podcast.new(info_podcast)
+    described_class.new.save(podcast)
+    expect(podcast.id).not_to be_nil
+  end
 end

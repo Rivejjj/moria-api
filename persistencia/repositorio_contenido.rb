@@ -2,14 +2,15 @@ require_relative './abstract_repository'
 
 class RepositorioContenido < AbstractRepository
   TIPO_CANCION = 'c'.freeze
+  TIPO_PODCAST = 'p'.freeze
   self.table_name = :contenido
-  self.model_class = 'Cancion'
+  self.model_class = 'Contenido'
 
   def find(id_contenido)
-    fila_cancion = dataset.first(pk_column => id_contenido)
-    raise CancionNoEncontradaError if fila_cancion.nil?
+    fila_contenido = dataset.first(pk_column => id_contenido)
+    raise CancionNoEncontradaError if fila_contenido.nil?
 
-    load_object dataset.first(fila_cancion)
+    load_object dataset.first(fila_contenido)
   end
 
   def find_playlist_by_usuario(usuario)
@@ -24,27 +25,33 @@ class RepositorioContenido < AbstractRepository
 
   protected
 
-  def insert(cancion)
-    changeset = insert_changeset(cancion)
-    changeset[:id] = cancion.id if cancion.id
+  def insert(contenido)
+    changeset = insert_changeset(contenido)
+    changeset[:id] = contenido.id if contenido.id
     id = dataset.insert(changeset)
-    cancion.id ||= id
-    cancion
+    contenido.id ||= id
+    contenido
   end
 
   def load_object(a_hash)
-    info_cancion = InformacionContenido.new(a_hash[:nombre], a_hash[:autor], a_hash[:anio], a_hash[:duracion], a_hash[:genero])
-    Cancion.new(info_cancion, a_hash[:id])
+    info_contenido = InformacionContenido.new(a_hash[:nombre], a_hash[:autor], a_hash[:anio], a_hash[:duracion], a_hash[:genero])
+
+    Cancion.new(info_contenido, a_hash[:id])
   end
 
-  def changeset(cancion)
+  def changeset(contenido)
+    tipo = if contenido.es_una_cancion?
+             TIPO_CANCION
+           else
+             TIPO_PODCAST
+           end
     {
-      nombre: cancion.nombre,
-      autor: cancion.autor,
-      anio: cancion.anio,
-      duracion: cancion.duracion,
-      genero: cancion.genero,
-      tipo: TIPO_CANCION
+      nombre: contenido.nombre,
+      autor: contenido.autor,
+      anio: contenido.anio,
+      duracion: contenido.duracion,
+      genero: contenido.genero,
+      tipo:
     }
   end
 end

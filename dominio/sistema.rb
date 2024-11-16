@@ -1,8 +1,7 @@
 class Sistema
-  def initialize(repositorio_usuarios, repositorio_contenido, repositorio_podcasts)
+  def initialize(repositorio_usuarios, repositorio_contenido)
     @repositorio_usuarios = repositorio_usuarios
     @repositorio_contenido = repositorio_contenido
-    @repositorio_podcasts = repositorio_podcasts
   end
 
   def crear_usuario(nombre_de_usuario, email, id_plataforma)
@@ -23,7 +22,7 @@ class Sistema
   def crear_podcast(nombre, autor, anio, duracion, genero)
     info_podcast = InformacionContenido.new(nombre, autor, anio, duracion, genero)
     podcast = Podcast.new(info_podcast)
-    @repositorio_podcasts.save(podcast)
+    @repositorio_contenido.save(podcast)
     podcast.id
   end
 
