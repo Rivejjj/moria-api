@@ -52,6 +52,8 @@ class Sistema
   def dar_me_gusta_a_cancion(id_contenido, id_plataforma)
     usuario = @repositorio_usuarios.find_by_id_plataforma(id_plataforma)
     cancion = @repositorio_contenido.find(id_contenido)
+    raise CancionNoReproducidaError unless usuario.reprodujo_la_cancion?(cancion)
+
     usuario.me_gusta(cancion)
     @repositorio_usuarios.save(usuario)
   end
@@ -73,3 +75,5 @@ class Sistema
 end
 
 class NombreDeUsuarioEnUsoError < StandardError; end
+
+class CancionNoReproducidaError < StandardError; end

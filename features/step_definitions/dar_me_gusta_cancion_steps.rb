@@ -32,5 +32,5 @@ end
 
 Entonces('se le informa que debe reproducir la cancion') do
   expect(@response.status).to eq(403)
-  expect(@response.body['tipo_contenido']).to eq('cancion')
+  expect(JSON.parse(@response.body)['tipo_contenido']).to eq('cancion')
 end
