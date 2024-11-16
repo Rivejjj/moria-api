@@ -69,7 +69,7 @@ post '/usuarios/:id_plataforma/playlist' do |id_plataforma|
   respuesta = { nombre_cancion: }
   status 201
   json(respuesta)
-rescue CancionNoEncontradaError
+rescue ContenidoNoEncontradoError
   status 404
 rescue UsuarioNoEncontradoError
   status 401
@@ -89,7 +89,7 @@ end
 post '/contenidos/:id_contenido/megusta' do |id_contenido|
   sistema.dar_me_gusta_a_cancion(id_contenido, @params[:id_plataforma])
   status 201
-rescue CancionNoEncontradaError
+rescue ContenidoNoEncontradoError
   status 404
 rescue UsuarioNoEncontradoError
   status 401

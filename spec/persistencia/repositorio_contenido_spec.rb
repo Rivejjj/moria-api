@@ -11,10 +11,10 @@ describe RepositorioContenido do
     expect(cancion.id).not_to be_nil
   end
 
-  it 'deberia levantar un error cuando la cancion no es encontrada' do
+  it 'deberia levantar un error cuando el contenido no es encontrado' do
     repo_contenido = described_class.new
     repo_contenido.delete_all
-    expect { repo_contenido.find(1) }.to raise_error(CancionNoEncontradaError)
+    expect { repo_contenido.find(1) }.to raise_error(ContenidoNoEncontradoError)
   end
 
   it 'deberia guardar y asignar id a un podcast' do

@@ -8,7 +8,7 @@ class RepositorioContenido < AbstractRepository
 
   def find(id_contenido)
     fila_contenido = dataset.first(pk_column => id_contenido)
-    raise CancionNoEncontradaError if fila_contenido.nil?
+    raise ContenidoNoEncontradoError if fila_contenido.nil?
 
     load_object dataset.first(fila_contenido)
   end
@@ -60,5 +60,5 @@ class RepositorioContenido < AbstractRepository
   end
 end
 
-class CancionNoEncontradaError < StandardError
+class ContenidoNoEncontradoError < StandardError
 end
