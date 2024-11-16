@@ -1,7 +1,8 @@
 class Sistema
-  def initialize(repositorio_usuarios, repositorio_contenido)
+  def initialize(repositorio_usuarios, repositorio_contenido, repositorio_episodios)
     @repositorio_usuarios = repositorio_usuarios
     @repositorio_contenido = repositorio_contenido
+    @repositorio_episodios = repositorio_episodios
   end
 
   def crear_usuario(nombre_de_usuario, email, id_plataforma)
@@ -53,6 +54,12 @@ class Sistema
     cancion = @repositorio_contenido.find(id_contenido)
     usuario.me_gusta(cancion)
     @repositorio_usuarios.save(usuario)
+  end
+
+  def crear_episodio_podcast(id_podcast, numero_episodio, nombre, duracion)
+    episodio = EpisodioPodcast.new(numero_episodio, id_podcast, nombre, duracion)
+    @repositorio_episodios.save(episodio)
+    episodio.id
   end
 
   def usuarios

@@ -14,7 +14,7 @@ configure do
   set :logger, customer_logger
   set :default_content_type, :json
   set :environment, ENV['APP_MODE'].to_sym
-  set :sistema, Sistema.new(RepositorioUsuarios.new, RepositorioContenido.new)
+  set :sistema, Sistema.new(RepositorioUsuarios.new, RepositorioContenido.new, RepositorioEpisodiosPodcast.new)
 end
 
 before do
@@ -100,4 +100,10 @@ post '/podcasts' do
   respuesta = { id_podcast: }
   status 201
   json(respuesta)
+end
+
+post '/podcasts/:id_podcast/episodios' do |id_podcast|
+  id_episodio = sistema.crear_episodio_podcast(id_podcast, params[:numero], params[:nombre], params[:duracion])
+  status 201
+  json({ id_episodio: })
 end

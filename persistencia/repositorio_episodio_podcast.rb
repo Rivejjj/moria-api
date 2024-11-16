@@ -3,7 +3,7 @@ class RepositorioEpisodiosPodcast < AbstractRepository
   self.model_class = 'EpisodioPodcast'
 
   def load_object(a_hash)
-    EpisodioPodcast.new(a_hash[:numero], a_hash[:id_podcast], a_hash[:nombre], a_hash[:duracion], a_hash[:id])
+    EpisodioPodcast.new(a_hash[:numero_episodio], a_hash[:id_podcast], a_hash[:nombre], a_hash[:duracion], a_hash[:id])
   end
 
   protected

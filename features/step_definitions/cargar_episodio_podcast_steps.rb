@@ -13,6 +13,7 @@ end
 Cuando('el administrador carga el episodio numero {int} de un podcast con id {int} llamado {string} con duracion de {int} segundos') do |numero, id_podcast, nombre, duracion|
   @request_body = { nombre:, numero:, duracion: }
   @response = Faraday.post("/podcasts/#{id_podcast}/episodios", @request_body.to_json, { 'Content-Type' => 'application/json' })
+  @id_podcast = id_podcast
 end
 
 Entonces('se da de alta el episodio del podcast') do
@@ -20,8 +21,9 @@ Entonces('se da de alta el episodio del podcast') do
   repo_episodios = RepositorioEpisodiosPodcast.new
   episodio = repo_episodios.first
   expect(episodio.nombre).to eq(@request_body[:nombre])
-  expect(episodio.numero).to eq(@request_body[:numero])
+  expect(episodio.numero_episodio).to eq(@request_body[:numero])
   expect(episodio.duracion).to eq(@request_body[:duracion])
+  expect(episodio.id_podcast).to eq(@id_podcast)
 end
 
 Entonces('no se da de alta el episodio del podcast') do

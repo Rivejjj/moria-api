@@ -1,7 +1,6 @@
 #language: es
 Característica: Cargar episodio de podcast
 
-  @wip
   Escenario: US39:1 - Administrador carga un episodio de un podcast
     Dado que no hay episodios de podcasts registrados
     Y existe un podcast con id 1
