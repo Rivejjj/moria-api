@@ -7,7 +7,8 @@ describe EpisodioPodcast do
     id_podcast = 1
     nombre = 'Episodio 1'
     duracion = 3600
-    cancion = described_class.new(numero_episodio, id_podcast, nombre, duracion)
-    expect(cancion).not_to be_nil
+    episodio_podcast = described_class.new(numero_episodio, id_podcast, nombre, duracion)
+
+    expect(episodio_podcast).not_to be_nil
   end
 end
