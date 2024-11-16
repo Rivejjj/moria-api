@@ -54,4 +54,11 @@ describe Usuario do
     usuario.me_gusta(cancion2)
     expect(usuario.me_gustas).to include(cancion, cancion2)
   end
+
+  it 'reprodujo_la_cancion? deberia devolver true si la reprodujo' do
+    usuario = described_class.new('nombre', 'email@email.com', '1')
+    cancion = instance_double('Cancion', nombre: 'cancion', id: 1)
+    usuario.agregar_reproduccion(cancion)
+    expect(usuario.reprodujo_la_cancion?(cancion)).to eq(true)
+  end
 end

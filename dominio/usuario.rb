@@ -27,4 +27,8 @@ class Usuario
   def me_gusta(cancion)
     @me_gustas << cancion
   end
+
+  def reprodujo_la_cancion?(_cancion)
+    true
+  end
 end
