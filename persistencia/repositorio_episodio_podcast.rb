@@ -6,7 +6,8 @@ class RepositorioEpisodiosPodcast < AbstractRepository
 
   def save(episodio)
     repo_contenido = RepositorioContenido.new
-    raise ContenidoNoEncontradoError if repo_contenido.find(episodio.id_podcast).nil?
+    contenido = repo_contenido.find(episodio.id_podcast)
+    raise ContenidoNoEncontradoError if contenido.nil? || contenido.es_una_cancion?
 
     super(episodio)
   end

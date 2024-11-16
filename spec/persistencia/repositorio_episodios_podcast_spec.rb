@@ -21,4 +21,13 @@ describe RepositorioEpisodiosPodcast do
     episodio_podcast = EpisodioPodcast.new(1, 1, 'nombre', 180)
     expect { described_class.new.save(episodio_podcast) }.to raise_error(ContenidoNoEncontradoError)
   end
+
+  it 'deberia devolver error al encontrar una cancion en vez de un podcast' do
+    info_contenido = InformacionContenido.new('nombre', 'autor', 2021, 180, 'rock')
+    cancion = Cancion.new(info_contenido, 1)
+    RepositorioContenido.new.save(cancion)
+
+    episodio_podcast = EpisodioPodcast.new(1, 1, 'nombre', 180)
+    expect { described_class.new.save(episodio_podcast) }.to raise_error(ContenidoNoEncontradoError)
+  end
 end
