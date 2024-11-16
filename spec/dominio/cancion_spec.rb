@@ -9,9 +9,9 @@ describe Cancion do
     expect(cancion).not_to be_nil
   end
 
-  it 'deberia devolver tipo contenido cancion' do
+  it 'es_una_cancion? deberia devolver true' do
     info_cancion = InformacionContenido.new('nombre', 'autor', 2021, 180, 'rock')
     cancion = described_class.new(info_cancion)
-    expect(cancion.tipo_contenido).to eq(:cancion)
+    expect(cancion.es_una_cancion?).to eq true
   end
 end

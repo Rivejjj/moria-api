@@ -1,7 +1,7 @@
 require_relative './contenido'
 
 class Cancion < Contenido
-  def tipo_contenido
-    :cancion
+  def es_una_cancion?
+    true
   end
 end
