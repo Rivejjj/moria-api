@@ -106,4 +106,6 @@ post '/podcasts/:id_podcast/episodios' do |id_podcast|
   id_episodio = sistema.crear_episodio_podcast(id_podcast, params[:numero], params[:nombre], params[:duracion])
   status 201
   json({ id_episodio: })
+rescue ContenidoNoEncontradoError
+  status 404
 end
