@@ -9,4 +9,8 @@ class EpisodioPodcast
     @nombre = nombre
     @duracion = duracion
   end
+
+  def es_una_cancion?
+    false
+  end
 end
