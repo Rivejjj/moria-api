@@ -18,3 +18,8 @@ Cuando('la persona le da me gusta a una cancion con id {int}') do |id_cancion|
   request_body = { id_plataforma: '123456789' }.to_json
   @response = Faraday.post("/contenidos/#{id_cancion}/megusta", request_body, { 'Content-Type' => 'application/json' })
 end
+
+Dado('reprodujo la cancion con id {int}') do |id_cancion|
+  request_body = { 'nombre_usuario' => @usuario.nombre }.to_json
+  Faraday.post("/canciones/#{id_cancion}/reproduccion", request_body, { 'Content-Type' => 'application/json' })
+end
