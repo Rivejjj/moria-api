@@ -57,8 +57,16 @@ describe Usuario do
 
   it 'reprodujo_la_cancion? deberia devolver true si la reprodujo' do
     usuario = described_class.new('nombre', 'email@email.com', '1')
-    cancion = instance_double('Cancion', nombre: 'cancion', id: 1)
+    cancion = instance_double('Cancion', nombre: 'cancion', id: 1, es_una_cancion?: true)
     usuario.agregar_reproduccion(cancion)
     expect(usuario.reprodujo_la_cancion?(cancion)).to eq(true)
+  end
+
+  it 'reprodujo_la_cancion? deberia devolver false si no la reprodujo' do
+    usuario = described_class.new('nombre', 'email@email.com', '1')
+    cancion1 = instance_double('Cancion', nombre: 'cancion', id: 1, es_una_cancion?: true)
+    cancion2 = instance_double('Cancion', nombre: 'cancion', id: 2, es_una_cancion?: true)
+    usuario.agregar_reproduccion(cancion1)
+    expect(usuario.reprodujo_la_cancion?(cancion2)).to eq(false)
   end
 end

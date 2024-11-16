@@ -28,7 +28,7 @@ class Usuario
     @me_gustas << cancion
   end
 
-  def reprodujo_la_cancion?(_cancion)
-    true
+  def reprodujo_la_cancion?(cancion)
+    @reproducciones.any? { |reproduccion| reproduccion.id == cancion.id && reproduccion.es_una_cancion? }
   end
 end
