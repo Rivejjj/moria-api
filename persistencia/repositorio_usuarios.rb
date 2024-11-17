@@ -25,7 +25,7 @@ class RepositorioUsuarios < AbstractRepository
     load_object(row) unless row.nil?
   end
 
-  def find_by_id_plataforma(id_plataforma)
+  def get_by_id_plataforma(id_plataforma)
     row = dataset.first(id_plataforma:)
     raise UsuarioNoEncontradoError if row.nil?
 

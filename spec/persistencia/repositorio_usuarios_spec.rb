@@ -41,7 +41,7 @@ describe RepositorioUsuarios do
     repositorio = described_class.new
     juan = Usuario.new('juan', 'juan@test.com', '1')
     repositorio.save(juan)
-    juan = repositorio.find_by_id_plataforma('1')
+    juan = repositorio.get_by_id_plataforma('1')
     expect(juan.nombre).to eq('juan')
     expect(juan.email).to eq('juan@test.com')
     expect(juan.id_plataforma).to eq('1')
@@ -50,7 +50,7 @@ describe RepositorioUsuarios do
   it 'deberia levantar un error cuando el usuario no es encontrado' do
     repositorio = described_class.new
     repositorio.delete_all
-    expect { repositorio.find_by_id_plataforma('1') }.to raise_error(UsuarioNoEncontradoError)
+    expect { repositorio.get_by_id_plataforma('1') }.to raise_error(UsuarioNoEncontradoError)
   end
 
   it 'deberia recuperar al usuario con su playlist' do

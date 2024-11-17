@@ -6,7 +6,7 @@ class RepositorioContenido < AbstractRepository
   self.table_name = :contenido
   self.model_class = 'Contenido'
 
-  def find(id_contenido)
+  def get(id_contenido)
     fila_contenido = dataset.first(pk_column => id_contenido)
     raise ContenidoNoEncontradoError if fila_contenido.nil?
 

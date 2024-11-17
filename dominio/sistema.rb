@@ -28,15 +28,15 @@ class Sistema
   end
 
   def agregar_a_playlist(id_contenido, id_plataforma)
-    usuario = @repositorio_usuarios.find_by_id_plataforma(id_plataforma)
-    contenido = @repositorio_contenido.find(id_contenido)
+    usuario = @repositorio_usuarios.get_by_id_plataforma(id_plataforma)
+    contenido = @repositorio_contenido.get(id_contenido)
     usuario.agregar_a_playlist(contenido)
     @repositorio_usuarios.save(usuario)
     contenido.nombre
   end
 
   def recomendar_contenido(id_plataforma)
-    usuario = @repositorio_usuarios.find_by_id_plataforma(id_plataforma)
+    usuario = @repositorio_usuarios.get_by_id_plataforma(id_plataforma)
     recomendador_de_contenido = RecomendadorDeContenido.new
     contenido_recomendado = recomendador_de_contenido.recomendar_contenido(usuario)
     contenido_recomendado.map { |contenido| [contenido.id, contenido.nombre] }
@@ -44,13 +44,13 @@ class Sistema
 
   def reproducir_cancion(id_contenido, nombre_usuario)
     usuario = @repositorio_usuarios.find_by_nombre(nombre_usuario)
-    contenido = @repositorio_contenido.find(id_contenido)
+    contenido = @repositorio_contenido.get(id_contenido)
     usuario.agregar_reproduccion(contenido)
     @repositorio_usuarios.save(usuario)
   end
 
-  def reproducir_episodio_podcast(id_episodio, nombre)
-    usuario = @repositorio_usuarios.find_by_nombre(nombre)
+  def reproducir_episodio_podcast(id_episodio, nombre_usuario)
+    usuario = @repositorio_usuarios.find_by_nombre(nombre_usuario)
     episodio = @repositorio_episodios.find(id_episodio)
     usuario.agregar_reproduccion(episodio)
     @repositorio_usuarios.save(usuario)
@@ -58,8 +58,8 @@ class Sistema
   end
 
   def dar_me_gusta_a_cancion(id_contenido, id_plataforma)
-    usuario = @repositorio_usuarios.find_by_id_plataforma(id_plataforma)
-    cancion = @repositorio_contenido.find(id_contenido)
+    usuario = @repositorio_usuarios.get_by_id_plataforma(id_plataforma)
+    cancion = @repositorio_contenido.get(id_contenido)
     raise CancionNoReproducidaError unless usuario.reprodujo_la_cancion?(cancion)
 
     usuario.me_gusta(cancion)

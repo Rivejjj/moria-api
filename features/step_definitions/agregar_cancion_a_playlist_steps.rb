@@ -13,14 +13,14 @@ end
 Entonces('se agrega la cancion {string} a la playlist') do |nombre_cancion|
   expect(@response.status).to eq(201)
   repo_usuarios = RepositorioUsuarios.new
-  usuario = repo_usuarios.find_by_id_plataforma(ID_PLATAFORMA_PRUEBA)
+  usuario = repo_usuarios.get_by_id_plataforma(ID_PLATAFORMA_PRUEBA)
   expect(usuario.tiene_cancion_en_playlist(nombre_cancion)).to eq true
 end
 
 Entonces('no se agrega la cancion a la playlist') do
   expect(@response.status).to eq(404)
   repo_usuarios = RepositorioUsuarios.new
-  usuario = repo_usuarios.find_by_id_plataforma(ID_PLATAFORMA_PRUEBA)
+  usuario = repo_usuarios.get_by_id_plataforma(ID_PLATAFORMA_PRUEBA)
   expect(usuario.playlist.size).to eq 0
 end
 

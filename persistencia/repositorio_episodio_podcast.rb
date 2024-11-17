@@ -6,14 +6,10 @@ class RepositorioEpisodiosPodcast < AbstractRepository
 
   def save(episodio)
     repo_contenido = RepositorioContenido.new
-    contenido = repo_contenido.find(episodio.id_podcast)
-    raise ContenidoNoEncontradoError if contenido.nil? || contenido.es_una_cancion?
+    contenido = repo_contenido.get(episodio.id_podcast)
+    raise ContenidoNoEncontradoError if contenido.es_una_cancion?
 
     super(episodio)
-  end
-
-  def load_object(a_hash)
-    EpisodioPodcast.new(a_hash[:numero_episodio], a_hash[:id_podcast], a_hash[:nombre], a_hash[:duracion], a_hash[:id])
   end
 
   protected
@@ -24,6 +20,10 @@ class RepositorioEpisodiosPodcast < AbstractRepository
     id = dataset.insert(changeset)
     contenido.id ||= id
     contenido
+  end
+
+  def load_object(a_hash)
+    EpisodioPodcast.new(a_hash[:numero_episodio], a_hash[:id_podcast], a_hash[:nombre], a_hash[:duracion], a_hash[:id])
   end
 
   def changeset(episodio)
