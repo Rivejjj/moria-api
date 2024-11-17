@@ -18,6 +18,14 @@ class RepositorioEpisodiosPodcast < AbstractRepository
 
   protected
 
+  def insert(contenido)
+    changeset = insert_changeset(contenido)
+    changeset[:id] = contenido.id if contenido.id
+    id = dataset.insert(changeset)
+    contenido.id ||= id
+    contenido
+  end
+
   def changeset(episodio)
     {
       numero_episodio: episodio.numero_episodio,
