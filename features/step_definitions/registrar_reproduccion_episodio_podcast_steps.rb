@@ -10,7 +10,7 @@ end
 
 Cuando('reproduce un episodio de un podcast con id {int}') do |id_episodio|
   request_body = { 'nombre_usuario' => @usuario.nombre }
-  @response = Faraday.post("/episodio_podcast/#{id_episodio}/reproduccion", request_body.to_json, { 'Content-Type' => 'application/json' })
+  @response = Faraday.post("/episodios/#{id_episodio}/reproduccion", request_body.to_json, { 'Content-Type' => 'application/json' })
   @id_episodio = id_episodio
 end
 
