@@ -1,3 +1,5 @@
+# rubocop:disable Metrics/ClassLength
+
 class RepositorioContenidoDeUsuario
   def save(usuario)
     save_playlist(usuario)
@@ -7,7 +9,8 @@ class RepositorioContenidoDeUsuario
 
   def delete_all
     DB[:playlists_usuarios_contenido].delete
-    DB[:reproducciones].delete
+    DB[:reproducciones_canciones].delete
+    DB[:reproducciones_episodios].delete
     DB[:me_gustas].delete
   end
 
@@ -32,7 +35,17 @@ class RepositorioContenidoDeUsuario
   end
 
   def save_reproducciones(usuario)
-    save_contenido_de_usuario(DB[:reproducciones], usuario.id, usuario.reproducciones)
+    canciones = usuario.reproducciones.select(&:es_una_cancion?)
+    save_contenido_de_usuario(DB[:reproducciones_canciones], usuario.id, canciones)
+    save_reproducciones_de_episodio(usuario)
+  end
+
+  def save_reproducciones_de_episodio(usuario)
+    episodios = usuario.reproducciones.reject(&:es_una_cancion?)
+    db_reproducciones = DB[:reproducciones_episodios]
+    episodios.each do |episodio|
+      db_reproducciones.insert(id_usuario: usuario.id, id_episodio: episodio.id)
+    end
   end
 
   def save_me_gustas(usuario)
@@ -68,12 +81,28 @@ class RepositorioContenidoDeUsuario
   end
 
   def find_reproducciones(usuario)
+    find_reproducciones_canciones(usuario) + find_reproducciones_episodios(usuario)
+  end
+
+  def find_reproducciones_canciones(usuario)
     repositorio_contenido = RepositorioContenido.new
-    reproducciones = DB[:reproducciones]
+
+    reproducciones = DB[:reproducciones_canciones]
     reproducciones_filtrado = reproducciones.where(id_usuario: usuario.id)
     reproducciones = []
     reproducciones_filtrado.each do |fila|
       reproducciones << repositorio_contenido.find(fila[:id_contenido])
+    end
+    reproducciones
+  end
+
+  def find_reproducciones_episodios(usuario)
+    repo_episodios = RepositorioEpisodiosPodcast.new
+    reproducciones = DB[:reproducciones_episodios]
+    reproducciones_filtrado = reproducciones.where(id_usuario: usuario.id)
+    reproducciones = []
+    reproducciones_filtrado.each do |fila|
+      reproducciones << repo_episodios.find(fila[:id_episodio])
     end
     reproducciones
   end
@@ -110,3 +139,4 @@ class RepositorioContenidoDeUsuario
     end
   end
 end
+# rubocop:enable Metrics/ClassLength
