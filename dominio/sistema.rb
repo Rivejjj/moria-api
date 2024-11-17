@@ -49,6 +49,13 @@ class Sistema
     @repositorio_usuarios.save(usuario)
   end
 
+  def reproducir_episodio_podcast(id_episodio, id_plataforma)
+    usuario = @repositorio_usuarios.find_by_id_plataforma(id_plataforma)
+    episodio = @repositorio_episodios.find(id_episodio)
+    usuario.agregar_reproduccion(episodio)
+    @repositorio_usuarios.save(usuario)
+  end
+
   def dar_me_gusta_a_cancion(id_contenido, id_plataforma)
     usuario = @repositorio_usuarios.find_by_id_plataforma(id_plataforma)
     cancion = @repositorio_contenido.find(id_contenido)
