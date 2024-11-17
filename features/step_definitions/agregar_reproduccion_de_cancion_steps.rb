@@ -1,8 +1,8 @@
-Dado('existe una cancion con id {int}') do |id|
+Dado('que existe una cancion con id {int}') do |id|
   repo_canciones = RepositorioContenido.new
   info_cancion = InformacionContenido.new('Thriller', 'Michael Jackson', 1982, 42, 'Pop')
-  cancion = Cancion.new(info_cancion, id)
-  repo_canciones.save(cancion)
+  @cancion = Cancion.new(info_cancion, id)
+  repo_canciones.save(@cancion)
 end
 
 Cuando('reproduce una cancion con id {int}') do |id_cancion|
