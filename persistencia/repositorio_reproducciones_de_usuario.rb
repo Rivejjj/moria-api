@@ -30,11 +30,15 @@ class RepositorioReproduccionesDeUsuario
     !DB[:reproducciones_canciones].where(id_usuario:, id_contenido:).first.nil?
   end
 
+  def reproduccion_episodio_ya_en_db?(id_episodio, id_usuario)
+    !DB[:reproducciones_episodios].where(id_usuario:, id_episodio:).first.nil?
+  end
+
   def save_reproducciones_de_episodio(usuario)
     episodios = usuario.reproducciones.reject(&:es_una_cancion?)
     db_reproducciones = DB[:reproducciones_episodios]
     episodios.each do |episodio|
-      db_reproducciones.insert(id_usuario: usuario.id, id_episodio: episodio.id)
+      db_reproducciones.insert(id_usuario: usuario.id, id_episodio: episodio.id) unless reproduccion_episodio_ya_en_db?(episodio.id, usuario.id)
     end
   end
 

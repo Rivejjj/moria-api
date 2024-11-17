@@ -19,12 +19,12 @@ describe RepositorioContenidoDeUsuario do
   end
 end
 
-def insertar_episodio_podcast
+def insertar_episodio_podcast(numero_episodio = 1)
   info = InformacionContenido.new('cancion', 'autor', 2020, 180, 'rock')
   podcast = Podcast.new(info)
   RepositorioContenido.new.save(podcast)
 
-  episodio_podcast = EpisodioPodcast.new(1, podcast.id, 'episodio', 180)
+  episodio_podcast = EpisodioPodcast.new(numero_episodio, podcast.id, 'episodio', 180)
   RepositorioEpisodiosPodcast.new.save(episodio_podcast)
   episodio_podcast
 end
