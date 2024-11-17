@@ -115,7 +115,7 @@ rescue ContenidoNoEncontradoError
 end
 
 post '/episodio_podcast/:id_episodio/reproduccion' do |id_episodio|
-  id_episodio = sistema.reproducir_episodio_podcast(id_episodio, params[:id_plataforma])
+  id_episodio = sistema.reproducir_episodio_podcast(id_episodio, params[:nombre_usuario])
   status 201
   json({ id_episodio: })
 end
