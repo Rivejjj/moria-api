@@ -1,16 +1,13 @@
-# rubocop:disable Metrics/ClassLength
-
 class RepositorioContenidoDeUsuario
   def save(usuario)
     save_playlist(usuario)
-    save_reproducciones(usuario)
+    RepositorioReproduccionesDeUsuario.new.save(usuario)
     save_me_gustas(usuario)
   end
 
   def delete_all
     DB[:playlists_usuarios_contenido].delete
-    DB[:reproducciones_canciones].delete
-    DB[:reproducciones_episodios].delete
+    RepositorioReproduccionesDeUsuario.new.delete_all
     DB[:me_gustas].delete
   end
 
@@ -31,20 +28,6 @@ class RepositorioContenidoDeUsuario
   def save_contenido_de_usuario(db, usuario_id, contenidos)
     contenidos.each do |contenido|
       db.insert(id_usuario: usuario_id, id_contenido: contenido.id) unless contenido_de_usuario_ya_en_db?(db, contenido.id, usuario_id)
-    end
-  end
-
-  def save_reproducciones(usuario)
-    canciones = usuario.reproducciones.select(&:es_una_cancion?)
-    save_contenido_de_usuario(DB[:reproducciones_canciones], usuario.id, canciones)
-    save_reproducciones_de_episodio(usuario)
-  end
-
-  def save_reproducciones_de_episodio(usuario)
-    episodios = usuario.reproducciones.reject(&:es_una_cancion?)
-    db_reproducciones = DB[:reproducciones_episodios]
-    episodios.each do |episodio|
-      db_reproducciones.insert(id_usuario: usuario.id, id_episodio: episodio.id)
     end
   end
 
@@ -80,33 +63,6 @@ class RepositorioContenidoDeUsuario
     end
   end
 
-  def find_reproducciones(usuario)
-    find_reproducciones_canciones(usuario) + find_reproducciones_episodios(usuario)
-  end
-
-  def find_reproducciones_canciones(usuario)
-    repositorio_contenido = RepositorioContenido.new
-
-    reproducciones = DB[:reproducciones_canciones]
-    reproducciones_filtrado = reproducciones.where(id_usuario: usuario.id)
-    reproducciones = []
-    reproducciones_filtrado.each do |fila|
-      reproducciones << repositorio_contenido.find(fila[:id_contenido])
-    end
-    reproducciones
-  end
-
-  def find_reproducciones_episodios(usuario)
-    repo_episodios = RepositorioEpisodiosPodcast.new
-    reproducciones = DB[:reproducciones_episodios]
-    reproducciones_filtrado = reproducciones.where(id_usuario: usuario.id)
-    reproducciones = []
-    reproducciones_filtrado.each do |fila|
-      reproducciones << repo_episodios.find(fila[:id_episodio])
-    end
-    reproducciones
-  end
-
   def find_me_gustas(usuario)
     repositorio_contenido = RepositorioContenido.new
     me_gustas = DB[:me_gustas]
@@ -126,10 +82,7 @@ class RepositorioContenidoDeUsuario
   end
 
   def load_reproducciones(usuario)
-    reproducciones = find_reproducciones(usuario)
-    reproducciones.each do |contenido|
-      usuario.agregar_reproduccion(contenido)
-    end
+    RepositorioReproduccionesDeUsuario.new.load(usuario)
   end
 
   def load_me_gustas(usuario)
@@ -139,4 +92,3 @@ class RepositorioContenidoDeUsuario
     end
   end
 end
-# rubocop:enable Metrics/ClassLength
