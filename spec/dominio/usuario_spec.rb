@@ -78,4 +78,10 @@ describe Usuario do
     usuario.agregar_reproduccion(cancion1)
     expect(usuario.reprodujo_la_cancion?(cancion2)).to eq(false)
   end
+
+  it 'dos usuarios con el mismo id deberian considerarse el mismo usuario' do
+    usuario1 = described_class.new('nombre', 'email@email.com', '1', 1)
+    usuario2 = described_class.new('nombre', 'email@email.com', '1', 1)
+    expect(usuario1.es_el_mismo_usuario_que?(usuario2)).to be true
+  end
 end

@@ -33,6 +33,10 @@ class Usuario
   def reprodujo_la_cancion?(cancion)
     @reproducciones.any? { |reproduccion| reproduccion.id == cancion.id && reproduccion.es_una_cancion? }
   end
+
+  def es_el_mismo_usuario_que?(otro_usuario)
+    @id == otro_usuario.id
+  end
 end
 
 class CancionNoReproducidaError < StandardError; end
