@@ -12,6 +12,10 @@ class RepositorioEpisodiosPodcast < AbstractRepository
     super(episodio)
   end
 
+  def find_by_id_podcast(id_podcast)
+    dataset.where(id_podcast:).map { |row| load_object(row) }
+  end
+
   protected
 
   def insert(contenido)

@@ -32,4 +32,17 @@ describe RepositorioContenido do
     podcast_encontrado = repo_contenido.first
     expect(podcast_encontrado.es_una_cancion?).to eq(false)
   end
+
+  it 'deberia encontrar un podcast con sus episodios' do
+    info_podcast = InformacionContenido.new('nombre', 'autor', 2024, 360_000, 'ciencia')
+    podcast = Podcast.new(info_podcast)
+    episodio = EpisodioPodcast.new(1, 1, 'Episodio 1', 3600)
+    podcast.agregar_episodio(episodio)
+
+    repo_contenido = described_class.new
+    repo_contenido.save(podcast)
+
+    podcast_encontrado = repo_contenido.get(podcast.id)
+    expect(podcast_encontrado.episodios.first.id).to eq(episodio.id)
+  end
 end

@@ -6,6 +6,16 @@ class RepositorioContenido < AbstractRepository
   self.table_name = :contenido
   self.model_class = 'Contenido'
 
+  def save(contenido)
+    super(contenido)
+    if contenido.is_a?(Podcast)
+      contenido.episodios.each do |episodio|
+        episodio.id_podcast = contenido.id
+        RepositorioEpisodiosPodcast.new.save(episodio)
+      end
+    end
+  end
+
   def get(id_contenido)
     fila_contenido = dataset.first(pk_column => id_contenido)
     raise ContenidoNoEncontradoError if fila_contenido.nil?
@@ -39,7 +49,12 @@ class RepositorioContenido < AbstractRepository
     when TIPO_CANCION
       Cancion.new(info_contenido, a_hash[:id])
     when TIPO_PODCAST
-      Podcast.new(info_contenido, a_hash[:id])
+      podcast = Podcast.new(info_contenido, a_hash[:id])
+      episodios = RepositorioEpisodiosPodcast.new.find_by_id_podcast(a_hash[:id])
+      episodios.each do |episodio|
+        podcast.agregar_episodio(episodio)
+      end
+      podcast
     end
   end
 
