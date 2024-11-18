@@ -13,4 +13,16 @@ describe ReproduccionesCancion do
       expect(reproducciones.usuarios).to include(usuario)
     end
   end
+
+  describe 'contiene_reproduccion_de?' do
+    it 'deberia devolver true si contiene la reproduccion del usuario' do
+      episodio = instance_double('Cancion')
+      reproducciones = described_class.new(episodio)
+
+      usuario = instance_double('Usuario', es_el_mismo_usuario_que?: true)
+      reproducciones.agregar_reproduccion_de(usuario)
+
+      expect(reproducciones.contiene_reproduccion_de?(usuario)).to be true
+    end
+  end
 end
