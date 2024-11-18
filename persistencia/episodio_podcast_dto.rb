@@ -13,4 +13,8 @@ class EpisodioPodcastDTO
   def nombre
     @episodio.nombre
   end
+
+  def duracion
+    @episodio.duracion
+  end
 end

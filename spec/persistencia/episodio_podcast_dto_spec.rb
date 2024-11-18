@@ -22,4 +22,11 @@ describe EpisodioPodcastDTO do
     episodio_podcast_dto = described_class.new(episodio_podcast, id_podcast)
     expect(episodio_podcast_dto.nombre).to eq 'Episodio 1'
   end
+
+  it 'deberia devolver la duracion del episodio' do
+    episodio_podcast = instance_double('EpisodioPodcast', duracion: 1600)
+    id_podcast = 1
+    episodio_podcast_dto = described_class.new(episodio_podcast, id_podcast)
+    expect(episodio_podcast_dto.duracion).to eq 1600
+  end
 end
