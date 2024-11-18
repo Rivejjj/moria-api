@@ -1,4 +1,6 @@
 class ReproduccionesPodcast
+  attr_reader :podcast, :reproducciones_episodios
+
   CANTIDAD_MINIMA_DE_EPISODIOS_REPRODUCIDOS = 2
 
   def initialize(podcast, reproducciones_episodios)

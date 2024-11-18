@@ -15,6 +15,18 @@ class RepositorioReproducciones
     reproducciones_episodio_podcast
   end
 
+  def get_reproducciones_podcast(id_podcast)
+    podcast = RepositorioContenido.new.get(id_podcast)
+    raise ContenidoNoEncontradoError unless podcast.is_a?(Podcast)
+
+    reproducciones_episodios = []
+    podcast.episodios.each do |episodio|
+      reproducciones_episodios << get_reproducciones_episodio_podcast(episodio.id)
+    end
+
+    ReproduccionesPodcast.new(podcast, reproducciones_episodios)
+  end
+
   def save_reproducciones_episodio_podcast(reproducciones_episodio_podcast)
     id_episodio = reproducciones_episodio_podcast.episodio_podcast.id
     reproducciones_episodio_podcast.usuarios.each do |usuario|
