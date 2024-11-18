@@ -5,6 +5,7 @@ require 'sinatra/custom_logger'
 require_relative './config/configuration'
 require_relative './lib/version'
 Dir[File.join(__dir__, 'dominio', '*.rb')].each { |file| require file }
+Dir[File.join(__dir__, 'dominio/reproducciones', '*.rb')].each { |file| require file }
 Dir[File.join(__dir__, 'persistencia', '*.rb')].each { |file| require file }
 
 configure do

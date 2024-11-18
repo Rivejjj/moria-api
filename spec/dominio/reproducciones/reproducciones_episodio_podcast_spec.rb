@@ -1,5 +1,5 @@
 require 'spec_helper'
-require_relative '../../dominio/reproducciones_episodio_podcast'
+require_relative '../../../dominio/reproducciones/reproducciones_episodio_podcast'
 
 describe ReproduccionesEpisodioPodcast do
   describe 'agregar_reproduccion_de' do
