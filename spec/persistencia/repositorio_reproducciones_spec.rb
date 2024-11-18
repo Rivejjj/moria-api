@@ -47,6 +47,20 @@ describe RepositorioReproducciones do
     expect(reproducciones_podcast.reproducciones_episodios.size).to eq 2
     expect(reproducciones_podcast.podcast.id).to eq podcast_id
   end
+
+  it 'deberia recuperar las reproducciones de una cancion' do
+    usuario = crear_y_guardar_usuario
+    cancion = crear_y_guardar_cancion
+
+    reproducciones = ReproduccionesCancion.new(cancion)
+    reproducciones.agregar_reproduccion_de(usuario)
+
+    described_class.new.save_reproducciones_cancion(reproducciones)
+
+    reproducciones_conseguidas = described_class.new.get_reproducciones_cancion(cancion.id)
+    expect(reproducciones_conseguidas.usuarios.any? { |un_usuario| un_usuario.es_el_mismo_usuario_que?(usuario) }).to be(true)
+    expect(reproducciones_conseguidas.cancion.id).to eq cancion.id
+  end
 end
 
 def crear_podcast_con_episodio(podcast_id = 1, numero_episodio = 1)
@@ -70,4 +84,11 @@ def crear_y_guardar_usuario
   usuario = Usuario.new('juan', 'juan@juan', '123456789')
   RepositorioUsuarios.new.save(usuario)
   usuario
+end
+
+def crear_y_guardar_cancion
+  info_contenido = InformacionContenido.new('nombre', 'autor', 2021, 180, 'genero')
+  cancion = Cancion.new(info_contenido)
+  RepositorioContenido.new.save(cancion)
+  cancion
 end

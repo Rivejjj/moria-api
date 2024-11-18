@@ -1,5 +1,5 @@
 class ReproduccionesCancion
-  attr_reader :usuarios
+  attr_reader :cancion, :usuarios
 
   def initialize(cancion)
     @cancion = cancion

@@ -3,6 +3,20 @@ class RepositorioReproducciones
     DB[:reproducciones_episodios].delete
   end
 
+  def save_reproducciones_episodio_podcast(reproducciones_episodio_podcast)
+    id_episodio = reproducciones_episodio_podcast.episodio_podcast.id
+    reproducciones_episodio_podcast.usuarios.each do |usuario|
+      DB[:reproducciones_episodios].insert(id_usuario: usuario.id, id_episodio:) unless reproduccion_episodio_podcast_ya_existe?(usuario.id, id_episodio)
+    end
+  end
+
+  def save_reproducciones_cancion(reproducciones_cancion)
+    id_contenido = reproducciones_cancion.cancion.id
+    reproducciones_cancion.usuarios.each do |usuario|
+      DB[:reproducciones_canciones].insert(id_usuario: usuario.id, id_contenido:)
+    end
+  end
+
   def get_reproducciones_episodio_podcast(id_episodio)
     episodio = RepositorioEpisodiosPodcast.new.find(id_episodio)
     reproducciones_episodio_podcast = ReproduccionesEpisodioPodcast.new(episodio)
@@ -27,11 +41,18 @@ class RepositorioReproducciones
     ReproduccionesPodcast.new(podcast, reproducciones_episodios)
   end
 
-  def save_reproducciones_episodio_podcast(reproducciones_episodio_podcast)
-    id_episodio = reproducciones_episodio_podcast.episodio_podcast.id
-    reproducciones_episodio_podcast.usuarios.each do |usuario|
-      DB[:reproducciones_episodios].insert(id_usuario: usuario.id, id_episodio:) unless reproduccion_episodio_podcast_ya_existe?(usuario.id, id_episodio)
+  def get_reproducciones_cancion(id_contenido)
+    cancion = RepositorioContenido.new.get(id_contenido)
+    raise ContenidoNoEncontradoError unless cancion.is_a?(Cancion)
+
+    reproducciones_cancion = ReproduccionesCancion.new(cancion)
+    reproducciones = DB[:reproducciones_canciones].where(id_contenido:)
+
+    reproducciones.each do |fila|
+      usuario = RepositorioUsuarios.new.find(fila[:id_usuario])
+      reproducciones_cancion.agregar_reproduccion_de(usuario)
     end
+    reproducciones_cancion
   end
 
   protected
