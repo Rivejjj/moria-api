@@ -25,6 +25,8 @@ class Usuario
   end
 
   def me_gusta(cancion)
+    raise CancionNoReproducidaError unless reprodujo_la_cancion?(cancion)
+
     @me_gustas << cancion
   end
 
@@ -32,3 +34,5 @@ class Usuario
     @reproducciones.any? { |reproduccion| reproduccion.id == cancion.id && reproduccion.es_una_cancion? }
   end
 end
+
+class CancionNoReproducidaError < StandardError; end

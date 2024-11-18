@@ -41,18 +41,27 @@ describe Usuario do
 
   it 'puede dar me gusta a una cancion' do
     usuario = described_class.new('nombre', 'email@email.com', '1')
-    cancion = instance_double('Cancion', nombre: 'cancion')
+    cancion = instance_double('Cancion', nombre: 'cancion', id: 1, es_una_cancion?: true)
+    usuario.agregar_reproduccion(cancion)
     usuario.me_gusta(cancion)
     expect(usuario.me_gustas).to include(cancion)
   end
 
   it 'puede dar me gusta a 2 canciones' do
     usuario = described_class.new('nombre', 'email@email.com', '1')
-    cancion = instance_double('Cancion', nombre: 'cancion')
-    cancion2 = instance_double('Cancion2', nombre: 'cancion2')
+    cancion = instance_double('Cancion', nombre: 'cancion', id: 1, es_una_cancion?: true)
+    cancion2 = instance_double('Cancion2', nombre: 'cancion2', id: 2, es_una_cancion?: true)
+    usuario.agregar_reproduccion(cancion)
+    usuario.agregar_reproduccion(cancion2)
     usuario.me_gusta(cancion)
     usuario.me_gusta(cancion2)
     expect(usuario.me_gustas).to include(cancion, cancion2)
+  end
+
+  it 'no puede dar me gusta a una cancion no reproducida' do
+    usuario = described_class.new('nombre', 'email@email.com', '1')
+    cancion = instance_double('Cancion', nombre: 'cancion')
+    expect { usuario.me_gusta(cancion) }.to raise_error(CancionNoReproducidaError)
   end
 
   it 'reprodujo_la_cancion? deberia devolver true si la reprodujo' do
