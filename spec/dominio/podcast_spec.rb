@@ -44,4 +44,12 @@ describe Podcast do
     podcast = described_class.new(info_podcast)
     expect(podcast.es_una_cancion?).to eq false
   end
+
+  it 'deberia poder agregar un episodio' do
+    info_podcast = InformacionContenido.new('nombre', 'autor', 2021, 180, 'rock')
+    podcast = described_class.new(info_podcast)
+    episodio = instance_double('EpisodioPodcast')
+    podcast.agregar_episodio(episodio)
+    expect(podcast.episodios).to include(episodio)
+  end
 end
