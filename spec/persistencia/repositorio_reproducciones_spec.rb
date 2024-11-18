@@ -18,6 +18,19 @@ describe RepositorioReproducciones do
     expect(reproducciones_conseguidas.usuarios.any? { |un_usuario| un_usuario.es_el_mismo_usuario_que?(usuario) }).to be(true)
     expect(reproducciones_conseguidas.episodio_podcast.id).to eq episodio_podcast.id
   end
+
+  it 'no deberia guardar una reproduccion mas de una vez' do
+    usuario = crear_y_guardar_usuario
+    episodio_podcast = crear_podcast_con_episodio
+    reproducciones = ReproduccionesEpisodioPodcast.new(episodio_podcast)
+    reproducciones.agregar_reproduccion_de(usuario)
+    reproducciones.agregar_reproduccion_de(usuario)
+
+    described_class.new.save_reproducciones_episodio_podcast(reproducciones)
+
+    reproducciones_conseguidas = described_class.new.get_reproducciones_episodio_podcast(episodio_podcast.id)
+    expect(reproducciones_conseguidas.usuarios.size).to eq 1
+  end
 end
 
 def crear_podcast_con_episodio
