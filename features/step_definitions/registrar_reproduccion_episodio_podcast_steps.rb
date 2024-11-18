@@ -1,11 +1,10 @@
 Dado('existe un episodio de un podcast con id {int}') do |id|
-  episodios_repo = RepositorioEpisodiosPodcast.new
   contenido_repo = RepositorioContenido.new
   podcast = Podcast.new(InformacionContenido.new('nombre', 'autor', 2021, 180, 'genero'))
-  contenido_repo.save(podcast)
+  episodio_podcast = EpisodioPodcast.new(1, 'nombre', 4567, id)
 
-  episodio_podcast = EpisodioPodcast.new(1, podcast.id, 'nombre', 4567, id)
-  episodios_repo.save(episodio_podcast)
+  podcast.agregar_episodio(episodio_podcast)
+  contenido_repo.save(podcast)
 end
 
 Cuando('reproduce un episodio de un podcast con id {int}') do |id_episodio|

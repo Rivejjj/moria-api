@@ -14,7 +14,7 @@ describe RepositorioContenidoDeUsuario do
     RepositorioUsuarios.new.save(usuario)
     episodio_obtenido = RepositorioUsuarios.new.find(usuario.id).reproducciones[0]
 
-    expect_episodios_iguales(episodio_obtenido, episodio_podcast)
+    expect(episodio_obtenido.id).to eq(episodio_podcast.id)
     expect(episodio_obtenido.es_una_cancion?).to be false
   end
 end
@@ -22,15 +22,10 @@ end
 def insertar_episodio_podcast(numero_episodio = 1)
   info = InformacionContenido.new('cancion', 'autor', 2020, 180, 'rock')
   podcast = Podcast.new(info)
+  episodio_podcast = EpisodioPodcast.new(numero_episodio, 'episodio', 180)
+
+  podcast.agregar_episodio(episodio_podcast)
   RepositorioContenido.new.save(podcast)
 
-  episodio_podcast = EpisodioPodcast.new(numero_episodio, podcast.id, 'episodio', 180)
-  RepositorioEpisodiosPodcast.new.save(episodio_podcast)
   episodio_podcast
-end
-
-def expect_episodios_iguales(episodio_obtenido, episodio_podcast)
-  expect(episodio_obtenido.nombre).to eq(episodio_podcast.nombre)
-  expect(episodio_obtenido.id_podcast).to eq(episodio_podcast.id_podcast)
-  expect(episodio_obtenido.id).to eq(episodio_podcast.id)
 end

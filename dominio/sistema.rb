@@ -67,8 +67,10 @@ class Sistema
   end
 
   def crear_episodio_podcast(id_podcast, numero_episodio, nombre, duracion)
-    episodio = EpisodioPodcast.new(numero_episodio, id_podcast, nombre, duracion)
-    @repositorio_episodios.save(episodio)
+    podcast = @repositorio_contenido.get(id_podcast)
+    episodio = EpisodioPodcast.new(numero_episodio, nombre, duracion)
+    podcast.agregar_episodio(episodio)
+    @repositorio_contenido.save(podcast)
     episodio.id
   end
 

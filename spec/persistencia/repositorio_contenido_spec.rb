@@ -36,7 +36,7 @@ describe RepositorioContenido do
   it 'deberia encontrar un podcast con sus episodios' do
     info_podcast = InformacionContenido.new('nombre', 'autor', 2024, 360_000, 'ciencia')
     podcast = Podcast.new(info_podcast)
-    episodio = EpisodioPodcast.new(1, 1, 'Episodio 1', 3600)
+    episodio = EpisodioPodcast.new(1, 'Episodio 1', 3600)
     podcast.agregar_episodio(episodio)
 
     repo_contenido = described_class.new

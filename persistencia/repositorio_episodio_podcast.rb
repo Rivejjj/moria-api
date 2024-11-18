@@ -4,12 +4,13 @@ class RepositorioEpisodiosPodcast < AbstractRepository
   self.table_name = :episodios_podcast
   self.model_class = 'EpisodioPodcast'
 
-  def save(episodio)
+  def save(episodio, id_podcast)
     repo_contenido = RepositorioContenido.new
-    contenido = repo_contenido.get(episodio.id_podcast)
+    contenido = repo_contenido.get(id_podcast)
     raise ContenidoNoEncontradoError if contenido.es_una_cancion?
 
-    super(episodio)
+    episodio_podcast_dto = EpisodioPodcastDTO.new(episodio, id_podcast)
+    super(episodio_podcast_dto)
   end
 
   def find_by_id_podcast(id_podcast)
@@ -18,16 +19,16 @@ class RepositorioEpisodiosPodcast < AbstractRepository
 
   protected
 
-  def insert(contenido)
-    changeset = insert_changeset(contenido)
-    changeset[:id] = contenido.id if contenido.id
+  def insert(episodio)
+    changeset = insert_changeset(episodio)
+    changeset[:id] = episodio.id if episodio.id
     id = dataset.insert(changeset)
-    contenido.id ||= id
-    contenido
+    episodio.id ||= id
+    episodio
   end
 
   def load_object(a_hash)
-    EpisodioPodcast.new(a_hash[:numero_episodio], a_hash[:id_podcast], a_hash[:nombre], a_hash[:duracion], a_hash[:id])
+    EpisodioPodcast.new(a_hash[:numero_episodio], a_hash[:nombre], a_hash[:duracion], a_hash[:id])
   end
 
   def changeset(episodio)

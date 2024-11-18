@@ -17,4 +17,20 @@ class EpisodioPodcastDTO
   def duracion
     @episodio.duracion
   end
+
+  def id
+    @episodio.id
+  end
+
+  def id=(valor)
+    @episodio.id = valor
+  end
+
+  def created_on
+    @episodio.created_on
+  end
+
+  def updated_on
+    @episodio.updated_on
+  end
 end

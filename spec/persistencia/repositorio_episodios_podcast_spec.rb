@@ -13,14 +13,14 @@ describe RepositorioEpisodiosPodcast do
     podcast = Podcast.new(info_contenido, 1)
     RepositorioContenido.new.save(podcast)
 
-    episodio_podcast = EpisodioPodcast.new(1, podcast.id, 'nombre', 180)
-    described_class.new.save(episodio_podcast)
+    episodio_podcast = EpisodioPodcast.new(1, 'nombre', 180)
+    described_class.new.save(episodio_podcast, podcast.id)
     expect(episodio_podcast.id).not_to be_nil
   end
 
-  it 'deberia devoler error al no encontrar el podcast para el episodio' do
-    episodio_podcast = EpisodioPodcast.new(1, 1, 'nombre', 180)
-    expect { described_class.new.save(episodio_podcast) }.to raise_error(ContenidoNoEncontradoError)
+  it 'deberia devolver error al no encontrar el podcast para el episodio' do
+    episodio_podcast = EpisodioPodcast.new(1, 'nombre', 180)
+    expect { described_class.new.save(episodio_podcast, 1) }.to raise_error(ContenidoNoEncontradoError)
   end
 
   it 'deberia devolver error al encontrar una cancion en vez de un podcast' do
@@ -28,8 +28,8 @@ describe RepositorioEpisodiosPodcast do
     cancion = Cancion.new(info_contenido, 1)
     RepositorioContenido.new.save(cancion)
 
-    episodio_podcast = EpisodioPodcast.new(1, 1, 'nombre', 180)
-    expect { described_class.new.save(episodio_podcast) }.to raise_error(ContenidoNoEncontradoError)
+    episodio_podcast = EpisodioPodcast.new(1, 'nombre', 180)
+    expect { described_class.new.save(episodio_podcast, 1) }.to raise_error(ContenidoNoEncontradoError)
   end
 
   it 'deberia guardar y no asignar id a un episodio podcast que ya tiene id' do
@@ -37,8 +37,8 @@ describe RepositorioEpisodiosPodcast do
     podcast = Podcast.new(info_contenido, 1)
     RepositorioContenido.new.save(podcast)
 
-    episodio_podcast = EpisodioPodcast.new(1, podcast.id, 'nombre', 180, 33)
-    described_class.new.save(episodio_podcast)
+    episodio_podcast = EpisodioPodcast.new(1, 'nombre', 180, 33)
+    described_class.new.save(episodio_podcast, podcast.id)
     expect(described_class.new.find(episodio_podcast.id).id).to eq 33
   end
 end

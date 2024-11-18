@@ -23,7 +23,6 @@ Entonces('se da de alta el episodio del podcast') do
   expect(episodio.nombre).to eq(@request_body[:nombre])
   expect(episodio.numero_episodio).to eq(@request_body[:numero])
   expect(episodio.duracion).to eq(@request_body[:duracion])
-  expect(episodio.id_podcast).to eq(@id_podcast)
 end
 
 Entonces('no se da de alta el episodio del podcast') do

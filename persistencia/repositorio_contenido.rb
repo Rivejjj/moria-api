@@ -10,8 +10,7 @@ class RepositorioContenido < AbstractRepository
     super(contenido)
     if contenido.is_a?(Podcast)
       contenido.episodios.each do |episodio|
-        episodio.id_podcast = contenido.id
-        RepositorioEpisodiosPodcast.new.save(episodio)
+        RepositorioEpisodiosPodcast.new.save(episodio, contenido.id)
       end
     end
   end
