@@ -1,5 +1,5 @@
 class ReproduccionesEpisodioPodcast
-  attr_reader :usuarios
+  attr_reader :usuarios, :episodio_podcast
 
   def initialize(episodio_podcast)
     @episodio_podcast = episodio_podcast
