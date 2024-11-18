@@ -10,7 +10,7 @@ class ReproduccionesEpisodioPodcast
     @usuarios << usuario
   end
 
-  def contiene_reproduccion_de?(_usuario)
-    true
+  def contiene_reproduccion_de?(usuario)
+    @usuarios.any? { |un_usuario| un_usuario.es_el_mismo_usuario_que?(usuario) }
   end
 end
