@@ -22,7 +22,7 @@ describe RepositorioReproducciones do
 
     reproducciones_conseguidas = described_class.new.get_reproducciones_episodio_podcast(episodio_podcast.id)
     expect(reproducciones_conseguidas.usuarios.any? { |un_usuario| un_usuario.es_el_mismo_usuario_que?(usuario) }).to be(true)
-    expect(reproducciones_conseguidas.episodio_podcast.id).to eq episodio_podcast.id
+    expect(reproducciones_conseguidas.reproducido.id).to eq episodio_podcast.id
   end
 
   it 'no deberia guardar una reproduccion de un episodio mas de una vez' do

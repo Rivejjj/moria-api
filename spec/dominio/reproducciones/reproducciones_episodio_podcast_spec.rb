@@ -33,4 +33,12 @@ describe ReproduccionesEpisodioPodcast do
       expect(reproducciones.contiene_reproduccion_de?(usuario)).to be false
     end
   end
+
+  describe 'reproducido' do
+    it 'deberia obtener el id del episodio de las reproducciones' do
+      episodio = instance_double('EpisodioPodcast', id: 1)
+      reproducciones = described_class.new(episodio)
+      expect(reproducciones.reproducido.id).to eq episodio.id
+    end
+  end
 end

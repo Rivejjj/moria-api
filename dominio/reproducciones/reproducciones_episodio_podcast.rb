@@ -1,8 +1,8 @@
 class ReproduccionesEpisodioPodcast
-  attr_reader :usuarios, :episodio_podcast
+  attr_reader :usuarios, :reproducido
 
   def initialize(episodio_podcast)
-    @episodio_podcast = episodio_podcast
+    @reproducido = episodio_podcast
     @usuarios = []
   end
 
