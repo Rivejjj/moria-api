@@ -59,7 +59,7 @@ describe RepositorioReproducciones do
 
     reproducciones_conseguidas = described_class.new.get_reproducciones_cancion(cancion.id)
     expect(reproducciones_conseguidas.usuarios.any? { |un_usuario| un_usuario.es_el_mismo_usuario_que?(usuario) }).to be(true)
-    expect(reproducciones_conseguidas.cancion.id).to eq cancion.id
+    expect(reproducciones_conseguidas.reproducido.id).to eq cancion.id
   end
 
   it 'no deberia guardar una reproduccion de una cancion mas de una vez' do
