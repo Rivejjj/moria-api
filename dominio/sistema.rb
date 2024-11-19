@@ -1,9 +1,9 @@
 class Sistema
-  def initialize(repositorio_usuarios, repositorio_contenido, repositorio_episodios, repositorio_me_gusta_contenido)
+  def initialize(repositorio_usuarios, repositorio_contenido, repositorio_episodios, repositorio_me_gustas_contenido)
     @repositorio_usuarios = repositorio_usuarios
     @repositorio_contenido = repositorio_contenido
     @repositorio_episodios = repositorio_episodios
-    @repositorio_me_gusta_contenido = repositorio_me_gusta_contenido
+    @repositorio_me_gustas_contenido = repositorio_me_gustas_contenido
   end
 
   def crear_usuario(nombre_de_usuario, email, id_plataforma)
@@ -60,15 +60,9 @@ class Sistema
 
   def dar_me_gusta_a_contenido(id_contenido, id_plataforma)
     usuario = @repositorio_usuarios.get_by_id_plataforma(id_plataforma)
-    contenido = @repositorio_contenido.get(id_contenido)
-    if contenido.es_una_cancion?
-      usuario.me_gusta(contenido)
-      @repositorio_usuarios.save(usuario)
-    else
-      me_gustas_contenido = @repositorio_me_gusta_contenido.get(id_contenido)
-      me_gustas_contenido.agregar_me_gusta_de(usuario)
-      @repositorio_me_gusta_contenido.save(me_gustas_contenido)
-    end
+    me_gustas_contenido = @repositorio_me_gustas_contenido.get(id_contenido)
+    me_gustas_contenido.agregar_me_gusta_de(usuario)
+    @repositorio_me_gustas_contenido.save(me_gustas_contenido)
   end
 
   def crear_episodio_podcast(id_podcast, numero_episodio, nombre, duracion)

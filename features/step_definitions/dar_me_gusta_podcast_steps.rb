@@ -18,13 +18,13 @@ Cuando('el usuario le da me gusta a un podcast con id {int}') do |id_podcast|
   @response = Faraday.post("/contenidos/#{id_podcast}/megusta", request_body, { 'Content-Type' => 'application/json' })
 end
 
-Entonces('el me gusta se registra') do
-  me_gustas_podcast = RepositorioMeGustasContenido.new.get(@id_podcast)
+Entonces('se registra el me gusta') do
+  me_gustas_podcast = RepositorioMeGustasContenido.new.get(@id_contenido)
   expect(me_gustas_podcast.usuarios.any? { |un_usuario| un_usuario.es_el_mismo_usuario_que?(@usuario) }).to be(true)
 end
 
-Entonces('el me gusta no se registra') do
-  me_gustas_podcast = RepositorioMeGustasContenido.new.get(@id_podcast)
+Entonces('no se registra el me gusta') do
+  me_gustas_podcast = RepositorioMeGustasContenido.new.get(@id_contenido)
   expect(me_gustas_podcast.usuarios.any? { |un_usuario| un_usuario.es_el_mismo_usuario_que?(@usuario) }).to be(false)
 end
 
