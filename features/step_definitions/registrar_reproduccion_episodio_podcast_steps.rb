@@ -16,7 +16,6 @@ end
 Entonces('se registra la reproduccion del episodio del podcast') do
   expect(@response.status).to eq(201)
   expect(JSON.parse(@response.body)['id_episodio']).to eq @id_episodio
-  repo_usuarios = RepositorioUsuarios.new
-  usuario = repo_usuarios.find_by_nombre(@usuario.nombre)
-  expect(usuario.reproducciones.map(&:id)).to include(@id_episodio)
+  reproducciones_episodio_podcast = RepositorioReproducciones.new.get_reproducciones_episodio_podcast(@id_episodio)
+  expect(reproducciones_episodio_podcast.contiene_reproduccion_de?(@usuario)).to be true
 end
