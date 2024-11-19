@@ -14,3 +14,7 @@ Entonces('se le informa los detalles de la cancion') do
   expect(detalles_cancion[:duracion]).to eq @cancion.duracion
   expect(detalles_cancion[:genero]).to eq @cancion.genero
 end
+
+Entonces('no se le informa los detalles de la cancion') do
+  expect(@respuesta.status).to eq 404
+end
