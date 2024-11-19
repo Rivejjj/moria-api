@@ -13,7 +13,6 @@ end
 
 Entonces('se registra la reproduccion') do
   expect(@response.status).to eq(201)
-  repo_usuarios = RepositorioUsuarios.new
-  usuario = repo_usuarios.find_by_nombre(@usuario.nombre)
-  expect(usuario.reproducciones.map(&:id)).to include(@id_cancion)
+  reproducciones_cancion = RepositorioReproducciones.new.get_reproducciones_cancion(@id_cancion)
+  expect(reproducciones_cancion.contiene_reproduccion_de?(@usuario)).to be true
 end

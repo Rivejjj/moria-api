@@ -1,9 +1,10 @@
 class Sistema
-  def initialize(repositorio_usuarios, repositorio_contenido, repositorio_episodios, repositorio_me_gustas_contenido)
+  def initialize(repositorio_usuarios, repositorio_contenido, repositorio_episodios, repositorio_me_gustas_contenido, repositorio_reproducciones)
     @repositorio_usuarios = repositorio_usuarios
     @repositorio_contenido = repositorio_contenido
     @repositorio_episodios = repositorio_episodios
     @repositorio_me_gustas_contenido = repositorio_me_gustas_contenido
+    @repositorio_reproducciones = repositorio_reproducciones
   end
 
   def crear_usuario(nombre_de_usuario, email, id_plataforma)
@@ -45,9 +46,9 @@ class Sistema
 
   def reproducir_cancion(id_contenido, nombre_usuario)
     usuario = @repositorio_usuarios.find_by_nombre(nombre_usuario)
-    contenido = @repositorio_contenido.get(id_contenido)
-    usuario.agregar_reproduccion(contenido)
-    @repositorio_usuarios.save(usuario)
+    reproducciones_cancion = @repositorio_reproducciones.get_reproducciones_cancion(id_contenido)
+    reproducciones_cancion.agregar_reproduccion_de(usuario)
+    @repositorio_reproducciones.save_reproducciones_cancion(reproducciones_cancion)
   end
 
   def reproducir_episodio_podcast(id_episodio, nombre_usuario)
