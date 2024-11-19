@@ -1,7 +1,7 @@
 class RepositorioMeGustasContenido
   def save(me_gustas_contenido)
     me_gustas_contenido.usuarios.each do |usuario|
-      DB[:me_gustas].insert(id_usuario: usuario.id, id_contenido: me_gustas_contenido.reproducciones_contenido.reproducido.id)
+      DB[:me_gustas].insert(id_usuario: usuario.id, id_contenido: me_gustas_contenido.contenido.id)
     end
   end
 

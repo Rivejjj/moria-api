@@ -13,4 +13,13 @@ describe MeGustasContenido do
       expect(me_gustas_contenido.usuarios).to include(usuario)
     end
   end
+
+  describe 'contenido' do
+    it 'deberia devolver el contenido' do
+      contenido = instance_double('Contenido')
+      reproducciones_contenido = instance_double('ReproduccionesContenido', reproducido: contenido)
+      me_gustas_contenido = described_class.new(reproducciones_contenido)
+      expect(me_gustas_contenido.contenido).to eq(contenido)
+    end
+  end
 end

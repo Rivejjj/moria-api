@@ -9,4 +9,8 @@ class MeGustasContenido
   def agregar_me_gusta_de(usuario)
     @usuarios << usuario
   end
+
+  def contenido
+    @reproducciones_contenido.reproducido
+  end
 end

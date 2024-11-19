@@ -16,7 +16,7 @@ describe RepositorioMeGustasContenido do
     described_class.new.save(me_gustas_contenido)
 
     me_gustas_conseguido = described_class.new.get(1)
-    expect(me_gustas_conseguido.reproducciones_contenido.reproducido.id).to eq 1
+    expect(me_gustas_conseguido.contenido.id).to eq 1
     expect(me_gustas_conseguido.usuarios.any? { |un_usuario| un_usuario.es_el_mismo_usuario_que?(usuario) }).to be(true)
   end
 end
