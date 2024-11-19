@@ -130,4 +130,6 @@ get '/contenidos/:id_contenido/detalles' do |id_contenido|
   detalles_contenido = sistema.obtener_detalles_contenido(id_contenido)
   status 200
   detalles_contenido.obtener_json
+rescue ContenidoNoEncontradoError
+  status 404
 end
