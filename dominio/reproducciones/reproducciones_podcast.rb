@@ -5,7 +5,7 @@ class ReproduccionesPodcast < Reproducciones
 
   CANTIDAD_MINIMA_DE_EPISODIOS_REPRODUCIDOS = 2
 
-  def initialize(podcast, reproducciones_episodios)
+  def initialize(podcast, reproducciones_episodios = [])
     super(podcast)
     @reproducciones_episodios = reproducciones_episodios
   end
