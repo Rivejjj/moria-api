@@ -10,8 +10,7 @@ class RepositorioMeGustasContenido
   end
 
   def get(id_contenido)
-    contenido = RepositorioContenido.new.get(id_contenido)
-    reproducciones = RepositorioReproducciones.new.get_reproducciones_podcast(id_contenido) if contenido.is_a?(Podcast)
+    reproducciones = get_reproducciones_contenido(id_contenido)
     me_gustas_contenido = MeGustasContenido.new(reproducciones)
     me_gustas = DB[:me_gustas].where(id_contenido:)
     me_gustas.each do |fila|
@@ -19,5 +18,17 @@ class RepositorioMeGustasContenido
       me_gustas_contenido.agregar_me_gusta_de(usuario)
     end
     me_gustas_contenido
+  end
+
+  protected
+
+  def get_reproducciones_contenido(id_contenido)
+    contenido = RepositorioContenido.new.get(id_contenido)
+    if contenido.is_a?(Podcast)
+      reproducciones = RepositorioReproducciones.new.get_reproducciones_podcast(id_contenido)
+    elsif contenido.is_a?(Cancion)
+      reproducciones = RepositorioReproducciones.new.get_reproducciones_cancion(id_contenido)
+    end
+    reproducciones
   end
 end
