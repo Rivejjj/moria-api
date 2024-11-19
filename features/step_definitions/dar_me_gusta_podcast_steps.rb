@@ -22,6 +22,16 @@ Entonces('el me gusta se registra') do
   expect(me_gustas_podcast.usuarios.any? { |un_usuario| un_usuario.es_el_mismo_usuario_que?(@usuario) }).to be(true)
 end
 
+Entonces('el me gusta no se registra') do
+  me_gustas_podcast = RepositorioMeGustasContenido.new.get(@id_podcast)
+  expect(me_gustas_podcast.usuarios.any? { |un_usuario| un_usuario.es_el_mismo_usuario_que?(@usuario) }).to be(false)
+end
+
+Entonces('se le informa que debe reproducir episodios del podcast') do
+  expect(@response.status).to eq(403)
+  expect(JSON.parse(@response.body)['tipo_contenido']).to eq('podcast')
+end
+
 def crear_episodio_para_podcast(id_podcast, numero_episodio)
   podcast = RepositorioContenido.new.get(id_podcast)
   episodio_podcast = EpisodioPodcast.new(numero_episodio, 'nombre', 4567)
