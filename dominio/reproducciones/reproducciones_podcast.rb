@@ -1,10 +1,12 @@
-class ReproduccionesPodcast
-  attr_reader :podcast, :reproducciones_episodios
+require_relative './reproducciones'
+
+class ReproduccionesPodcast < Reproducciones
+  attr_reader :reproducciones_episodios
 
   CANTIDAD_MINIMA_DE_EPISODIOS_REPRODUCIDOS = 2
 
   def initialize(podcast, reproducciones_episodios)
-    @podcast = podcast
+    super(podcast)
     @reproducciones_episodios = reproducciones_episodios
   end
 

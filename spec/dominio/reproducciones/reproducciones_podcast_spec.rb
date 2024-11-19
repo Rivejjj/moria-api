@@ -21,4 +21,12 @@ describe ReproduccionesPodcast do
       expect(reproducciones.contiene_reproduccion_de?(usuario)).to be false
     end
   end
+
+  describe 'reproducido' do
+    it 'deberia obtener el id de la cancion de las reproducciones' do
+      podcast = instance_double('Podcast', id: 1)
+      reproducciones = described_class.new(podcast, [])
+      expect(reproducciones.reproducido.id).to eq podcast.id
+    end
+  end
 end

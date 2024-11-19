@@ -1,8 +1,10 @@
-class ReproduccionesEpisodioPodcast
-  attr_reader :usuarios, :reproducido
+require_relative './reproducciones'
+
+class ReproduccionesEpisodioPodcast < Reproducciones
+  attr_reader :usuarios
 
   def initialize(episodio_podcast)
-    @reproducido = episodio_podcast
+    super(episodio_podcast)
     @usuarios = []
   end
 

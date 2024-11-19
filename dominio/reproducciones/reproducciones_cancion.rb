@@ -1,8 +1,10 @@
-class ReproduccionesCancion
-  attr_reader :reproducido, :usuarios
+require_relative './reproducciones'
+
+class ReproduccionesCancion < Reproducciones
+  attr_reader :usuarios
 
   def initialize(cancion)
-    @reproducido = cancion
+    super(cancion)
     @usuarios = []
   end
 

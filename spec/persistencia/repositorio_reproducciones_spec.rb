@@ -45,7 +45,7 @@ describe RepositorioReproducciones do
     reproducciones_podcast = described_class.new.get_reproducciones_podcast(podcast_id)
 
     expect(reproducciones_podcast.reproducciones_episodios.size).to eq 2
-    expect(reproducciones_podcast.podcast.id).to eq podcast_id
+    expect(reproducciones_podcast.reproducido.id).to eq podcast_id
   end
 
   it 'deberia recuperar las reproducciones de una cancion' do
