@@ -7,6 +7,7 @@ require_relative './lib/version'
 Dir[File.join(__dir__, 'dominio', '*.rb')].each { |file| require file }
 Dir[File.join(__dir__, 'dominio/reproducciones', '*.rb')].each { |file| require file }
 Dir[File.join(__dir__, 'persistencia', '*.rb')].each { |file| require file }
+Dir[File.join(__dir__, 'presentacion', '*.rb')].each { |file| require file }
 
 configure do
   customer_logger = Configuration.logger
@@ -123,4 +124,10 @@ post '/episodios/:id_episodio/reproduccion' do |id_episodio|
   id_episodio = sistema.reproducir_episodio_podcast(id_episodio, params[:nombre_usuario])
   status 201
   json({ id_episodio: })
+end
+
+get '/contenidos/:id_contenido/detalles' do |id_contenido|
+  detalles_contenido = sistema.obtener_detalles_contenido(id_contenido)
+  status 200
+  detalles_contenido.obtener_json
 end

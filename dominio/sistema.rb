@@ -74,6 +74,11 @@ class Sistema
     episodio.id
   end
 
+  def obtener_detalles_contenido(id_contenido)
+    contenido = @repositorio_contenido.get(id_contenido)
+    DetallesContenido.new(contenido)
+  end
+
   def usuarios
     @repositorio_usuarios.all
   end
