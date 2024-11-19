@@ -4,6 +4,7 @@ Dado('que no hay episodios de podcasts registrados') do
 end
 
 Dado('que existe un podcast con id {int}') do |id|
+  @id_podcast = id
   repo_contenido = RepositorioContenido.new
   info_podcast = InformacionContenido.new('El podcast de la semana', 'Juan Perez', 2020, 36_000, 'Entretenimiento')
   podcast = Podcast.new(info_podcast, id)

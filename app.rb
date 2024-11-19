@@ -14,7 +14,7 @@ configure do
   set :logger, customer_logger
   set :default_content_type, :json
   set :environment, ENV['APP_MODE'].to_sym
-  set :sistema, Sistema.new(RepositorioUsuarios.new, RepositorioContenido.new, RepositorioEpisodiosPodcast.new)
+  set :sistema, Sistema.new(RepositorioUsuarios.new, RepositorioContenido.new, RepositorioEpisodiosPodcast.new, RepositorioMeGustasContenido.new)
 end
 
 before do
@@ -87,7 +87,7 @@ rescue UsuarioNoEncontradoError
 end
 
 post '/contenidos/:id_contenido/megusta' do |id_contenido|
-  sistema.dar_me_gusta_a_cancion(id_contenido, @params[:id_plataforma])
+  sistema.dar_me_gusta_a_contenido(id_contenido, @params[:id_plataforma])
   status 201
 rescue ContenidoNoEncontradoError
   status 404
