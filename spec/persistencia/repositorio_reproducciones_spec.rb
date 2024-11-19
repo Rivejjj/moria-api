@@ -4,6 +4,7 @@ require_relative '../../dominio/podcast'
 require_relative '../../dominio/episodio_podcast'
 require_relative '../../dominio/informacion_contenido'
 Dir[File.join(__dir__, '../../persistencia', '*.rb')].each { |file| require file }
+Dir[File.join(__dir__, '../../dominio/reproducciones', '*.rb')].each { |file| require file }
 
 describe RepositorioReproducciones do
   before(:each) do

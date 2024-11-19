@@ -3,6 +3,7 @@ require_relative '../../dominio/usuario'
 require_relative '../../dominio/podcast'
 require_relative '../../dominio/episodio_podcast'
 require_relative '../../dominio/informacion_contenido'
+require_relative '../../dominio/me_gustas_contenido'
 Dir[File.join(__dir__, '../../persistencia', '*.rb')].each { |file| require file }
 
 describe RepositorioMeGustasContenido do

@@ -1,5 +1,5 @@
 class Usuario
-  attr_reader :nombre, :email, :id_plataforma, :playlist, :reproducciones, :updated_on, :created_on, :me_gustas
+  attr_reader :nombre, :email, :id_plataforma, :playlist, :reproducciones, :updated_on, :created_on
   attr_accessor :id
 
   def initialize(nombre, email, id_plataforma, id = nil)
@@ -9,7 +9,6 @@ class Usuario
     @id_plataforma = id_plataforma
     @playlist = []
     @reproducciones = []
-    @me_gustas = []
   end
 
   def agregar_a_playlist(contenido)
@@ -24,12 +23,6 @@ class Usuario
     @playlist.any? { |cancion| cancion.nombre == nombre_cancion }
   end
 
-  def me_gusta(cancion)
-    raise CancionNoReproducidaError unless reprodujo_la_cancion?(cancion)
-
-    @me_gustas << cancion
-  end
-
   def reprodujo_la_cancion?(cancion)
     @reproducciones.any? { |reproduccion| reproduccion.id == cancion.id && reproduccion.es_una_cancion? }
   end
@@ -38,5 +31,3 @@ class Usuario
     @id == otro_usuario.id
   end
 end
-
-class CancionNoReproducidaError < StandardError; end

@@ -80,6 +80,7 @@ class Sistema
   def reset
     @repositorio_usuarios.delete_all
     @repositorio_contenido.delete_all
+    @repositorio_episodios.delete_all
   end
 end
 
