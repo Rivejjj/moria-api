@@ -7,6 +7,7 @@ class MeGustasContenido
   end
 
   def agregar_me_gusta_de(usuario)
+    @reproducciones_contenido.assert_contiene_reproduccion_de(usuario)
     @usuarios << usuario
   end
 

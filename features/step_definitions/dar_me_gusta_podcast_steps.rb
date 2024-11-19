@@ -9,6 +9,7 @@ Dado('reprodujo {int} episodios del podcast con id {int}') do |cantidad, id_podc
   (0..cantidad - 1).each do |i|
     reproducciones_episodio = RepositorioReproducciones.new.get_reproducciones_episodio_podcast(podcast.episodios[i].id)
     reproducciones_episodio.agregar_reproduccion_de(@usuario)
+    RepositorioReproducciones.new.save_reproducciones_episodio_podcast(reproducciones_episodio)
   end
 end
 
