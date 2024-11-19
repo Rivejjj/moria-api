@@ -13,6 +13,10 @@ RSpec.configure do |config|
   end
 
   config.after :each do
+    RepositorioMeGustasContenido.new.delete_all
+    RepositorioReproducciones.new.delete_all
     RepositorioUsuarios.new.delete_all
+    RepositorioContenido.new.delete_all
+    RepositorioEpisodiosPodcast.new.delete_all
   end
 end

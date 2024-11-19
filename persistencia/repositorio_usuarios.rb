@@ -1,5 +1,5 @@
 require_relative './abstract_repository'
-require_relative './repositorio_contenido_de_usuario'
+require_relative './repositorio_playlists_de_usuario'
 
 class RepositorioUsuarios < AbstractRepository
   self.table_name = :usuarios
@@ -11,12 +11,12 @@ class RepositorioUsuarios < AbstractRepository
     else
       insert(usuario)
     end
-    RepositorioContenidoDeUsuario.new.save(usuario)
+    RepositorioPlaylistsDeUsuario.new.save(usuario)
     usuario
   end
 
   def delete_all
-    RepositorioContenidoDeUsuario.new.delete_all
+    RepositorioPlaylistsDeUsuario.new.delete_all
     dataset.delete
   end
 
@@ -36,7 +36,7 @@ class RepositorioUsuarios < AbstractRepository
 
   def load_object(a_hash)
     usuario = Usuario.new(a_hash[:nombre], a_hash[:email], a_hash[:id_plataforma], a_hash[:id])
-    RepositorioContenidoDeUsuario.new.load_a_usuario(usuario)
+    RepositorioPlaylistsDeUsuario.new.load(usuario)
     usuario
   end
 

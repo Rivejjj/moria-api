@@ -1,6 +1,7 @@
 class RepositorioReproducciones
   def delete_all
     DB[:reproducciones_episodios].delete
+    DB[:reproducciones_canciones].delete
   end
 
   def save_reproducciones_episodio_podcast(reproducciones_episodio_podcast)

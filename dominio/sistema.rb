@@ -79,6 +79,8 @@ class Sistema
   end
 
   def reset
+    @repositorio_me_gustas_contenido.delete_all
+    @repositorio_reproducciones.delete_all
     @repositorio_usuarios.delete_all
     @repositorio_contenido.delete_all
     @repositorio_episodios.delete_all
