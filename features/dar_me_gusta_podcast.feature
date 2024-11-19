@@ -9,7 +9,7 @@ Característica: Dar me gusta a podcast
     Cuando el usuario le da me gusta a un podcast con id 1
     Entonces el me gusta se registra
     Y se le informa que la calificacion fue registrada
-  @wip
+
   Escenario: US41:2 - Usuario intenta dar me gusta a un podcast del cual reprodujo 1 episodio
     Dado que existe un usuario "Kevin"
     Y que existe un podcast con id 1
@@ -18,4 +18,3 @@ Característica: Dar me gusta a podcast
     Cuando el usuario le da me gusta a un podcast con id 1
     Entonces el me gusta no se registra
     Y se le informa que debe reproducir episodios del podcast
-

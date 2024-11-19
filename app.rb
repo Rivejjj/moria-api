@@ -98,6 +98,10 @@ rescue CancionNoReproducidaError
   respuesta = { tipo_contenido: 'cancion' }
   status 403
   json(respuesta)
+rescue PodcastNoReproducidoError
+  respuesta = { tipo_contenido: 'podcast' }
+  status 403
+  json(respuesta)
 end
 
 post '/podcasts' do
