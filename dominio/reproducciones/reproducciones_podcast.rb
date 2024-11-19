@@ -16,4 +16,11 @@ class ReproduccionesPodcast < Reproducciones
     end
     cantidad_reproducidos >= CANTIDAD_MINIMA_DE_EPISODIOS_REPRODUCIDOS
   end
+
+  def assert_contiene_reproduccion_de(usuario)
+    raise PodcastNoReproducidoError unless contiene_reproduccion_de?(usuario)
+  end
+end
+
+class PodcastNoReproducidoError < StandardError
 end

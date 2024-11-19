@@ -22,6 +22,16 @@ describe ReproduccionesPodcast do
     end
   end
 
+  describe 'assert_contiene_reproduccion_de' do
+    it 'deberia lanzar una excepcion si no contiene la reproduccion del usuario' do
+      usuario = instance_double('Usuario', es_el_mismo_usuario_que?: true)
+      podcast = instance_double('Podcast')
+      reproducciones = described_class.new(podcast, [])
+
+      expect { reproducciones.assert_contiene_reproduccion_de(usuario) }.to raise_error(PodcastNoReproducidoError)
+    end
+  end
+
   describe 'reproducido' do
     it 'deberia obtener el id de la cancion de las reproducciones' do
       podcast = instance_double('Podcast', id: 1)
