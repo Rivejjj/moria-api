@@ -1,5 +1,5 @@
 class MeGustasContenido
-  attr_reader :usuarios
+  attr_reader :reproducciones_contenido, :usuarios
 
   def initialize(reproducciones_contenido)
     @reproducciones_contenido = reproducciones_contenido

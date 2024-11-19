@@ -30,7 +30,8 @@ class RepositorioMeGustasDeUsuario
     me_gustas_filtrado = me_gustas.where(id_usuario: usuario.id)
     me_gustas = []
     me_gustas_filtrado.each do |fila|
-      me_gustas << repositorio_contenido.get(fila[:id_contenido])
+      contenido = repositorio_contenido.get(fila[:id_contenido])
+      me_gustas << contenido if contenido.es_una_cancion?
     end
     me_gustas
   end

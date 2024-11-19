@@ -62,7 +62,7 @@ def crear_podcast_con_episodios_y_reproducir(cantidad_episodios, usuario, podcas
   (1..cantidad_episodios).each do |numero_episodio|
     reproducciones_episodio = ReproduccionesEpisodioPodcast.new(crear_podcast_con_episodio(podcast_id, numero_episodio))
     reproducciones_episodio.agregar_reproduccion_de(usuario)
-    described_class.new.save_reproducciones_episodio_podcast(reproducciones_episodio)
+    RepositorioReproducciones.new.save_reproducciones_episodio_podcast(reproducciones_episodio)
   end
 end
 
