@@ -9,8 +9,12 @@ class RepositorioEpisodiosPodcast < AbstractRepository
     contenido = repo_contenido.get(id_podcast)
     raise ContenidoNoEncontradoError if contenido.es_una_cancion?
 
-    episodio_podcast_dto = EpisodioPodcastDTO.new(episodio, id_podcast)
-    super(episodio_podcast_dto)
+    if find_dataset_by_id(episodio.id).first
+      update(episodio, id_podcast)
+    else
+      insert(episodio, id_podcast)
+    end
+    episodio
   end
 
   def find_by_id_podcast(id_podcast)
@@ -19,12 +23,28 @@ class RepositorioEpisodiosPodcast < AbstractRepository
 
   protected
 
-  def insert(episodio)
-    changeset = insert_changeset(episodio)
+  def insert(episodio, id_podcast)
+    changeset = insert_changeset(episodio, id_podcast)
     changeset[:id] = episodio.id if episodio.id
     id = dataset.insert(changeset)
     episodio.id ||= id
     episodio
+  end
+
+  def update(episodio, id_podcast)
+    find_dataset_by_id(episodio.id).update(update_changeset(episodio, id_podcast))
+  end
+
+  def insert_changeset(episodio, id_podcast)
+    add_id_podcast(super(episodio), id_podcast)
+  end
+
+  def update_changeset(episodio, id_podcast)
+    add_id_podcast(super(episodio), id_podcast)
+  end
+
+  def add_id_podcast(changeset, id_podcast)
+    changeset.merge(id_podcast:)
   end
 
   def load_object(a_hash)
@@ -34,7 +54,6 @@ class RepositorioEpisodiosPodcast < AbstractRepository
   def changeset(episodio)
     {
       numero_episodio: episodio.numero_episodio,
-      id_podcast: episodio.id_podcast,
       nombre: episodio.nombre,
       duracion: episodio.duracion
     }
