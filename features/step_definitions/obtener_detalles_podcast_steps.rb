@@ -16,6 +16,10 @@ Entonces('se le informa los detalles del podcast') do
   expect_episodios(episodios, podcast)
 end
 
+Entonces('no se le informa los detalles del podcast') do
+  expect(@respuesta.status).to eq 404
+end
+
 def expect_episodios(episodios_json, podcast)
   podcast.episodios.each do |episodio|
     detalles_episodio = episodios_json[episodio.numero_episodio.to_s.to_sym]

@@ -6,3 +6,6 @@ Característica: Obtener detalles de un podcast
     Cuando el usuario obtiene los detalles del podcast con id 1
     Entonces se le informa los detalles del podcast
 
+  Escenario: US8:2 - Usuario intenta obtener los detalles de un podcast que no existe
+    Cuando el usuario obtiene los detalles del podcast con id 1
+    Entonces no se le informa los detalles del podcast
