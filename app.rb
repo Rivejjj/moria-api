@@ -4,6 +4,7 @@ require 'sequel'
 require 'sinatra/custom_logger'
 require_relative './config/configuration'
 require_relative './lib/version'
+require_relative './app/configuracion_repositorios'
 Dir[File.join(__dir__, 'dominio', '*.rb')].each { |file| require file }
 Dir[File.join(__dir__, 'dominio/reproducciones', '*.rb')].each { |file| require file }
 Dir[File.join(__dir__, 'persistencia', '*.rb')].each { |file| require file }
@@ -16,7 +17,7 @@ configure do
   set :logger, customer_logger
   set :default_content_type, :json
   set :environment, ENV['APP_MODE'].to_sym
-  set :sistema, Sistema.new(RepositorioUsuarios.new, RepositorioContenido.new, RepositorioEpisodiosPodcast.new, RepositorioMeGustasContenido.new, RepositorioReproducciones.new)
+  set :sistema, Sistema.new(ConfiguracionRepositorios.new)
 end
 
 before do
@@ -113,7 +114,7 @@ post '/podcasts' do
 end
 
 post '/podcasts/:id_podcast/episodios' do |id_podcast|
-  id_episodio = sistema.crear_episodio_podcast(id_podcast, params[:numero], params[:nombre], params[:duracion])
+  id_episodio = sistema.crear_episodio_podcast(id_podcast, @params[:numero], @params[:nombre], @params[:duracion])
   status 201
   json({ id_episodio: })
 rescue ContenidoNoEncontradoError
@@ -121,7 +122,7 @@ rescue ContenidoNoEncontradoError
 end
 
 post '/episodios/:id_episodio/reproduccion' do |id_episodio|
-  id_episodio = sistema.reproducir_episodio_podcast(id_episodio, params[:nombre_usuario])
+  id_episodio = sistema.reproducir_episodio_podcast(id_episodio, @params[:nombre_usuario])
   status 201
   json({ id_episodio: })
 end
@@ -132,4 +133,10 @@ get '/contenidos/:id_contenido/detalles' do |id_contenido|
   detalles_contenido.obtener_json
 rescue ContenidoNoEncontradoError
   status 404
+end
+
+post '/autores' do
+  id_autor = sistema.crear_autor(@params[:nombre], @params[:id_externo])
+  status 201
+  json({ id_autor: })
 end

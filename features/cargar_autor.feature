@@ -1,5 +1,4 @@
 # language: es
-@wip
 Característica: Cargar autor
   Escenario: US42:1 - Administrador carga un autor
     Dado que no hay autores registrados

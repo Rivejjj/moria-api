@@ -1,10 +1,11 @@
 class Sistema
-  def initialize(repositorio_usuarios, repositorio_contenido, repositorio_episodios, repositorio_me_gustas_contenido, repositorio_reproducciones)
-    @repositorio_usuarios = repositorio_usuarios
-    @repositorio_contenido = repositorio_contenido
-    @repositorio_episodios = repositorio_episodios
-    @repositorio_me_gustas_contenido = repositorio_me_gustas_contenido
-    @repositorio_reproducciones = repositorio_reproducciones
+  def initialize(configuracion_repositorios)
+    @repositorio_usuarios = configuracion_repositorios.repositorio_usuarios
+    @repositorio_contenido = configuracion_repositorios.repositorio_contenido
+    @repositorio_episodios = configuracion_repositorios.repositorio_episodios
+    @repositorio_me_gustas_contenido = configuracion_repositorios.repositorio_me_gustas_contenido
+    @repositorio_reproducciones = configuracion_repositorios.repositorio_reproducciones
+    @repositorio_autores = configuracion_repositorios.repositorio_autores
   end
 
   def crear_usuario(nombre_de_usuario, email, id_plataforma)
@@ -77,6 +78,12 @@ class Sistema
   def obtener_detalles_contenido(id_contenido)
     contenido = @repositorio_contenido.get(id_contenido)
     DetallesContenido.new(contenido)
+  end
+
+  def crear_autor(nombre, id_externo)
+    autor = Autor.new(nombre, id_externo)
+    @repositorio_autores.save(autor)
+    autor.id
   end
 
   def usuarios
