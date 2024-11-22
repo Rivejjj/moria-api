@@ -6,6 +6,10 @@ class RepositorioAutores < AbstractRepository
 
   protected
 
+  def load_object(a_hash)
+    Autor.new(a_hash[:nombre], a_hash[:id_externo], a_hash[:id])
+  end
+
   def changeset(autor)
     {
       nombre: autor.nombre,
