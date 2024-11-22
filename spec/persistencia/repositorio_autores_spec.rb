@@ -3,6 +3,10 @@ require_relative '../../dominio/autor'
 require_relative '../../persistencia/repositorio_autores'
 
 describe RepositorioAutores do
+  before(:each) do
+    described_class.new.delete_all
+  end
+
   it 'deberia guardar y asignar id a un autor' do
     autor = Autor.new('Michael Jackson', '3fMbdgg4jU18AjLCKBhRSm')
     described_class.new.save(autor)
