@@ -96,6 +96,7 @@ class Sistema
     @repositorio_usuarios.delete_all
     @repositorio_contenido.delete_all
     @repositorio_episodios.delete_all
+    @repositorio_autores.delete_all
   end
 end
 
