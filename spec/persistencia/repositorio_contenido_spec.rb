@@ -45,4 +45,15 @@ describe RepositorioContenido do
     podcast_encontrado = repo_contenido.get(podcast.id)
     expect(podcast_encontrado.episodios.first.id).to eq(episodio.id)
   end
+
+  xit 'deberia encontrar un contenido con su autor' do
+    autor = Autor.new('autor', '12345678')
+    RepositorioAutores.new.save(autor)
+    info_contenido = InformacionContenido.new('nombre', autor, 2021, 180, 'rock')
+    contenido = Cancion.new(info_contenido)
+    described_class.new.save(contenido)
+    contenido_encontrado = repo_contenido.first
+    expect(contenido_encontrado.autor.nombre).to eq 'autor'
+    expect(contenido_encontrado.autor.id_externo).to eq '12345678'
+  end
 end

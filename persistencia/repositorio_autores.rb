@@ -4,6 +4,10 @@ class RepositorioAutores < AbstractRepository
   self.table_name = :autores
   self.model_class = 'Autor'
 
+  def get(id_autor)
+    find(id_autor)
+  end
+
   protected
 
   def load_object(a_hash)

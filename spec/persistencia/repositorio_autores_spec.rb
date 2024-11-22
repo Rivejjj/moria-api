@@ -21,4 +21,14 @@ describe RepositorioAutores do
     expect(autor_encontrado.nombre).to eq(autor.nombre)
     expect(autor_encontrado.id_externo).to eq(autor.id_externo)
   end
+
+  describe 'get' do
+    it 'deberia encontrar un autor por su id' do
+      autor = Autor.new('Michael Jackson', '3fMbdgg4jU18AjLCKBhRSm')
+      repo_autores = described_class.new
+      repo_autores.save(autor)
+      autor_encontrado = repo_autores.get(autor.id)
+      expect(autor_encontrado.id).to eq autor.id
+    end
+  end
 end
