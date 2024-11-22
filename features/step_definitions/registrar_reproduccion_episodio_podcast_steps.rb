@@ -1,6 +1,8 @@
 Dado('existe un episodio de un podcast con id {int}') do |id_episodio|
   contenido_repo = RepositorioContenido.new
-  podcast = Podcast.new(InformacionContenido.new('nombre', 'autor', 2021, 180, 'genero'))
+  autor = Autor.new('autor', '12345678')
+  RepositorioAutores.new.save(autor)
+  podcast = Podcast.new(InformacionContenido.new('nombre', autor, 2021, 180, 'genero'))
   episodio_podcast = EpisodioPodcast.new(1, 'nombre', 4567, id_episodio)
   podcast.agregar_episodio(episodio_podcast)
 

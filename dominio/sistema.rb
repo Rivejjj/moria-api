@@ -16,14 +16,16 @@ class Sistema
     usuario
   end
 
-  def crear_cancion(nombre, autor, anio, duracion, genero)
+  def crear_cancion(nombre, nombre_autor, anio, duracion, genero)
+    autor = @repositorio_autores.get_by_nombre(nombre_autor)
     info_cancion = InformacionContenido.new(nombre, autor, anio, duracion, genero)
     cancion = Cancion.new(info_cancion)
     @repositorio_contenido.save(cancion)
     cancion.id
   end
 
-  def crear_podcast(nombre, autor, anio, duracion, genero)
+  def crear_podcast(nombre, nombre_autor, anio, duracion, genero)
+    autor = @repositorio_autores.get_by_nombre(nombre_autor)
     info_podcast = InformacionContenido.new(nombre, autor, anio, duracion, genero)
     podcast = Podcast.new(info_podcast)
     @repositorio_contenido.save(podcast)

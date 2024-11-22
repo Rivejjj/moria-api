@@ -7,6 +7,7 @@ class RepositorioContenido < AbstractRepository
   self.model_class = 'Contenido'
 
   def save(contenido)
+    RepositorioAutores.new.get(contenido.autor.id)
     super(contenido)
     if contenido.is_a?(Podcast)
       contenido.episodios.each do |episodio|
@@ -43,18 +44,27 @@ class RepositorioContenido < AbstractRepository
   end
 
   def load_object(a_hash)
-    info_contenido = InformacionContenido.new(a_hash[:nombre], a_hash[:autor], a_hash[:anio], a_hash[:duracion], a_hash[:genero])
+    autor = RepositorioAutores.new.get(a_hash[:id_autor])
+    info_contenido = InformacionContenido.new(a_hash[:nombre], autor, a_hash[:anio], a_hash[:duracion], a_hash[:genero])
     case a_hash[:tipo]
     when TIPO_CANCION
-      Cancion.new(info_contenido, a_hash[:id])
+      load_cancion(a_hash, info_contenido)
     when TIPO_PODCAST
-      podcast = Podcast.new(info_contenido, a_hash[:id])
-      episodios = RepositorioEpisodiosPodcast.new.find_by_id_podcast(a_hash[:id])
-      episodios.each do |episodio|
-        podcast.agregar_episodio(episodio)
-      end
-      podcast
+      load_podcast(a_hash, info_contenido)
     end
+  end
+
+  def load_cancion(a_hash, info_contenido)
+    Cancion.new(info_contenido, a_hash[:id])
+  end
+
+  def load_podcast(a_hash, info_contenido)
+    podcast = Podcast.new(info_contenido, a_hash[:id])
+    episodios = RepositorioEpisodiosPodcast.new.find_by_id_podcast(a_hash[:id])
+    episodios.each do |episodio|
+      podcast.agregar_episodio(episodio)
+    end
+    podcast
   end
 
   def changeset(contenido)
@@ -65,7 +75,7 @@ class RepositorioContenido < AbstractRepository
            end
     {
       nombre: contenido.nombre,
-      autor: contenido.autor,
+      id_autor: contenido.autor.id,
       anio: contenido.anio,
       duracion: contenido.duracion,
       genero: contenido.genero,

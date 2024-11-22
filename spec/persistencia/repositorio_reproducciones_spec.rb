@@ -78,7 +78,9 @@ describe RepositorioReproducciones do
 end
 
 def crear_podcast_con_episodio(podcast_id = 1, numero_episodio = 1)
-  info_contenido = InformacionContenido.new('nombre', 'autor', 2021, 180, 'genero')
+  autor = Autor.new('autor', '12345678')
+  RepositorioAutores.new.save(autor)
+  info_contenido = InformacionContenido.new('nombre', autor, 2021, 180, 'genero')
   podcast = Podcast.new(info_contenido, podcast_id)
   episodio_podcast = EpisodioPodcast.new(numero_episodio, 'nombre', 180)
   podcast.agregar_episodio(episodio_podcast)
@@ -101,7 +103,9 @@ def crear_y_guardar_usuario(id = 1)
 end
 
 def crear_y_guardar_cancion(id = 1)
-  info_contenido = InformacionContenido.new('nombre', 'autor', 2021, 180, 'genero')
+  autor = Autor.new('autor', '12345678')
+  RepositorioAutores.new.save(autor)
+  info_contenido = InformacionContenido.new('nombre', autor, 2021, 180, 'genero')
   cancion = Cancion.new(info_contenido, id)
   RepositorioContenido.new.save(cancion)
   cancion

@@ -11,7 +11,7 @@ Entonces('se le informa los detalles del podcast') do
   podcast = RepositorioContenido.new.get(@id_contenido)
   expect(id_podcast).to eq podcast.id
   expect(detalles_podcast[:nombre]).to eq podcast.nombre
-  expect(detalles_podcast[:autor]).to eq podcast.autor
+  expect(detalles_podcast[:autor]).to eq podcast.nombre_autor
   expect(detalles_podcast[:genero]).to eq podcast.genero
   expect_episodios(episodios, podcast)
 end

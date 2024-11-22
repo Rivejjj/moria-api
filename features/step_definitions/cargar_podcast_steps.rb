@@ -13,7 +13,7 @@ Entonces('se da de alta el podcast') do
   repo_podcasts = RepositorioContenido.new
   podcast = repo_podcasts.first
   expect(podcast.nombre).to eq(@request_body[:nombre])
-  expect(podcast.autor).to eq(@request_body[:autor])
+  expect(podcast.nombre_autor).to eq(@request_body[:autor])
   expect(podcast.anio).to eq(@request_body[:anio])
   expect(podcast.duracion).to eq(@request_body[:duracion])
   expect(podcast.genero).to eq(@request_body[:genero])

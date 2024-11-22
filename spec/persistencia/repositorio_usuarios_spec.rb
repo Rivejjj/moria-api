@@ -54,15 +54,14 @@ describe RepositorioUsuarios do
   end
 
   it 'deberia recuperar al usuario con su playlist' do
-    cancion = Cancion.new(InformacionContenido.new('cancion', 'autor', 2020, 180, 'rock'))
-    RepositorioContenido.new.save(cancion)
+    cancion = guardar_cancion(1)
 
     repositorio = described_class.new
     juan = Usuario.new('juan', 'juan@test.com', '1')
     juan.agregar_a_playlist(cancion)
     repositorio.save(juan)
     juan = repositorio.find(juan.id)
-    expect(juan.tiene_cancion_en_playlist('cancion')).to eq true
+    expect(juan.tiene_cancion_en_playlist('cancion1')).to eq true
   end
 
   it 'deberia recuperar al usuario con su playlist en orden' do
@@ -80,7 +79,9 @@ describe RepositorioUsuarios do
 end
 
 def guardar_cancion(numero_cancion)
-  cancion = Cancion.new(InformacionContenido.new("cancion#{numero_cancion}", 'autor', 2020, 180, 'rock'))
+  autor = Autor.new('autor', '12345678')
+  RepositorioAutores.new.save(autor)
+  cancion = Cancion.new(InformacionContenido.new("cancion#{numero_cancion}", autor, 2020, 180, 'rock'))
   RepositorioContenido.new.save(cancion)
   cancion
 end

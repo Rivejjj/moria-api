@@ -36,7 +36,9 @@ end
 
 def crear_y_guardar_cancion(nombre_cancion, id = 1)
   repo_contenido = RepositorioContenido.new
-  info_cancion = InformacionContenido.new(nombre_cancion, 'autor', 2020, 180, 'genero')
+  autor = Autor.new('autor', '12345678')
+  RepositorioAutores.new.save(autor)
+  info_cancion = InformacionContenido.new(nombre_cancion, autor, 2020, 180, 'genero')
   cancion = Cancion.new(info_cancion, id)
   repo_contenido.save(cancion)
   cancion

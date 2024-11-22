@@ -18,7 +18,7 @@ Entonces('se da de alta la cancion') do
   repo_contenido = RepositorioContenido.new
   cancion = repo_contenido.first
   expect(cancion.nombre).to eq(@request_body[:nombre])
-  expect(cancion.autor).to eq(@request_body[:autor])
+  expect(cancion.nombre_autor).to eq(@request_body[:autor])
   expect(cancion.anio).to eq(@request_body[:anio])
   expect(cancion.duracion).to eq(@request_body[:duracion])
   expect(cancion.genero).to eq(@request_body[:genero])

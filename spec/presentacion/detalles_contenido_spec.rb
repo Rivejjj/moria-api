@@ -28,7 +28,7 @@ describe DetallesContenido do
     }.to_json
 
     it 'deberia obtener el json de los detalles de una cancion' do
-      cancion = instance_double(Cancion, nombre: 'Beat it', autor: 'Michael Jackson', anio: 1983, duracion: 378, genero: 'Pop', id: 1)
+      cancion = instance_double(Cancion, nombre: 'Beat it', nombre_autor: 'Michael Jackson', anio: 1983, duracion: 378, genero: 'Pop', id: 1)
       allow(cancion).to receive(:is_a?).with(Cancion).and_return(true)
       detalles_contenido = described_class.new(cancion)
 
@@ -38,7 +38,7 @@ describe DetallesContenido do
     it 'deberia obtener el json de los detalles de un podcast' do
       episodio1 = instance_double(EpisodioPodcast, nombre: 'Primer episodio', duracion: 916, numero_episodio: 1)
       episodio2 = instance_double(EpisodioPodcast, nombre: 'Segundo episodio', duracion: 4368, numero_episodio: 2)
-      podcast = instance_double(Podcast, nombre: 'JRE', autor: 'Michael Jackson', genero: 'Cultura', episodios: [episodio1, episodio2], id: 1)
+      podcast = instance_double(Podcast, nombre: 'JRE', nombre_autor: 'Michael Jackson', genero: 'Cultura', episodios: [episodio1, episodio2], id: 1)
 
       allow(podcast).to receive(:is_a?).with(Podcast).and_return(true)
       allow(podcast).to receive(:is_a?).with(Cancion).and_return(false)

@@ -42,7 +42,9 @@ def crear_reproducciones_podcast(usuario, id_podcast)
 end
 
 def crear_reproducciones_cancion(usuario, id_cancion)
-  cancion = Cancion.new(InformacionContenido.new('nombre', 'autor', 2021, 180, 'genero'), id_cancion)
+  autor = Autor.new('autor', '12345678')
+  RepositorioAutores.new.save(autor)
+  cancion = Cancion.new(InformacionContenido.new('nombre', autor, 2021, 180, 'genero'), id_cancion)
   RepositorioContenido.new.save(cancion)
   reproducciones = ReproduccionesCancion.new(cancion)
   reproducciones.agregar_reproduccion_de(usuario)

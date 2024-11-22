@@ -5,7 +5,6 @@ class DetallesContenido
 
   def obtener_json
     if @contenido.is_a? Cancion
-      puts 'entro a cancion'
       obtener_json_cancion
     elsif @contenido.is_a? Podcast
       obtener_json_podcast
@@ -18,7 +17,7 @@ class DetallesContenido
     { 'podcast': @contenido.id,
       'detalles': {
         'nombre': @contenido.nombre,
-        'autor': @contenido.autor,
+        'autor': @contenido.nombre_autor,
         'genero': @contenido.genero,
         'episodios': obtener_json_episodios(@contenido.episodios)
       } }.to_json
@@ -39,7 +38,7 @@ class DetallesContenido
     { 'cancion': @contenido.id,
       'detalles': {
         'nombre': @contenido.nombre,
-        'autor': @contenido.autor,
+        'autor': @contenido.nombre_autor,
         'anio': @contenido.anio,
         'duracion': @contenido.duracion,
         'genero': @contenido.genero

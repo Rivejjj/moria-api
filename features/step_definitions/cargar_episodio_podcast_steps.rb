@@ -31,7 +31,9 @@ end
 
 def crear_y_guardar_podcast(nombre_podcast, id_podcast)
   repo_contenido = RepositorioContenido.new
-  info_podcast = InformacionContenido.new(nombre_podcast, 'Juan Perez', 2020, 36_000, 'Entretenimiento')
+  autor = Autor.new('Juan Perez', '12345678')
+  RepositorioAutores.new.save(autor)
+  info_podcast = InformacionContenido.new(nombre_podcast, autor, 2020, 36_000, 'Entretenimiento')
   podcast = Podcast.new(info_podcast, id_podcast)
   repo_contenido.save(podcast)
   podcast
