@@ -60,6 +60,8 @@ post '/canciones' do
   respuesta = { id_cancion: }
   status 201
   json(respuesta)
+rescue AutorNoEncontradoError
+  status 404
 end
 
 post '/canciones/:id_cancion/reproduccion' do |id_cancion|
