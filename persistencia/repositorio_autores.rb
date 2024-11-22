@@ -13,6 +13,7 @@ class RepositorioAutores < AbstractRepository
 
   def get_by_nombre(nombre)
     fila_autor = dataset.where(Sequel.function(:lower, :nombre) => nombre.downcase).first
+    raise AutorNoEncontradoError if fila_autor.nil?
 
     load_object dataset.first(fila_autor)
   end

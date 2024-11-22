@@ -44,5 +44,9 @@ describe RepositorioAutores do
       autor_encontrado = repo_autores.get_by_nombre('michael jackson')
       expect(autor_encontrado.id).to eq autor.id
     end
+
+    it 'deberia levantar un error si no se encuentra al autor' do
+      expect { described_class.new.get_by_nombre('Michael Jackson') }.to raise_error(AutorNoEncontradoError)
+    end
   end
 end
