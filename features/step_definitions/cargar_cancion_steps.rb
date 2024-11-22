@@ -8,6 +8,11 @@ Cuando('el administrador carga la cancion {string} hecha por {string} en {int} c
   @response = Faraday.post('/canciones', @request_body.to_json, { 'Content-Type' => 'application/json' })
 end
 
+Dado('que existe un autor con nombre {string}') do |nombre|
+  request_body = { nombre:, id_externo: '3fMbdgg4jU18AjLCKBhRSm' }
+  Faraday.post('/autores', request_body.to_json, { 'Content-Type' => 'application/json' })
+end
+
 Entonces('se da de alta la cancion') do
   expect(@response.status).to eq(201)
   repo_contenido = RepositorioContenido.new
@@ -20,7 +25,6 @@ Entonces('se da de alta la cancion') do
   expect(cancion.es_una_cancion?).to eq(true)
 end
 
-Dado('que existe un autor con nombre {string}') do |nombre|
-  request_body = { nombre:, id_externo: '3fMbdgg4jU18AjLCKBhRSm' }
-  Faraday.post('/autores', request_body.to_json, { 'Content-Type' => 'application/json' })
+Entonces('no se da de alta la cancion') do
+  expect(@response.status).to eq(404)
 end
