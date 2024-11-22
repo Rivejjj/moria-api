@@ -11,6 +11,12 @@ class RepositorioAutores < AbstractRepository
     load_object dataset.first(fila_autor)
   end
 
+  def get_by_nombre(nombre)
+    fila_autor = dataset.where(Sequel.function(:lower, :nombre) => nombre.downcase).first
+
+    load_object dataset.first(fila_autor)
+  end
+
   protected
 
   def load_object(a_hash)

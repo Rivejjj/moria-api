@@ -35,4 +35,14 @@ describe RepositorioAutores do
       expect { described_class.new.get(1) }.to raise_error(AutorNoEncontradoError)
     end
   end
+
+  describe 'get_by_nombre' do
+    it 'deberia encontrar un autor por su nombre sin distinguir mayusculas y minusculas' do
+      autor = Autor.new('Michael Jackson', '3fMbdgg4jU18AjLCKBhRSm')
+      repo_autores = described_class.new
+      repo_autores.save(autor)
+      autor_encontrado = repo_autores.get_by_nombre('michael jackson')
+      expect(autor_encontrado.id).to eq autor.id
+    end
+  end
 end
