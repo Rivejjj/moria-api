@@ -14,4 +14,13 @@ describe Cancion do
     cancion = described_class.new(info_cancion)
     expect(cancion.es_una_cancion?).to eq true
   end
+
+  describe 'nombre_autor' do
+    it 'deberia devolver el nombre del autor de la cancion' do
+      autor = instance_double('Autor', nombre: 'autor')
+      info_cancion = InformacionContenido.new('nombre', autor, 2021, 180, 'rock')
+      cancion = described_class.new(info_cancion)
+      expect(cancion.nombre_autor).to eq 'autor'
+    end
+  end
 end

@@ -30,4 +30,8 @@ class Contenido
   def es_una_cancion?
     false
   end
+
+  def nombre_autor
+    autor.nombre
+  end
 end
