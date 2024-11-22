@@ -1,8 +1,5 @@
 Dado('existe una cancion {string} con id {int}') do |nombre_cancion, id_cancion|
-  repo_contenido = RepositorioContenido.new
-  info_cancion = InformacionContenido.new(nombre_cancion, 'autor', 2020, 180, 'rock')
-  cancion = Cancion.new(info_cancion, id_cancion)
-  repo_contenido.save(cancion)
+  crear_y_guardar_cancion(nombre_cancion, id_cancion)
 end
 
 Cuando('el usuario agrega la cancion con id {int} a su playlist') do |id_cancion|
@@ -35,4 +32,12 @@ end
 
 Entonces('la persona debe registrarse') do
   expect(@response.status).to eq(401)
+end
+
+def crear_y_guardar_cancion(nombre_cancion, id = 1)
+  repo_contenido = RepositorioContenido.new
+  info_cancion = InformacionContenido.new(nombre_cancion, 'autor', 2020, 180, 'genero')
+  cancion = Cancion.new(info_cancion, id)
+  repo_contenido.save(cancion)
+  cancion
 end

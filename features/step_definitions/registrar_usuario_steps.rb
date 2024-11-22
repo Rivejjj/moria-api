@@ -22,9 +22,7 @@ Entonces('la registracion es exitosa') do
 end
 
 Dado('que existe un usuario {string}') do |nombre_de_usuario|
-  repo_usuarios = RepositorioUsuarios.new
-  @usuario = Usuario.new(nombre_de_usuario, 'mail@existente.com', ID_PLATAFORMA_PRUEBA)
-  repo_usuarios.save(@usuario)
+  crear_y_guardar_usuario(nombre_de_usuario)
 end
 
 Entonces('la registracion falla') do
@@ -33,4 +31,10 @@ Entonces('la registracion falla') do
   expect(repo_usuarios.all.size).to eq(1)
   usuario = repo_usuarios.find_by_nombre(@nombre_de_usuario)
   expect(usuario.email).not_to eq(@email)
+end
+
+def crear_y_guardar_usuario(nombre_de_usuario)
+  repo_usuarios = RepositorioUsuarios.new
+  @usuario = Usuario.new(nombre_de_usuario, 'mail@existente.com', ID_PLATAFORMA_PRUEBA)
+  repo_usuarios.save(@usuario)
 end

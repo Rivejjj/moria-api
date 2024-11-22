@@ -94,15 +94,15 @@ def crear_podcast_con_episodios_y_reproducir(cantidad_episodios, usuario, podcas
   end
 end
 
-def crear_y_guardar_usuario
-  usuario = Usuario.new('juan', 'juan@juan', '123456789')
+def crear_y_guardar_usuario(id = 1)
+  usuario = Usuario.new('juan', 'juan@juan', '123456789', id)
   RepositorioUsuarios.new.save(usuario)
   usuario
 end
 
-def crear_y_guardar_cancion
+def crear_y_guardar_cancion(id = 1)
   info_contenido = InformacionContenido.new('nombre', 'autor', 2021, 180, 'genero')
-  cancion = Cancion.new(info_contenido)
+  cancion = Cancion.new(info_contenido, id)
   RepositorioContenido.new.save(cancion)
   cancion
 end

@@ -8,9 +8,7 @@ Dado('existe un episodio de un podcast con id {int}') do |id_episodio|
 end
 
 Cuando('reproduce un episodio de un podcast con id {int}') do |id_episodio|
-  request_body = { 'nombre_usuario' => @usuario.nombre }
-  @response = Faraday.post("/episodios/#{id_episodio}/reproduccion", request_body.to_json, { 'Content-Type' => 'application/json' })
-  @id_episodio = id_episodio
+  reproducir_episodio(@usuario, id_episodio)
 end
 
 Entonces('se registra la reproduccion del episodio del podcast') do
@@ -18,4 +16,10 @@ Entonces('se registra la reproduccion del episodio del podcast') do
   expect(JSON.parse(@response.body)['id_episodio']).to eq @id_episodio
   reproducciones_episodio_podcast = RepositorioReproducciones.new.get_reproducciones_episodio_podcast(@id_episodio)
   expect(reproducciones_episodio_podcast.contiene_reproduccion_de?(@usuario)).to be true
+end
+
+def reproducir_episodio(usuario, id_episodio)
+  request_body = { 'nombre_usuario' => usuario.nombre }
+  @response = Faraday.post("/episodios/#{id_episodio}/reproduccion", request_body.to_json, { 'Content-Type' => 'application/json' })
+  @id_episodio = id_episodio
 end
