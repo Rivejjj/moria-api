@@ -5,7 +5,10 @@ class RepositorioAutores < AbstractRepository
   self.model_class = 'Autor'
 
   def get(id_autor)
-    find(id_autor)
+    fila_autor = dataset.first(pk_column => id_autor)
+    raise AutorNoEncontradoError if fila_autor.nil?
+
+    load_object dataset.first(fila_autor)
   end
 
   protected
@@ -21,3 +24,5 @@ class RepositorioAutores < AbstractRepository
     }
   end
 end
+
+class AutorNoEncontradoError < StandardError; end
