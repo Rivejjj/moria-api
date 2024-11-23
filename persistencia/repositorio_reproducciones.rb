@@ -56,6 +56,18 @@ class RepositorioReproducciones
     reproducciones_cancion
   end
 
+  def all
+    contenidos = RepositorioContenido.new.all
+    contenidos.map do |contenido|
+      case contenido
+      when Cancion
+        get_reproducciones_cancion(contenido.id)
+      when Podcast
+        get_reproducciones_podcast(contenido.id)
+      end
+    end
+  end
+
   protected
 
   def add_created_on(changeset)

@@ -101,6 +101,18 @@ describe RepositorioReproducciones do
 
     expect(reproducciones_conseguidas.reproducciones.size).to eq 2
   end
+
+  it 'deberia devolver todos los contenidos' do
+    id_podcast = 4
+    usuario = crear_y_guardar_usuario
+    cancion = crear_y_guardar_cancion
+    crear_podcast_con_episodio(id_podcast)
+
+    reproducciones_cancion = ReproduccionesCancion.new(cancion)
+    reproducciones_cancion.agregar_reproduccion_de(usuario)
+    contenidos = described_class.new.all.map(&:reproducido)
+    expect(contenidos.map(&:id)).to include(cancion.id, id_podcast)
+  end
 end
 
 def crear_podcast_con_episodio(podcast_id = 1, numero_episodio = 1)
