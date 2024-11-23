@@ -5,6 +5,7 @@ require 'sinatra/custom_logger'
 require_relative './config/configuration'
 require_relative './lib/version'
 require_relative './app/configuracion_repositorios'
+require_relative './proveedor_de_fecha/proveedor_de_fecha_date'
 Dir[File.join(__dir__, 'dominio', '*.rb')].each { |file| require file }
 Dir[File.join(__dir__, 'dominio/reproducciones', '*.rb')].each { |file| require file }
 Dir[File.join(__dir__, 'persistencia', '*.rb')].each { |file| require file }
@@ -17,7 +18,7 @@ configure do
   set :logger, customer_logger
   set :default_content_type, :json
   set :environment, ENV['APP_MODE'].to_sym
-  set :sistema, Sistema.new(ConfiguracionRepositorios.new)
+  set :sistema, Sistema.new(ConfiguracionRepositorios.new, ProveedorDeFechaDate.new)
 end
 
 before do
@@ -137,6 +138,12 @@ get '/contenidos/:id_contenido/detalles' do |id_contenido|
   detalles_contenido.obtener_json
 rescue ContenidoNoEncontradoError
   status 404
+end
+
+get '/contenidos/top_semanal' do
+  top_semanal = sistema.obtener_top_semanal
+  status 200
+  top_semanal.obtener_json
 end
 
 post '/autores' do

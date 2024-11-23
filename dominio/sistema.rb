@@ -1,11 +1,12 @@
 class Sistema
-  def initialize(configuracion_repositorios)
+  def initialize(configuracion_repositorios, proveedor_de_fecha)
     @repositorio_usuarios = configuracion_repositorios.repositorio_usuarios
     @repositorio_contenido = configuracion_repositorios.repositorio_contenido
     @repositorio_episodios = configuracion_repositorios.repositorio_episodios
     @repositorio_me_gustas_contenido = configuracion_repositorios.repositorio_me_gustas_contenido
     @repositorio_reproducciones = configuracion_repositorios.repositorio_reproducciones
     @repositorio_autores = configuracion_repositorios.repositorio_autores
+    @proveedor_de_fecha = proveedor_de_fecha
   end
 
   def crear_usuario(nombre_de_usuario, email, id_plataforma)
@@ -80,6 +81,11 @@ class Sistema
   def obtener_detalles_contenido(id_contenido)
     contenido = @repositorio_contenido.get(id_contenido)
     DetallesContenido.new(contenido)
+  end
+
+  def obtener_top_semanal
+    top_semanal = TopSemanal.new(@repositorio_reproducciones, @proveedor_de_fecha)
+    TopSemanalPresentacion.new(top_semanal.obtener_contenidos)
   end
 
   def crear_autor(nombre, id_externo)

@@ -1,6 +1,5 @@
 # language: es
 Característica: Top semanal
-  @wip
   Escenario: US44:1 - Usuario intenta obtener los 3 contenidos más reproducidos de la semana
     Dado que una cancion con id 1 fue reproducida por 3 usuarios esta semana
     Y que un episodio de un podcast con id 2 fue reproducido por 4 usuarios esta semana

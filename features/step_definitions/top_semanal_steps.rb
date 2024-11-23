@@ -25,7 +25,7 @@ end
 Entonces('obtiene el top de contenidos con ids {int}, {int}, {int}') do |id1, id2, id3|
   expect(@response.status).to eq 200
   top_semanal = JSON.parse(@response.body)['top_semanal']
-  expect(top_semanal[0][id_contenido]).to eq id1
-  expect(top_semanal[1][id_contenido]).to eq id2
-  expect(top_semanal[2][id_contenido]).to eq id3
+  expect(top_semanal[0]['id_contenido']).to eq id1
+  expect(top_semanal[1]['id_contenido']).to eq id2
+  expect(top_semanal[2]['id_contenido']).to eq id3
 end
