@@ -1,5 +1,5 @@
 class Reproduccion
-  attr_reader :usuario
+  attr_reader :usuario, :fecha
 
   DIAS_SEMANA = 7
 
