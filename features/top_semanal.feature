@@ -8,7 +8,6 @@ Característica: Top semanal
     Cuando un usuario intenta obtener el contenido mas escuchado de la semana
     Entonces obtiene el top de contenidos con ids 4, 2, 1
 
-  @wip
   Escenario: US44:2 - Usuario intenta obtener los 3 contenidos más reproducidos de la semana
     Dado que una cancion con id 1 fue reproducida por 3 usuarios esta semana
     Y que un episodio de un podcast con id 2 fue reproducido por 4 usuarios esta semana
