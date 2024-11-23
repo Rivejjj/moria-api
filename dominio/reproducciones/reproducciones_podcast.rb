@@ -26,6 +26,10 @@ class ReproduccionesPodcast < Reproducciones
 
     self.class.new(@reproducido, reproducciones_semana)
   end
+
+  def cantidad_de_reproducciones
+    @reproducciones.sum(&:cantidad_de_reproducciones)
+  end
 end
 
 class PodcastNoReproducidoError < StandardError

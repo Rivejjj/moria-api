@@ -49,13 +49,13 @@ describe ReproduccionesEpisodioPodcast do
       reproduccion2 = instance_double('Reproduccion', fue_reproducido_hace_menos_de_una_semana?: false)
       reproduccion3 = instance_double('Reproduccion', fue_reproducido_hace_menos_de_una_semana?: true)
 
-      reproducciones_cancion = described_class.new(instance_double('EpisodioPodcast'))
+      reproducciones_episodio = described_class.new(instance_double('EpisodioPodcast'))
 
-      reproducciones_cancion.agregar_reproduccion(reproduccion1)
-      reproducciones_cancion.agregar_reproduccion(reproduccion2)
-      reproducciones_cancion.agregar_reproduccion(reproduccion3)
+      reproducciones_episodio.agregar_reproduccion(reproduccion1)
+      reproducciones_episodio.agregar_reproduccion(reproduccion2)
+      reproducciones_episodio.agregar_reproduccion(reproduccion3)
 
-      expect(reproducciones_cancion.reproducciones_de_la_semana(instance_double('ProveedorDeFecha')).reproducciones).to eq [reproduccion1, reproduccion3]
+      expect(reproducciones_episodio.reproducciones_de_la_semana(instance_double('ProveedorDeFecha')).reproducciones).to eq [reproduccion1, reproduccion3]
     end
   end
 
