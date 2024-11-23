@@ -12,14 +12,6 @@ class ReproduccionesCancion < Reproducciones
   def assert_contiene_reproduccion_de(usuario)
     raise CancionNoReproducidaError unless contiene_reproduccion_de?(usuario)
   end
-
-  def cantidad_de_reproducciones
-    @reproducciones.size
-  end
-
-  def cantidad_de_reproducciones_de_la_semana(proveedor_de_fecha)
-    reproducciones_de_la_semana(proveedor_de_fecha).cantidad_de_reproducciones
-  end
 end
 
 class CancionNoReproducidaError < StandardError; end
