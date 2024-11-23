@@ -113,6 +113,8 @@ post '/podcasts' do
   respuesta = { id_podcast: }
   status 201
   json(respuesta)
+rescue AutorNoEncontradoError
+  status 404
 end
 
 post '/podcasts/:id_podcast/episodios' do |id_podcast|
