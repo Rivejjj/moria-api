@@ -141,7 +141,7 @@ rescue ContenidoNoEncontradoError
 end
 
 get '/contenidos/top_semanal' do
-  top_semanal = sistema.obtener_top_semanal
+  top_semanal = TopSemanalPresentacion.new(sistema.obtener_top_semanal)
   status 200
   top_semanal.obtener_json
 end

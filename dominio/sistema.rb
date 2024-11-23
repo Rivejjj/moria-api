@@ -84,8 +84,7 @@ class Sistema
   end
 
   def obtener_top_semanal
-    top_semanal = TopSemanal.new(@repositorio_reproducciones, @proveedor_de_fecha)
-    TopSemanalPresentacion.new(top_semanal.obtener_contenidos)
+    TopSemanal.new(@repositorio_reproducciones, @proveedor_de_fecha).obtener_contenidos
   end
 
   def crear_autor(nombre, id_externo)
