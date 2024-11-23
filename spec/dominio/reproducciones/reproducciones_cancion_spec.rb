@@ -68,4 +68,20 @@ describe ReproduccionesCancion do
       expect(reproducciones_cancion.reproducciones_de_la_semana(instance_double('ProveedorDeFecha')).reproducciones).to eq [reproduccion1, reproduccion3]
     end
   end
+
+  describe 'cantidad_de_reproducciones_de_la_semana' do
+    it 'deberia devolver la cantidad de reproducciones de la semana' do
+      reproduccion1 = instance_double('Reproduccion', fue_reproducido_hace_menos_de_una_semana?: true)
+      reproduccion2 = instance_double('Reproduccion', fue_reproducido_hace_menos_de_una_semana?: false)
+      reproduccion3 = instance_double('Reproduccion', fue_reproducido_hace_menos_de_una_semana?: true)
+
+      reproducciones_cancion = described_class.new(instance_double('Cancion'))
+
+      reproducciones_cancion.agregar_reproduccion(reproduccion1)
+      reproducciones_cancion.agregar_reproduccion(reproduccion2)
+      reproducciones_cancion.agregar_reproduccion(reproduccion3)
+
+      expect(reproducciones_cancion.cantidad_de_reproducciones_de_la_semana(instance_double('ProveedorDeFecha'))).to eq 2
+    end
+  end
 end
