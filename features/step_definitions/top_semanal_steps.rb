@@ -29,3 +29,26 @@ Entonces('obtiene el top de contenidos con ids {int}, {int}, {int}') do |id1, id
   expect(top_semanal[1]['id_contenido']).to eq id2
   expect(top_semanal[2]['id_contenido']).to eq id3
 end
+
+Dado('que una cancion con id {int} fue reproducida por {int} usuarios la semana pasada') do |id_cancion, cantidad_reproducciones|
+  fix_date(Date.today - 7)
+
+  cancion = crear_y_guardar_cancion('nombre_cancion', id_cancion)
+  (0..cantidad_reproducciones - 1).each do |i|
+    usuario = crear_y_guardar_usuario("Usuario#{id_cancion}#{i}")
+    reproducir_cancion(usuario, cancion.id)
+  end
+
+  unfix_date
+end
+
+def fix_date(date)
+  @original_today = Date.method(:today)
+  Date.define_singleton_method(:today) do
+    date
+  end
+end
+
+def unfix_date
+  Date.define_singleton_method(:today, @original_today)
+end
