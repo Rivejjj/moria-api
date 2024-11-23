@@ -5,7 +5,7 @@ class Reproducciones
     @reproducido = reproducido
   end
 
-  def agregar_reproduccion_de(_usuario)
+  def agregar_reproduccion(_reproduccion)
     raise 'Subclass must implement'
   end
 

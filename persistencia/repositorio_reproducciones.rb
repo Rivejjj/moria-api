@@ -13,8 +13,8 @@ class RepositorioReproducciones
 
   def save_reproducciones_cancion(reproducciones_cancion)
     id_contenido = reproducciones_cancion.reproducido.id
-    reproducciones_cancion.usuarios.each do |usuario|
-      DB[:reproducciones_canciones].insert(id_usuario: usuario.id, id_contenido:)
+    reproducciones_cancion.reproducciones.each do |reproduccion|
+      DB[:reproducciones_canciones].insert(id_usuario: reproduccion.usuario.id, id_contenido:)
     end
   end
 
@@ -51,7 +51,7 @@ class RepositorioReproducciones
 
     reproducciones.each do |fila|
       usuario = RepositorioUsuarios.new.find(fila[:id_usuario])
-      reproducciones_cancion.agregar_reproduccion_de(usuario)
+      reproducciones_cancion.agregar_reproduccion(Reproduccion.new(usuario))
     end
     reproducciones_cancion
   end

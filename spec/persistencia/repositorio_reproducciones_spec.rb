@@ -53,28 +53,28 @@ describe RepositorioReproducciones do
     usuario = crear_y_guardar_usuario
     cancion = crear_y_guardar_cancion
 
-    reproducciones = ReproduccionesCancion.new(cancion)
-    reproducciones.agregar_reproduccion_de(usuario)
+    reproducciones_cancion = ReproduccionesCancion.new(cancion)
+    reproducciones_cancion.agregar_reproduccion_de(usuario)
 
-    described_class.new.save_reproducciones_cancion(reproducciones)
+    described_class.new.save_reproducciones_cancion(reproducciones_cancion)
 
     reproducciones_conseguidas = described_class.new.get_reproducciones_cancion(cancion.id)
-    expect(reproducciones_conseguidas.usuarios.any? { |un_usuario| un_usuario.es_el_mismo_usuario_que?(usuario) }).to be(true)
+    expect(reproducciones_conseguidas.reproducciones.any? { |reproduccion| reproduccion.reproducido_por?(usuario) }).to be(true)
     expect(reproducciones_conseguidas.reproducido.id).to eq cancion.id
   end
 
   it 'deberia guardar todas las reproducciones de una cancion de un usuario' do
     usuario = crear_y_guardar_usuario
     cancion = crear_y_guardar_cancion
-    reproducciones = ReproduccionesCancion.new(cancion)
-    reproducciones.agregar_reproduccion_de(usuario)
-    reproducciones.agregar_reproduccion_de(usuario)
+    reproducciones_cancion = ReproduccionesCancion.new(cancion)
+    reproducciones_cancion.agregar_reproduccion_de(usuario)
+    reproducciones_cancion.agregar_reproduccion_de(usuario)
 
-    described_class.new.save_reproducciones_cancion(reproducciones)
+    described_class.new.save_reproducciones_cancion(reproducciones_cancion)
 
     reproducciones_conseguidas = described_class.new.get_reproducciones_cancion(cancion.id)
 
-    expect(reproducciones_conseguidas.usuarios.size).to eq 2
+    expect(reproducciones_conseguidas.reproducciones.size).to eq 2
   end
 end
 

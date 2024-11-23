@@ -1,7 +1,9 @@
 class Reproduccion
+  attr_reader :usuario
+
   DIAS_SEMANA = 7
 
-  def initialize(usuario, fecha)
+  def initialize(usuario, fecha = nil)
     @usuario = usuario
     @fecha = fecha
   end

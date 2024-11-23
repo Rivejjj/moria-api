@@ -5,12 +5,12 @@ describe ReproduccionesCancion do
   describe 'agregar_reproduccion_de' do
     it 'deberia agregar la reproduccion de un usuario' do
       cancion = instance_double('Cancion')
-      reproducciones = described_class.new(cancion)
+      reproducciones_cancion = described_class.new(cancion)
 
-      usuario = instance_double('Usuario')
-      reproducciones.agregar_reproduccion_de(usuario)
+      reproduccion = instance_double('Usuario')
+      reproducciones_cancion.agregar_reproduccion_de(reproduccion)
 
-      expect(reproducciones.usuarios).to include(usuario)
+      expect(reproducciones_cancion.reproducciones[0].usuario).to eq reproduccion
     end
   end
 
@@ -19,8 +19,9 @@ describe ReproduccionesCancion do
       cancion = instance_double('Cancion')
       reproducciones = described_class.new(cancion)
 
-      usuario = instance_double('Usuario', es_el_mismo_usuario_que?: true)
-      reproducciones.agregar_reproduccion_de(usuario)
+      usuario = instance_double('Usuario')
+      reproduccion = instance_double('Reproduccion', reproducido_por?: true)
+      reproducciones.agregar_reproduccion(reproduccion)
 
       expect(reproducciones.contiene_reproduccion_de?(usuario)).to be true
     end
@@ -28,7 +29,7 @@ describe ReproduccionesCancion do
     it 'deberia devolver false si no contiene la reproduccion del usuario' do
       cancion = instance_double('Cancion')
       reproducciones = described_class.new(cancion)
-      usuario = instance_double('Usuario', es_el_mismo_usuario_que?: false)
+      usuario = instance_double('Usuario')
 
       expect(reproducciones.contiene_reproduccion_de?(usuario)).to be false
     end
