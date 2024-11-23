@@ -9,7 +9,7 @@ Sequel.migration do
     end
 
     from(:reproducciones_episodios).each_with_index do |row, index|
-      from(:reproducciones_episodios).where(id_usuario: row[:id_usuario], id_contenido: row[:id_contenido]).update(id: index + 1)
+      from(:reproducciones_episodios).where(id_usuario: row[:id_usuario], id_episodio: row[:id_episodio]).update(id: index + 1)
     end
   end
 
@@ -17,7 +17,7 @@ Sequel.migration do
     alter_table(:reproducciones_episodios) do
       drop_column :id
       drop_constraint(:reproducciones_episodios_pkey, type: :primary_key)
-      add_primary_key %i[id_usuario id_contenido]
+      add_primary_key %i[id_usuario id_episodio]
     end
   end
 end
