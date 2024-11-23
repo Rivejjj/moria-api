@@ -5,24 +5,25 @@ describe ReproduccionesEpisodioPodcast do
   describe 'agregar_reproduccion_de' do
     it 'deberia agregar la reproduccion de un usuario' do
       episodio = instance_double('EpisodioPodcast')
-      reproducciones = described_class.new(episodio)
+      reproducciones_episodio = described_class.new(episodio)
 
       usuario = instance_double('Usuario')
-      reproducciones.agregar_reproduccion_de(usuario)
+      reproducciones_episodio.agregar_reproduccion_de(usuario)
 
-      expect(reproducciones.usuarios).to include(usuario)
+      expect(reproducciones_episodio.reproducciones[0].usuario).to eq(usuario)
     end
   end
 
   describe 'contiene_reproduccion_de?' do
     it 'deberia devolver true si contiene la reproduccion del usuario' do
       episodio = instance_double('EpisodioPodcast')
-      reproducciones = described_class.new(episodio)
+      reproducciones_episodio = described_class.new(episodio)
 
-      usuario = instance_double('Usuario', es_el_mismo_usuario_que?: true)
-      reproducciones.agregar_reproduccion_de(usuario)
+      usuario = instance_double('Usuario')
+      reproduccion = instance_double('Reproduccion', reproducido_por?: true)
+      reproducciones_episodio.agregar_reproduccion(reproduccion)
 
-      expect(reproducciones.contiene_reproduccion_de?(usuario)).to be true
+      expect(reproducciones_episodio.contiene_reproduccion_de?(usuario)).to be true
     end
 
     it 'deberia devolver false si no contiene la reproduccion del usuario' do

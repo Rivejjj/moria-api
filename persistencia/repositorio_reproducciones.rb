@@ -6,8 +6,8 @@ class RepositorioReproducciones
 
   def save_reproducciones_episodio_podcast(reproducciones_episodio_podcast)
     id_episodio = reproducciones_episodio_podcast.reproducido.id
-    reproducciones_episodio_podcast.usuarios.each do |usuario|
-      DB[:reproducciones_episodios].insert(id_usuario: usuario.id, id_episodio:)
+    reproducciones_episodio_podcast.reproducciones.each do |reproduccion|
+      DB[:reproducciones_episodios].insert(id_usuario: reproduccion.usuario.id, id_episodio:)
     end
   end
 
