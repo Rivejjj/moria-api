@@ -1,12 +1,9 @@
 class Reproducciones
-  attr_reader :reproducido
+  attr_reader :reproducido, :reproducciones
 
   def initialize(reproducido)
     @reproducido = reproducido
-  end
-
-  def agregar_reproduccion(_reproduccion)
-    raise 'Subclass must implement'
+    @reproducciones = []
   end
 
   def contiene_reproduccion_de?(_usuario)

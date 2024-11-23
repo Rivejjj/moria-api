@@ -45,7 +45,7 @@ describe RepositorioReproducciones do
     crear_podcast_con_episodios_y_reproducir(2, usuario, podcast_id)
     reproducciones_podcast = described_class.new.get_reproducciones_podcast(podcast_id)
 
-    expect(reproducciones_podcast.reproducciones_episodios.size).to eq 2
+    expect(reproducciones_podcast.reproducciones.size).to eq 2
     expect(reproducciones_podcast.reproducido.id).to eq podcast_id
   end
 
