@@ -19,3 +19,7 @@ Entonces('se da de alta el podcast') do
   expect(podcast.genero).to eq(@request_body[:genero])
   expect(podcast.es_una_cancion?).to eq(false)
 end
+
+Entonces('no se da de alta el podcast') do
+  expect(@response.status).to eq(404)
+end
