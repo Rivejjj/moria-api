@@ -14,7 +14,7 @@ class RepositorioReproducciones
   def save_reproducciones_cancion(reproducciones_cancion)
     id_contenido = reproducciones_cancion.reproducido.id
     reproducciones_cancion.usuarios.each do |usuario|
-      DB[:reproducciones_canciones].insert(id_usuario: usuario.id, id_contenido:) unless reproduccion_cancion_ya_existe?(usuario.id, id_contenido)
+      DB[:reproducciones_canciones].insert(id_usuario: usuario.id, id_contenido:)
     end
   end
 

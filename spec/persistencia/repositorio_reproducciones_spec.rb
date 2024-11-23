@@ -63,7 +63,7 @@ describe RepositorioReproducciones do
     expect(reproducciones_conseguidas.reproducido.id).to eq cancion.id
   end
 
-  it 'no deberia guardar una reproduccion de una cancion mas de una vez' do
+  it 'deberia guardar todas las reproducciones de una cancion y un usuario' do
     usuario = crear_y_guardar_usuario
     cancion = crear_y_guardar_cancion
     reproducciones = ReproduccionesCancion.new(cancion)
@@ -73,7 +73,8 @@ describe RepositorioReproducciones do
     described_class.new.save_reproducciones_cancion(reproducciones)
 
     reproducciones_conseguidas = described_class.new.get_reproducciones_cancion(cancion.id)
-    expect(reproducciones_conseguidas.usuarios.size).to eq 1
+
+    expect(reproducciones_conseguidas.usuarios.size).to eq 2
   end
 end
 
