@@ -7,7 +7,7 @@ class RepositorioReproducciones
   def save_reproducciones_episodio_podcast(reproducciones_episodio_podcast)
     id_episodio = reproducciones_episodio_podcast.reproducido.id
     reproducciones_episodio_podcast.usuarios.each do |usuario|
-      DB[:reproducciones_episodios].insert(id_usuario: usuario.id, id_episodio:) unless reproduccion_episodio_podcast_ya_existe?(usuario.id, id_episodio)
+      DB[:reproducciones_episodios].insert(id_usuario: usuario.id, id_episodio:)
     end
   end
 
@@ -54,15 +54,5 @@ class RepositorioReproducciones
       reproducciones_cancion.agregar_reproduccion_de(usuario)
     end
     reproducciones_cancion
-  end
-
-  protected
-
-  def reproduccion_episodio_podcast_ya_existe?(id_usuario, id_episodio)
-    !DB[:reproducciones_episodios].where(id_usuario:, id_episodio:).first.nil?
-  end
-
-  def reproduccion_cancion_ya_existe?(id_usuario, id_contenido)
-    !DB[:reproducciones_canciones].where(id_usuario:, id_contenido:).first.nil?
   end
 end

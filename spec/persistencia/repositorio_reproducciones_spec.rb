@@ -26,7 +26,7 @@ describe RepositorioReproducciones do
     expect(reproducciones_conseguidas.reproducido.id).to eq episodio_podcast.id
   end
 
-  it 'no deberia guardar una reproduccion de un episodio mas de una vez' do
+  it 'deberia guardar todas las reproducciones de un episodio de un usuario' do
     usuario = crear_y_guardar_usuario
     episodio_podcast = crear_podcast_con_episodio
     reproducciones = ReproduccionesEpisodioPodcast.new(episodio_podcast)
@@ -36,7 +36,7 @@ describe RepositorioReproducciones do
     described_class.new.save_reproducciones_episodio_podcast(reproducciones)
 
     reproducciones_conseguidas = described_class.new.get_reproducciones_episodio_podcast(episodio_podcast.id)
-    expect(reproducciones_conseguidas.usuarios.size).to eq 1
+    expect(reproducciones_conseguidas.usuarios.size).to eq 2
   end
 
   it 'deberia obtener todas las reproducciones de episodios del podcast' do
@@ -63,7 +63,7 @@ describe RepositorioReproducciones do
     expect(reproducciones_conseguidas.reproducido.id).to eq cancion.id
   end
 
-  it 'deberia guardar todas las reproducciones de una cancion y un usuario' do
+  it 'deberia guardar todas las reproducciones de una cancion de un usuario' do
     usuario = crear_y_guardar_usuario
     cancion = crear_y_guardar_cancion
     reproducciones = ReproduccionesCancion.new(cancion)
