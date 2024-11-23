@@ -10,6 +10,10 @@ class Reproducciones
     raise 'Subclass must implement'
   end
 
+  def agregar_reproduccion(reproduccion)
+    @reproducciones << reproduccion
+  end
+
   def reproducciones_de_la_semana(proveedor_de_fecha)
     reproducciones_semana = @reproducciones.select { |reproduccion| reproduccion.fue_reproducido_hace_menos_de_una_semana?(proveedor_de_fecha) }
 

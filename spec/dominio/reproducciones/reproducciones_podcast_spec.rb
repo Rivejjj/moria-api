@@ -39,4 +39,17 @@ describe ReproduccionesPodcast do
       expect(reproducciones.reproducido.id).to eq podcast.id
     end
   end
+
+  describe 'reproducciones_de_la_semana' do
+    it 'deberia devolver las reproducciones de hasta una semana atras' do
+      reproducciones_semanales = instance_double('ReproduccionesEpisodioPodcast')
+
+      reproducciones_episodio1 = instance_double('Reproducciones_episodio', reproducciones_de_la_semana: reproducciones_semanales)
+      reproducciones_episodio2 = instance_double('Reproducciones_episodio', reproducciones_de_la_semana: reproducciones_semanales)
+
+      reproducciones_podcast = described_class.new(instance_double('Podcast'), [reproducciones_episodio1, reproducciones_episodio2])
+
+      expect(reproducciones_podcast.reproducciones_de_la_semana(instance_double('ProveedorDeFecha')).reproducciones).to eq [reproducciones_semanales, reproducciones_semanales]
+    end
+  end
 end

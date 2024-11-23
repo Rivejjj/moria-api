@@ -18,6 +18,14 @@ class ReproduccionesPodcast < Reproducciones
   def assert_contiene_reproduccion_de(usuario)
     raise PodcastNoReproducidoError unless contiene_reproduccion_de?(usuario)
   end
+
+  def reproducciones_de_la_semana(proveedor_de_fecha)
+    reproducciones_semana = @reproducciones.map do |reproducciones_episodio|
+      reproducciones_episodio.reproducciones_de_la_semana(proveedor_de_fecha)
+    end
+
+    self.class.new(@reproducido, reproducciones_semana)
+  end
 end
 
 class PodcastNoReproducidoError < StandardError
