@@ -76,6 +76,18 @@ describe RepositorioReproducciones do
     expect(reproducciones_conseguidas.reproducciones.any? { |reproduccion| reproduccion.fecha.nil? }).to be false
   end
 
+  it 'deberia recuperar las reproducciones de un episodio con su fecha' do
+    usuario = crear_y_guardar_usuario
+    episodio_podcast = crear_podcast_con_episodio
+    reproducciones = ReproduccionesEpisodioPodcast.new(episodio_podcast)
+    reproducciones.agregar_reproduccion_de(usuario)
+
+    described_class.new.save_reproducciones_episodio_podcast(reproducciones)
+
+    reproducciones_conseguidas = described_class.new.get_reproducciones_episodio_podcast(episodio_podcast.id)
+    expect(reproducciones_conseguidas.reproducciones.any? { |reproduccion| reproduccion.fecha.nil? }).to be false
+  end
+
   it 'deberia guardar todas las reproducciones de una cancion de un usuario' do
     usuario = crear_y_guardar_usuario
     cancion = crear_y_guardar_cancion

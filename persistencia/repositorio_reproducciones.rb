@@ -7,14 +7,14 @@ class RepositorioReproducciones
   def save_reproducciones_episodio_podcast(reproducciones_episodio_podcast)
     id_episodio = reproducciones_episodio_podcast.reproducido.id
     reproducciones_episodio_podcast.reproducciones.each do |reproduccion|
-      DB[:reproducciones_episodios].insert(id_usuario: reproduccion.usuario.id, id_episodio:)
+      DB[:reproducciones_episodios].insert(add_created_on(id_usuario: reproduccion.usuario.id, id_episodio:))
     end
   end
 
   def save_reproducciones_cancion(reproducciones_cancion)
     id_contenido = reproducciones_cancion.reproducido.id
     reproducciones_cancion.reproducciones.each do |reproduccion|
-      DB[:reproducciones_canciones].insert(id_usuario: reproduccion.usuario.id, id_contenido:, created_on: Date.today)
+      DB[:reproducciones_canciones].insert(add_created_on(id_usuario: reproduccion.usuario.id, id_contenido:))
     end
   end
 
@@ -25,7 +25,7 @@ class RepositorioReproducciones
 
     reproducciones.each do |fila|
       usuario = RepositorioUsuarios.new.find(fila[:id_usuario])
-      reproducciones_episodio_podcast.agregar_reproduccion_de(usuario)
+      reproducciones_episodio_podcast.agregar_reproduccion(Reproduccion.new(usuario, fila[:created_on]))
     end
     reproducciones_episodio_podcast
   end
@@ -54,5 +54,11 @@ class RepositorioReproducciones
       reproducciones_cancion.agregar_reproduccion(Reproduccion.new(usuario, fila[:created_on]))
     end
     reproducciones_cancion
+  end
+
+  protected
+
+  def add_created_on(changeset)
+    changeset.merge(created_on: Date.today)
   end
 end
