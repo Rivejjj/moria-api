@@ -13,6 +13,6 @@ class Reproduccion
   end
 
   def fue_reproducido_hace_menos_de_una_semana?(proveedor_de_fecha)
-    @fecha > proveedor_de_fecha.fecha_actual - DIAS_SEMANA
+    proveedor_de_fecha.en_la_ultima_semana?(@fecha)
   end
 end
