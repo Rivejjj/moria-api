@@ -5,7 +5,11 @@ class Cancion < Contenido
     true
   end
 
-  def es_el_mismo?(_otro_contenido)
-    true
+  def es_el_mismo?(otro_contenido)
+    otro_contenido.id_igual_a?(@id)
+  end
+
+  def id_igual_a?(otro_id)
+    @id == otro_id
   end
 end

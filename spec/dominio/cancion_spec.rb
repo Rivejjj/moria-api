@@ -27,11 +27,19 @@ describe Cancion do
   end
 
   describe 'es_el_mismo?' do
-    it 'deberia devolver true si es el mismo contenido' do
+    it 'deberia devolver true si es la misma cancion' do
       autor = instance_double('Autor', nombre: 'autor')
       info_cancion = InformacionContenido.new('nombre', autor, 2021, 180, 'rock')
       cancion = described_class.new(info_cancion, 1)
       expect(cancion.es_el_mismo?(cancion)).to be true
+    end
+
+    it 'deberia devolver false si no es la misma cancion' do
+      autor = instance_double('Autor', nombre: 'autor')
+      info_cancion = InformacionContenido.new('nombre', autor, 2021, 180, 'rock')
+      cancion = described_class.new(info_cancion, 1)
+      cancion2 = described_class.new(info_cancion, 2)
+      expect(cancion.es_el_mismo?(cancion2)).to be false
     end
   end
 end
