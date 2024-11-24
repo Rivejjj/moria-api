@@ -6,3 +6,7 @@ Característica: Obtener autores relacionados
     Cuando un usuario intenta obtener los autores relacionados a "Michael Jackson"
     Entonces obtiene 3 autores relacionados
 
+  @wip
+  Escenario: US43:2 - Usuario intenta obtener los autores relacionados de un autor que no existe
+    Cuando un usuario intenta obtener los autores relacionados a "Michael Jackson"
+    Entonces no obtiene los autores relacionados

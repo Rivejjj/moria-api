@@ -11,6 +11,10 @@ Entonces('obtiene {int} autores relacionados') do |cantidad_autores_relacionados
   expect(autores_relacionados.size).to eq cantidad_autores_relacionados
 end
 
+Entonces('no obtiene los autores relacionados') do
+  expect(@respuesta.status).to eq 404
+end
+
 def stub_spotify_token
   body = {
     'access_token': 'fake_token',
