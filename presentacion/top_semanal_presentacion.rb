@@ -1,13 +1,7 @@
-class TopSemanalPresentacion
-  def initialize(top_semanal)
-    @top_semanal = top_semanal
-  end
+require_relative 'lista_contenidos_presentacion'
 
-  def obtener_json
-    {
-      top_semanal: @top_semanal.map do |contenido|
-        { id_contenido: contenido.id, nombre: contenido.nombre }
-      end
-    }.to_json
+class TopSemanalPresentacion < ListaContenidosPresentacion
+  def initialize(contenidos)
+    super(contenidos, :top_semanal)
   end
 end
