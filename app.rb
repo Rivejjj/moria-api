@@ -159,4 +159,6 @@ get '/autores/relacionados' do
   presentacion_autores_relacionados = PresentacionAutoresRelacionados.new(autores_relacionados)
   status 200
   presentacion_autores_relacionados.obtener_json
+rescue AutorNoEncontradoError
+  status 404
 end
