@@ -135,7 +135,7 @@ def crear_podcast_con_episodios_y_reproducir(cantidad_episodios, usuario, podcas
 end
 
 def crear_y_guardar_usuario(id = 1)
-  usuario = Usuario.new('juan', 'juan@juan', '123456789', id)
+  usuario = Usuario.new("juan#{id}", 'juan@juan', '123456789', id)
   RepositorioUsuarios.new.save(usuario)
   usuario
 end

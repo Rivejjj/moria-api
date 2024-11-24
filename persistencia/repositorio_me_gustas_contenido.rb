@@ -20,6 +20,15 @@ class RepositorioMeGustasContenido
     me_gustas_contenido
   end
 
+  def obtener_me_gustas_de(usuario)
+    filas_usuario = DB[:me_gustas].where(id_usuario: usuario.id)
+    me_gustas = []
+    filas_usuario.each do |fila|
+      me_gustas << get(fila[:id_contenido])
+    end
+    me_gustas
+  end
+
   protected
 
   def get_reproducciones_contenido(id_contenido)
