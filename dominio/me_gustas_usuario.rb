@@ -5,6 +5,9 @@ class MeGustasUsuario
   end
 
   def genero_mas_gustado
-    'Rock'
+    @contenidos.map(&:genero)
+               .tally
+               .max_by(&:last)
+               .first
   end
 end
