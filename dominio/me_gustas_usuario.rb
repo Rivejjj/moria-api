@@ -11,7 +11,7 @@ class MeGustasUsuario
                .first
   end
 
-  def contenido_gustado?(_contenido)
-    true
+  def contenido_gustado?(otro_contenido)
+    @contenidos.any? { |contenido_gustado| contenido_gustado.es_el_mismo?(otro_contenido) }
   end
 end
