@@ -1,5 +1,5 @@
 class Sistema
-  def initialize(configuracion_repositorios, proveedor_de_fecha)
+  def initialize(configuracion_repositorios, proveedor_de_fecha, adaptador_plataforma_musica)
     @repositorio_usuarios = configuracion_repositorios.repositorio_usuarios
     @repositorio_contenido = configuracion_repositorios.repositorio_contenido
     @repositorio_episodios = configuracion_repositorios.repositorio_episodios
@@ -7,6 +7,7 @@ class Sistema
     @repositorio_reproducciones = configuracion_repositorios.repositorio_reproducciones
     @repositorio_autores = configuracion_repositorios.repositorio_autores
     @proveedor_de_fecha = proveedor_de_fecha
+    @adaptador_plataforma_musica = adaptador_plataforma_musica
   end
 
   def crear_usuario(nombre_de_usuario, email, id_plataforma)
@@ -91,6 +92,11 @@ class Sistema
     autor = Autor.new(nombre, id_externo)
     @repositorio_autores.save(autor)
     autor.id
+  end
+
+  def obtener_autores_relacionados_a(nombre_autor)
+    autor = @repositorio_autores.get_by_nombre(nombre_autor)
+    @adaptador_plataforma_musica.obtener_autores_relacionados_a(autor)
   end
 
   def usuarios

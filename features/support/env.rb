@@ -4,6 +4,7 @@ require 'rack/test'
 require 'rspec/expectations'
 require_relative '../../app.rb'
 require 'faraday'
+require 'webmock/cucumber'
 
 DB = Configuration.db
 Sequel.extension :migration

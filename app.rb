@@ -6,6 +6,7 @@ require_relative './config/configuration'
 require_relative './lib/version'
 require_relative './app/configuracion_repositorios'
 require_relative './proveedor_de_fecha/proveedor_de_fecha_date'
+require_relative './adaptadores_plataforma_musica/adaptador_spotify'
 Dir[File.join(__dir__, 'dominio', '*.rb')].each { |file| require file }
 Dir[File.join(__dir__, 'dominio/reproducciones', '*.rb')].each { |file| require file }
 Dir[File.join(__dir__, 'persistencia', '*.rb')].each { |file| require file }
@@ -18,7 +19,7 @@ configure do
   set :logger, customer_logger
   set :default_content_type, :json
   set :environment, ENV['APP_MODE'].to_sym
-  set :sistema, Sistema.new(ConfiguracionRepositorios.new, ProveedorDeFechaDate.new)
+  set :sistema, Sistema.new(ConfiguracionRepositorios.new, ProveedorDeFechaDate.new, AdaptadorSpotify.new)
 end
 
 before do
@@ -150,4 +151,12 @@ post '/autores' do
   id_autor = sistema.crear_autor(@params[:nombre], @params[:id_externo])
   status 201
   json({ id_autor: })
+end
+
+get '/autores/relacionados' do
+  nombre_autor = @params[:nombre_autor]
+  autores_relacionados = sistema.obtener_autores_relacionados_a(nombre_autor)
+  presentacion_autores_relacionados = PresentacionAutoresRelacionados.new(autores_relacionados)
+  status 200
+  presentacion_autores_relacionados.obtener_json
 end

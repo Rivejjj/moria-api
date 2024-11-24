@@ -16,12 +16,7 @@ class AdaptadorSpotify
   end
 
   def obtener_token
-    auth_header = Base64.strict_encode64("#{@client_id}:#{@client_secret}")
-    response = Faraday.post(SPOTIFY_TOKEN_API_URL) do |req|
-      req.headers['Authorization'] = "Basic #{auth_header}"
-      req.headers['Content-Type'] = CONTENT_TYPE
-      req.body = { grant_type: GRANT_TYPE }
-    end
+    response = pedir_token
 
     if response.status == 200
       body = JSON.parse(response.body)
@@ -33,10 +28,11 @@ class AdaptadorSpotify
     end
   end
 
-  def obtener_relacionados_a(autor)
-    response = Faraday.get("#{SPOTIFY_AUTORES_API_URL}/#{autor.id_externo}/related-artists") do |req|
+  def obtener_autores_relacionados_a(autor)
+    response = Faraday.new(url: "#{SPOTIFY_AUTORES_API_URL}/#{autor.id_externo}/related-artists").get do |req|
       req.headers['Authorization'] = "Bearer #{obtener_token}"
     end
+
     if response.status == 200
       @logger.debug "Autores relacionados obtenidos: #{response.body}"
       relacionados = parsear_relacionados(response)
@@ -47,6 +43,15 @@ class AdaptadorSpotify
   end
 
   protected
+
+  def pedir_token
+    auth_header = Base64.strict_encode64("#{@client_id}:#{@client_secret}")
+    Faraday.new(url: SPOTIFY_TOKEN_API_URL).post do |req|
+      req.headers['Authorization'] = "Basic #{auth_header}"
+      req.headers['Content-Type'] = CONTENT_TYPE
+      req.body = { grant_type: GRANT_TYPE }
+    end
+  end
 
   def parsear_relacionados(response)
     JSON.parse(response.body)['artists'].map do |relacionado|
