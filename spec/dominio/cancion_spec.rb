@@ -4,13 +4,15 @@ require_relative '../../dominio/informacion_contenido'
 
 describe Cancion do
   it 'requiere informacion de la cancion' do
-    info_cancion = InformacionContenido.new('nombre', 'autor', 2021, 180, 'rock')
+    autor = instance_double('Autor', nombre: 'autor')
+    info_cancion = InformacionContenido.new('nombre', autor, 2021, 180, 'rock')
     cancion = described_class.new(info_cancion)
     expect(cancion).not_to be_nil
   end
 
   it 'es_una_cancion? deberia devolver true' do
-    info_cancion = InformacionContenido.new('nombre', 'autor', 2021, 180, 'rock')
+    autor = instance_double('Autor', nombre: 'autor')
+    info_cancion = InformacionContenido.new('nombre', autor, 2021, 180, 'rock')
     cancion = described_class.new(info_cancion)
     expect(cancion.es_una_cancion?).to eq true
   end
@@ -21,6 +23,15 @@ describe Cancion do
       info_cancion = InformacionContenido.new('nombre', autor, 2021, 180, 'rock')
       cancion = described_class.new(info_cancion)
       expect(cancion.nombre_autor).to eq 'autor'
+    end
+  end
+
+  describe 'es_el_mismo?' do
+    it 'deberia devolver true si es el mismo contenido' do
+      autor = instance_double('Autor', nombre: 'autor')
+      info_cancion = InformacionContenido.new('nombre', autor, 2021, 180, 'rock')
+      cancion = described_class.new(info_cancion, 1)
+      expect(cancion.es_el_mismo?(cancion)).to be true
     end
   end
 end
