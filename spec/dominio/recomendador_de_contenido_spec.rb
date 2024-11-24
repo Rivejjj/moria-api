@@ -9,8 +9,8 @@ describe RecomendadorDeContenido do
   end
 
   it 'deberia recomendar una cancion del genero mas gustado' do
-    cancion_rock1 = crear_mock_cancion
-    cancion_rock2 = crear_mock_cancion
+    cancion_rock1 = crear_mock_contenido
+    cancion_rock2 = crear_mock_contenido
 
     repo_contenido = instance_double('RepositorioContenido', get_canciones_de_genero: [cancion_rock1, cancion_rock2])
 
@@ -21,10 +21,24 @@ describe RecomendadorDeContenido do
     expect(cancion_recomendada.genero).to eq('rock')
     expect(cancion_recomendada).to eq(cancion_rock2)
   end
+
+  it 'deberia recomendar un podcast del genero mas gustado' do
+    podcast_rock1 = crear_mock_contenido
+    podcast_rock2 = crear_mock_contenido
+
+    repo_contenido = instance_double('RepositorioContenido', get_podcasts_de_genero: [podcast_rock1, podcast_rock2])
+
+    me_gustas = MeGustasUsuario.new(instance_double('Usuario'), [podcast_rock1])
+
+    recomendador = described_class.new(repo_contenido)
+    podcast_recomendada = recomendador.recomendar_podcast_de_genero_mas_gustado(me_gustas)
+    expect(podcast_recomendada.genero).to eq('rock')
+    expect(podcast_recomendada).to eq(podcast_rock2)
+  end
 end
 
-def crear_mock_cancion
-  cancion_rock = instance_double('Cancion', genero: 'rock')
-  allow(cancion_rock).to receive(:es_el_mismo?) { |cancion| cancion == cancion_rock }
-  cancion_rock
+def crear_mock_contenido
+  contenido_rock = instance_double('Contenido', genero: 'rock')
+  allow(contenido_rock).to receive(:es_el_mismo?) { |contenido| contenido == contenido_rock }
+  contenido_rock
 end
