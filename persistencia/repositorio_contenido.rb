@@ -37,6 +37,11 @@ class RepositorioContenido < AbstractRepository
     playlist
   end
 
+  def get_canciones_de_genero(genero)
+    canciones_de_genero = dataset.where(genero:, tipo: TIPO_CANCION)
+    load_collection(canciones_de_genero)
+  end
+
   protected
 
   def insert(contenido)

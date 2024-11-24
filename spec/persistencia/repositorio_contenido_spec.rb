@@ -70,4 +70,18 @@ describe RepositorioContenido do
     expect(contenido1.es_el_mismo?(contenidos[0])).to be true
     expect(contenido2.es_el_mismo?(contenidos[1])).to be true
   end
+
+  it 'deberia obtener todas las canciones de un determinado genero' do
+    crear_y_guardar_cancion_de_genero('rock', autor)
+    crear_y_guardar_cancion_de_genero('rock', autor)
+    crear_y_guardar_cancion_de_genero('pop', autor)
+
+    contenidos = described_class.new.get_canciones_de_genero('rock')
+    expect(contenidos.all? { |contenido| contenido.genero == 'rock' }).to be true
+  end
+end
+
+def crear_y_guardar_cancion_de_genero(genero, autor)
+  info_cancion = InformacionContenido.new('nombre', autor, 2021, 180, genero)
+  RepositorioContenido.new.save(Cancion.new(info_cancion))
 end
