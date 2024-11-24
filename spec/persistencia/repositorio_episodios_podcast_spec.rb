@@ -41,4 +41,23 @@ describe RepositorioEpisodiosPodcast do
     described_class.new.save(episodio_podcast, podcast.id)
     expect(described_class.new.find(episodio_podcast.id).id).to eq 33
   end
+
+  it 'deberia devolver todos los episodios de una lista de podcasts' do
+    podcast1 = crear_podcast_con_n_episodios(3, autor)
+    podcast2 = crear_podcast_con_n_episodios(2, autor)
+    crear_podcast_con_n_episodios(1, autor)
+
+    expect(described_class.new.get_episodios_de_podcasts([podcast1.id, podcast2.id]).size).to eq 5
+  end
+end
+
+def crear_podcast_con_n_episodios(cantidad_episodios, autor)
+  info_contenido = InformacionContenido.new('nombre', autor, 2021, 180, 'genero')
+  podcast = Podcast.new(info_contenido)
+  cantidad_episodios.times do |i|
+    episodio_podcast = EpisodioPodcast.new(i, "nombre#{i}", 180)
+    podcast.agregar_episodio(episodio_podcast)
+  end
+  RepositorioContenido.new.save(podcast)
+  podcast
 end

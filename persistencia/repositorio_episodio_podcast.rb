@@ -18,7 +18,11 @@ class RepositorioEpisodiosPodcast < AbstractRepository
   end
 
   def find_by_id_podcast(id_podcast)
-    dataset.where(id_podcast:).map { |row| load_object(row) }
+    get_episodios_de_podcasts([id_podcast])
+  end
+
+  def get_episodios_de_podcasts(ids)
+    load_collection(dataset.where(id_podcast: ids))
   end
 
   protected
