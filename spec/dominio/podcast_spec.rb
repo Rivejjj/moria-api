@@ -52,4 +52,12 @@ describe Podcast do
     podcast.agregar_episodio(episodio)
     expect(podcast.episodios).to include(episodio)
   end
+
+  describe 'es_el_mismo?' do
+    it 'deberia devolver true si es el mismo podcast' do
+      info_podcast = InformacionContenido.new('nombre', 'autor', 2021, 180, 'rock')
+      podcast = described_class.new(info_podcast)
+      expect(podcast.es_el_mismo?(podcast)).to be true
+    end
+  end
 end
