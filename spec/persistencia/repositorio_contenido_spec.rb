@@ -79,9 +79,26 @@ describe RepositorioContenido do
     contenidos = described_class.new.get_canciones_de_genero('rock')
     expect(contenidos.all? { |contenido| contenido.genero == 'rock' }).to be true
   end
+
+  it 'deberia obtener todas los podcast de un determinado genero' do
+    crear_y_guardar_podcast_de_genero('rock', autor)
+    crear_y_guardar_podcast_de_genero('rock', autor)
+    crear_y_guardar_podcast_de_genero('pop', autor)
+
+    contenidos = described_class.new.get_podcasts_de_genero('rock')
+    expect(contenidos.all? { |contenido| contenido.genero == 'rock' }).to be true
+  end
 end
 
 def crear_y_guardar_cancion_de_genero(genero, autor)
   info_cancion = InformacionContenido.new('nombre', autor, 2021, 180, genero)
   RepositorioContenido.new.save(Cancion.new(info_cancion))
+end
+
+def crear_y_guardar_podcast_de_genero(genero, autor)
+  info_cancion = InformacionContenido.new('nombre', autor, 2021, 180, genero)
+  podcast = Podcast.new(info_cancion)
+  podcast.agregar_episodio(EpisodioPodcast.new(1, 'episodio', 180))
+  RepositorioContenido.new.save(podcast)
+  podcast
 end

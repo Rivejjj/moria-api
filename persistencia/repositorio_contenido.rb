@@ -38,11 +38,19 @@ class RepositorioContenido < AbstractRepository
   end
 
   def get_canciones_de_genero(genero)
-    canciones_de_genero = dataset.where(genero:, tipo: TIPO_CANCION)
-    load_collection(canciones_de_genero)
+    get_contenido_de_genero(genero, TIPO_CANCION)
+  end
+
+  def get_podcasts_de_genero(genero)
+    get_contenido_de_genero(genero, TIPO_PODCAST)
   end
 
   protected
+
+  def get_contenido_de_genero(genero, tipo_contenido)
+    contenido_de_genero = dataset.where(genero:, tipo: tipo_contenido)
+    load_collection(contenido_de_genero)
+  end
 
   def insert(contenido)
     changeset = insert_changeset(contenido)
