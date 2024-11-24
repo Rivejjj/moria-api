@@ -22,11 +22,8 @@ class RepositorioMeGustasContenido
 
   def obtener_me_gustas_de(usuario)
     filas_usuario = DB[:me_gustas].where(id_usuario: usuario.id)
-    me_gustas = []
-    filas_usuario.each do |fila|
-      me_gustas << get(fila[:id_contenido])
-    end
-    me_gustas
+    contenido = RepositorioContenido.new.get_contenidos(filas_usuario.map { |fila| fila[:id_contenido] })
+    MeGustasUsuario.new(usuario, contenido)
   end
 
   protected
