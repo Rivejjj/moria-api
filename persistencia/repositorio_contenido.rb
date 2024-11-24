@@ -23,6 +23,10 @@ class RepositorioContenido < AbstractRepository
     load_object dataset.first(fila_contenido)
   end
 
+  def get_contenidos(ids_contenido)
+    load_collection(dataset.where(id: ids_contenido))
+  end
+
   def find_playlist_by_usuario(usuario)
     playlists_usuarios_contenido = DB[:playlists_usuarios_contenido]
     playlists_usuarios_contenido_filtrado = playlists_usuarios_contenido.where(id_usuario: usuario.id).order(:orden)

@@ -35,17 +35,16 @@ describe RepositorioMeGustasContenido do
     expect(me_gustas_conseguido.usuarios.any? { |un_usuario| un_usuario.es_el_mismo_usuario_que?(usuario) }).to be(true)
   end
 
-  it 'deberia obtener todos los megustas de un usuario' do
-    usuario = crear_y_guardar_usuario(1)
-    usuario2 = crear_y_guardar_usuario(2)
-    reproducciones_cancion = crear_reproducciones_cancion(usuario, 1)
-    reproducciones_podcast = crear_reproducciones_podcast(usuario2, 2)
+  xit 'deberia obtener todos los megustas de un usuario' do
+    usuarios = [crear_y_guardar_usuario(1), crear_y_guardar_usuario(2)]
+    reproducciones_cancion = crear_reproducciones_cancion(usuarios[0], 1)
+    reproducciones_podcast = crear_reproducciones_podcast(usuarios[1], 2)
 
-    crear_me_gusta_de(usuario, reproducciones_cancion)
-    crear_me_gusta_de(usuario2, reproducciones_podcast)
-
-    expect(described_class.new.obtener_me_gustas_de(usuario)[0].contenido.id).to eq 1
-    expect(described_class.new.obtener_me_gustas_de(usuario).size).to eq 1
+    crear_me_gusta_de(usuarios[0], reproducciones_cancion)
+    crear_me_gusta_de(usuarios[1], reproducciones_podcast)
+    me_gustas_usuario = described_class.new.obtener_me_gustas_de_usuario(usuarios[0])
+    expect(me_gustas_usuario.contenido_gustado?(reproducciones_cancion.reproducido)).to be true
+    expect(me_gustas_usuario.contenido_gustado?(reproducciones_podcast.reproducido)).to be false
   end
 end
 

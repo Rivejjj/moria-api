@@ -58,4 +58,16 @@ describe RepositorioContenido do
     expect(contenido_encontrado.autor.nombre).to eq 'autor'
     expect(contenido_encontrado.autor.id_externo).to eq '12345678'
   end
+
+  it 'deberia obtener todos los contenidos dada una lista de ids' do
+    contenido1 = Cancion.new(info_cancion, 1)
+    contenido2 = Cancion.new(info_cancion, 2)
+    repo_contenido = described_class.new
+    repo_contenido.save(contenido1)
+    repo_contenido.save(contenido2)
+
+    contenidos = repo_contenido.get_contenidos([1, 2])
+    expect(contenido1.es_el_mismo?(contenidos[0])).to be true
+    expect(contenido2.es_el_mismo?(contenidos[1])).to be true
+  end
 end
