@@ -8,3 +8,5 @@ data:
   LOG_LEVEL: debug
   LOG_URL: https://endpoint4.collection.sumologic.com/receiver/v1/http/ZaVnC4dhaV2t5M3dhRZ7ZBuSQ0tjEjuXIrFq2n3iqRnXUXu-DTIWxzZOTYBwFDvlu0-GSKcZtzmF1l9Nwm56pHeGPUTCTb6Ecp1uixwJZG9pSbYM7eEJ_g==
   PORT: "3000"
+  CLIENT_ID: 563ef98cd44d43978f9296ac05122b2e
+  CLIENT_SECRET: 3e617fa154a2498681328360ad715baf
