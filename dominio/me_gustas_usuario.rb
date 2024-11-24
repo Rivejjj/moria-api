@@ -10,4 +10,8 @@ class MeGustasUsuario
                .max_by(&:last)
                .first
   end
+
+  def contenido_gustado?(_contenido)
+    true
+  end
 end
