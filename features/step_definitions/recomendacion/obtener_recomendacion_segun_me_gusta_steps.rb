@@ -4,9 +4,9 @@ Dado('que existen {int} canciones del genero {string} y a {int} le dio me gusta'
   dar_me_gustas(canciones)
 end
 
-Dado('que existen {int} podcasts del genero {string} y a {int} le dio me gusta') do |cantidad_podcast, genero, _cantidad_megusta|
+Dado('que existen {int} podcasts del genero {string} y a {int} le dio me gusta') do |cantidad_podcast, genero, cantidad_megusta|
   id_podcasts = crear_y_guardar_n_podcasts_de_genero(cantidad_podcast, genero)
-  dar_me_gustas(id_podcasts)
+  dar_me_gustas(id_podcasts.first(cantidad_megusta))
 end
 
 Cuando('el usuario intenta obtener una recomendacion segun el genero que mas le gusta') do
@@ -17,14 +17,14 @@ Entonces('obtiene una cancion de genero {string} a la que no le dio me gusta') d
   cancion = JSON.parse(@response.body)['recomendacion'][0]
   me_gustas_cancion = RepositorioMeGustasContenido.new.get(cancion['id_contenido'])
   expect(me_gustas_cancion.usuarios).not_to include(@usuario)
-  expect(me_gustas_cancion.reproducido.genero).to eq(genero)
+  expect(me_gustas_cancion.contenido.genero).to eq(genero)
 end
 
-Entonces('obtiene un podcast de genero {string} al que no le dio me gusta') do |_string|
+Entonces('obtiene un podcast de genero {string} al que no le dio me gusta') do |genero|
   podcast = JSON.parse(@response.body)['recomendacion'][1]
   me_gustas_podcast = RepositorioMeGustasContenido.new.get(podcast['id_contenido'])
   expect(me_gustas_podcast.usuarios).not_to include(@usuario)
-  expect(me_gustas_podcast.reproducido.genero).to eq(genero)
+  expect(me_gustas_podcast.contenido.genero).to eq(genero)
 end
 
 def crear_y_guardar_autor(nombre)
@@ -54,7 +54,7 @@ end
 
 def crear_y_guardar_n_podcasts_de_genero(cantidad, genero)
   id_podcasts = []
-  (0..cantidad - 1).each do |i|
+  cantidad.times do |i|
     id_podcasts << crear_y_guardar_podcast_de_genero("podcast#{i}", genero)
   end
   id_podcasts
@@ -69,7 +69,7 @@ end
 
 def crear_y_guardar_n_canciones_de_genero(cantidad, genero)
   id_canciones = []
-  (0..cantidad - 1).each do |i|
+  cantidad.times do |i|
     id_canciones << crear_y_guardar_cancion_de_genero("cancion#{i}", genero)
   end
   id_canciones

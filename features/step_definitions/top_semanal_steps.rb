@@ -1,6 +1,6 @@
 Dado('que una cancion con id {int} fue reproducida por {int} usuarios esta semana') do |id_cancion, cantidad_reproducciones|
   cancion = crear_y_guardar_cancion('nombre_cancion', id_cancion)
-  (0..cantidad_reproducciones - 1).each do |i|
+  cantidad_reproducciones.times do |i|
     usuario = crear_y_guardar_usuario("Usuario#{id_cancion}#{i}")
     reproducir_cancion(usuario, cancion.id)
   end
@@ -12,7 +12,7 @@ Dado('que un episodio de un podcast con id {int} fue reproducido por {int} usuar
   podcast.agregar_episodio(episodio)
   RepositorioContenido.new.save(podcast)
 
-  (0..cantidad_reproducciones - 1).each do |i|
+  cantidad_reproducciones.times do |i|
     usuario = crear_y_guardar_usuario("Usuario#{id_podcast}#{i}")
     reproducir_episodio(usuario, episodio.id)
   end
@@ -34,7 +34,7 @@ Dado('que una cancion con id {int} fue reproducida por {int} usuarios la semana 
   fix_date(Date.today - 7)
 
   cancion = crear_y_guardar_cancion('nombre_cancion', id_cancion)
-  (0..cantidad_reproducciones - 1).each do |i|
+  cantidad_reproducciones.times do |i|
     usuario = crear_y_guardar_usuario("Usuario#{id_cancion}#{i}")
     reproducir_cancion(usuario, cancion.id)
   end

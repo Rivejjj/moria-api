@@ -85,7 +85,7 @@ end
 get '/usuarios/:id_plataforma/recomendacion' do |id_plataforma|
   recomendacion = sistema.recomendar_contenido(id_plataforma)
   respuesta_recomendacion = []
-  recomendacion.map { |c| respuesta_recomendacion << { 'id_cancion': c[0], 'nombre_cancion': c[1] } }
+  recomendacion.map { |c| respuesta_recomendacion << { 'id_contenido': c[0], 'nombre': c[1] } }
   respuesta = { 'recomendacion': respuesta_recomendacion }
   status 200
   json(respuesta)

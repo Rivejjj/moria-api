@@ -1,7 +1,5 @@
 # language: es
 Característica: Obtener recomendacion
-
-  @wip
   Escenario: US45:1 - Usuario intenta obtener una una recomendación de contenido según el género que más le gusta
     Dado que existe un usuario "Kevin"
     Y que existen 3 canciones del genero "rock" y a 2 le dio me gusta
