@@ -3,6 +3,7 @@ require 'sinatra/json'
 require 'sequel'
 require 'sinatra/custom_logger'
 require_relative './config/configuration'
+require_relative './config/middleware'
 require_relative './lib/version'
 require_relative './app/configuracion_repositorios'
 require_relative './proveedor_de_fecha/proveedor_de_fecha_date'
@@ -20,6 +21,7 @@ configure do
   set :default_content_type, :json
   set :environment, ENV['APP_MODE'].to_sym
   set :sistema, Sistema.new(ConfiguracionRepositorios.new, ProveedorDeFechaDate.new, AdaptadorSpotify.new)
+  use LogMiddleware
 end
 
 before do
