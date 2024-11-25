@@ -108,6 +108,15 @@ describe RepositorioContenido do
 
     expect(described_class.new.get(contenido.id).created_on).not_to be nil
   end
+
+  it 'no deberia borrarse la fecha de creacion al actualizar un contenido' do
+    contenido = Cancion.new(info_cancion)
+    described_class.new.save(contenido)
+    contenido = described_class.new.get(contenido.id)
+    described_class.new.save(contenido)
+
+    expect(described_class.new.get(contenido.id).created_on).not_to be nil
+  end
 end
 
 def crear_y_guardar_cancion_de_genero(genero, autor)

@@ -100,6 +100,7 @@ class RepositorioContenido < AbstractRepository
       anio: contenido.anio,
       duracion: contenido.duracion,
       genero: contenido.genero,
+      created_on: contenido.created_on,
       tipo:
     }
   end
