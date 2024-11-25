@@ -139,6 +139,14 @@ describe RepositorioContenido do
 
     expect(described_class.new.ultimos_podcasts(1).map(&:id)).to eq([1])
   end
+
+  it 'No deberia perder la fecha de creacion al actualizar' do
+    contenido = Cancion.new(info_cancion)
+    described_class.new.save(contenido)
+    described_class.new.save(contenido)
+
+    expect(described_class.new.get(contenido.id).created_on).not_to be nil
+  end
 end
 
 def crear_y_guardar_cancion_de_genero(genero, autor)

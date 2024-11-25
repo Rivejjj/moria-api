@@ -79,7 +79,8 @@ class AbstractRepository
   end
 
   def changeset_with_timestamps(a_record)
-    changeset(a_record).merge(created_on: a_record.created_on, updated_on: a_record.updated_on)
+    created_on = a_record.created_on.nil? ? Sequel[:created_on] : a_record.created_on
+    changeset(a_record).merge(created_on:, updated_on: a_record.updated_on)
   end
 
   def class_name
