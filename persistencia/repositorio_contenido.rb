@@ -45,6 +45,10 @@ class RepositorioContenido < AbstractRepository
     get_contenido_de_genero(genero, TIPO_PODCAST)
   end
 
+  def get_contenidos_de_autor(autor)
+    dataset.where(id_autor: autor.id).map { |fila| load_object(fila) }
+  end
+
   protected
 
   def get_contenido_de_genero(genero, tipo_contenido)
