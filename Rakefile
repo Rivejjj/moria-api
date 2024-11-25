@@ -41,7 +41,12 @@ Cucumber::Rake::Task.new(:cucumber) do |task|
 end
 
 Cucumber::Rake::Task.new(:acceptance_report) do |task|
-  task.cucumber_opts = ['features', '--publish-quiet', '--tags \'not @wip and not @local\'', '--format pretty',
+  task.cucumber_opts = ['features', '--publish-quiet', '--tags \'not @wip and not @regression\'', '--format pretty',
+                        '--format html -o reports/cucumber.html']
+end
+
+Cucumber::Rake::Task.new(:regression_report) do |task|
+  task.cucumber_opts = ['features', '--publish-quiet', '--tags \'@regression\'', '--format pretty',
                         '--format html -o reports/cucumber.html']
 end
 

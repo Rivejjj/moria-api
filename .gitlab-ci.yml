@@ -19,7 +19,7 @@ stages:
   - build
   - package
   - deploy_test
-  - acceptance_test
+  - regression_report
   - deploy_prod
 
 code_quality:
@@ -67,6 +67,15 @@ deploy_test_job:
     - kubectl -n ${TEAM}-${CI_ENVIRONMENT_NAME} apply -f infra/${CI_ENVIRONMENT_NAME}.configmap.yaml
     - kubectl -n ${TEAM}-${CI_ENVIRONMENT_NAME} set image deployment/restapi restapi=$CI_REGISTRY_IMAGE:$VERSION
     - ./scripts/smoke_test.sh $API_HOST_TEST $VERSION
+  only:
+    - tags
+
+regression_report_job:
+  stage: regression_report
+  script:
+    - gem install bundler --no-document
+    - bundle install --without staging production
+    - APP_MODE=test bundle exec rake regression_report
   only:
     - tags
 
