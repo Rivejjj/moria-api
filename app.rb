@@ -169,4 +169,6 @@ get '/autores/contenidos' do
   presentacion_contenidos_de_autor = PresentacionContenidosDeAutor.new(contenidos_de_autor)
   status 200
   presentacion_contenidos_de_autor.obtener_json
+rescue AutorNoEncontradoError
+  status 404
 end

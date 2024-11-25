@@ -8,7 +8,6 @@ Característica: Obtener contenidos de autor
     Cuando un usuario intenta obtener los contenidos del autor "Michael Jackson"
     Entonces obtiene los contenidos del autor
 
-  @wip
-  Escenario: US48:2 - Usuario intenta obtener lo contenidos de un autor que no existe
+  Escenario: US48:2 - Usuario intenta obtener los contenidos de un autor que no existe
     Cuando un usuario intenta obtener los contenidos del autor "Michael Jackson"
     Entonces no obtiene los contenidos del autor
