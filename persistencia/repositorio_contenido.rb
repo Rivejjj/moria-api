@@ -49,8 +49,8 @@ class RepositorioContenido < AbstractRepository
     dataset.where(id_autor: autor.id).map { |fila| load_object(fila) }
   end
 
-  def ultimos_contenidos(cantidad)
-    load_collection(dataset.order(Sequel.desc(:created_on)).limit(cantidad).all)
+  def ultimas_canciones(cantidad)
+    load_collection(dataset.where(tipo: TIPO_CANCION).order(Sequel.desc(:created_on)).limit(cantidad).all)
   end
 
   protected

@@ -126,7 +126,7 @@ describe RepositorioContenido do
     described_class.new.save(contenido2)
     described_class.new.save(contenido3)
 
-    expect(described_class.new.ultimos_contenidos(2).map(&:id)).to eq([1, 2])
+    expect(described_class.new.ultimas_canciones(2).map(&:id)).to eq([1, 2])
   end
 end
 
