@@ -36,15 +36,18 @@ def sistema
 end
 
 get '/version' do
+  logger.debug 'Recibido GET /version'
   json({ version: Version.current })
 end
 
 post '/reset' do
+  logger.debug 'Recibido POST /reset'
   sistema.reset
   status 200
 end
 
 get '/usuarios' do
+  logger.debug 'Recibido GET /usuarios'
   usuarios = sistema.usuarios
   respuesta = []
   usuarios.map { |u| respuesta << { email: u.email, id: u.id } }
@@ -53,6 +56,7 @@ get '/usuarios' do
 end
 
 post '/usuarios' do
+  logger.debug "Recibido POST /usuarios - #{@params.to_json}"
   sistema.crear_usuario(@params[:nombre_de_usuario], @params[:email], @params[:id_plataforma])
   status 201
 rescue NombreDeUsuarioEnUsoError
@@ -60,6 +64,7 @@ rescue NombreDeUsuarioEnUsoError
 end
 
 post '/canciones' do
+  logger.debug "Recibido POST /canciones - #{@params.to_json}"
   id_cancion = sistema.crear_cancion(@params[:nombre], @params[:autor], @params[:anio], @params[:duracion], @params[:genero])
   respuesta = { id_cancion: }
   status 201
@@ -69,11 +74,13 @@ rescue AutorNoEncontradoError
 end
 
 post '/canciones/:id_cancion/reproduccion' do |id_cancion|
+  logger.debug "Recibido POST /canciones/#{id_cancion}/reproduccion - #{@params.to_json}"
   sistema.reproducir_cancion(id_cancion, @params[:nombre_usuario])
   status 201
 end
 
 post '/usuarios/:id_plataforma/playlist' do |id_plataforma|
+  logger.debug "Recibido POST /usuarios/#{id_plataforma}/playlist - #{@params.to_json}"
   nombre_cancion = sistema.agregar_a_playlist(@params[:id_cancion], id_plataforma)
   respuesta = { nombre_cancion: }
   status 201
@@ -85,6 +92,7 @@ rescue UsuarioNoEncontradoError
 end
 
 get '/usuarios/:id_plataforma/recomendacion' do |id_plataforma|
+  logger.debug "Recibido GET /usuarios/#{id_plataforma}/recomendacion"
   recomendacion = sistema.recomendar_contenido(id_plataforma)
   respuesta_recomendacion = []
   recomendacion.map { |c| respuesta_recomendacion << { 'id_contenido': c[0], 'nombre': c[1] } }
@@ -96,6 +104,7 @@ rescue UsuarioNoEncontradoError
 end
 
 post '/contenidos/:id_contenido/megusta' do |id_contenido|
+  logger.debug "Recibido POST /contenidos/#{id_contenido}/megusta - #{@params.to_json}"
   sistema.dar_me_gusta_a_contenido(id_contenido, @params[:id_plataforma])
   status 201
 rescue ContenidoNoEncontradoError
@@ -113,6 +122,7 @@ rescue PodcastNoReproducidoError
 end
 
 post '/podcasts' do
+  logger.debug "Recibido POST /podcasts - #{@params.to_json}"
   id_podcast = sistema.crear_podcast(@params[:nombre], @params[:autor], @params[:anio], @params[:duracion], @params[:genero])
   respuesta = { id_podcast: }
   status 201
@@ -122,6 +132,7 @@ rescue AutorNoEncontradoError
 end
 
 post '/podcasts/:id_podcast/episodios' do |id_podcast|
+  logger.debug "Recibido POST /podcasts/#{id_podcast}/episodios - #{@params.to_json}"
   id_episodio = sistema.crear_episodio_podcast(id_podcast, @params[:numero], @params[:nombre], @params[:duracion])
   status 201
   json({ id_episodio: })
@@ -130,12 +141,14 @@ rescue ContenidoNoEncontradoError
 end
 
 post '/episodios/:id_episodio/reproduccion' do |id_episodio|
+  logger.debug "Recibido POST /episodios/#{id_episodio}/reproduccion - #{@params.to_json}"
   id_episodio = sistema.reproducir_episodio_podcast(id_episodio, @params[:nombre_usuario])
   status 201
   json({ id_episodio: })
 end
 
 get '/contenidos/:id_contenido/detalles' do |id_contenido|
+  logger.debug "Recibido GET /contenidos/#{id_contenido}/detalles"
   detalles_contenido = sistema.obtener_detalles_contenido(id_contenido)
   status 200
   detalles_contenido.obtener_json
@@ -144,18 +157,21 @@ rescue ContenidoNoEncontradoError
 end
 
 get '/contenidos/top_semanal' do
+  logger.debug 'Recibido GET /contenidos/top_semanal'
   top_semanal = TopSemanalPresentacion.new(sistema.obtener_top_semanal)
   status 200
   top_semanal.obtener_json
 end
 
 post '/autores' do
+  logger.debug "Recibido POST /autores - #{@params.to_json}"
   id_autor = sistema.crear_autor(@params[:nombre], @params[:id_externo])
   status 201
   json({ id_autor: })
 end
 
 get '/autores/relacionados' do
+  logger.debug "Recibido GET /autores/relacionados - #{@params.to_json}"
   nombre_autor = @params[:nombre_autor]
   autores_relacionados = sistema.obtener_autores_relacionados_a(nombre_autor)
   presentacion_autores_relacionados = PresentacionAutoresRelacionados.new(autores_relacionados)
@@ -166,6 +182,7 @@ rescue AutorNoEncontradoError
 end
 
 get '/autores/contenidos' do
+  logger.debug "Recibido GET /autores/contenidos - #{@params.to_json}"
   nombre_autor = @params[:nombre_autor]
   contenidos_de_autor = sistema.obtener_contenidos_de_autor(nombre_autor)
   presentacion_contenidos_de_autor = PresentacionContenidosDeAutor.new(contenidos_de_autor)
