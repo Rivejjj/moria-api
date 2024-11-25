@@ -43,11 +43,12 @@ describe RecomendadorDeContenido do
     expect(recomendacion).to eq([canciones[1], podcasts[1]])
   end
 
-  xit 'si no encuentra podcast o cancion del genero mas gustado, devuelve de las ultimas agregadas que no haya gustado el usuario' do
+  it 'si no encuentra podcast o cancion del genero mas gustado, devuelve de las ultimas agregadas que no haya gustado el usuario' do
     podcast = crear_mock_contenido
     cancion = crear_mock_contenido
+    cancion_pop = crear_mock_contenido('pop')
     repo_contenido = instance_double('RepositorioContenido', get_podcasts_de_genero: [], get_canciones_de_genero: [], ultimas_canciones: [cancion], ultimos_podcasts: [podcast])
-    me_gustas = MeGustasUsuario.new(instance_double('Usuario'), [])
+    me_gustas = MeGustasUsuario.new(instance_double('Usuario'), [cancion_pop])
 
     recomendador = described_class.new(repo_contenido)
     recomendacion = recomendador.recomendar_contenido(me_gustas)
@@ -55,8 +56,8 @@ describe RecomendadorDeContenido do
   end
 end
 
-def crear_mock_contenido
-  contenido_rock = instance_double('Contenido', genero: 'rock')
+def crear_mock_contenido(genero = 'rock')
+  contenido_rock = instance_double('Contenido', genero:)
   allow(contenido_rock).to receive(:es_el_mismo?) { |contenido| contenido == contenido_rock }
   contenido_rock
 end

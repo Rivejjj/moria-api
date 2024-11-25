@@ -12,12 +12,34 @@ class RecomendadorDeContenido
   def recomendar_cancion_de_genero_mas_gustado(me_gustas)
     genero = me_gustas.genero_mas_gustado
     canciones = @repositorio_contenido.get_canciones_de_genero(genero)
-    canciones.find { |cancion| !me_gustas.contenido_gustado?(cancion) }
+    recomendacion = buscar_primer_contenido_no_gustado(me_gustas, canciones)
+    recomendacion = recomendar_ultima_cancion_no_gustada(me_gustas) if recomendacion.nil?
+    recomendacion
   end
 
   def recomendar_podcast_de_genero_mas_gustado(me_gustas)
     genero = me_gustas.genero_mas_gustado
     podcasts = @repositorio_contenido.get_podcasts_de_genero(genero)
-    podcasts.find { |podcast| !me_gustas.contenido_gustado?(podcast) }
+    recomendacion = buscar_primer_contenido_no_gustado(me_gustas, podcasts)
+    recomendacion = recomendar_ultima_podcast_no_gustado(me_gustas) if recomendacion.nil?
+    recomendacion
+  end
+
+  protected
+
+  RANGO_ULTIMOS_CONTENIDOS = 100
+
+  def recomendar_ultima_cancion_no_gustada(me_gustas)
+    canciones = @repositorio_contenido.ultimas_canciones(RANGO_ULTIMOS_CONTENIDOS)
+    buscar_primer_contenido_no_gustado(me_gustas, canciones)
+  end
+
+  def recomendar_ultima_podcast_no_gustado(me_gustas)
+    podcasts = @repositorio_contenido.ultimos_podcasts(RANGO_ULTIMOS_CONTENIDOS)
+    buscar_primer_contenido_no_gustado(me_gustas, podcasts)
+  end
+
+  def buscar_primer_contenido_no_gustado(me_gustas, contenidos)
+    contenidos.find { |contenido| !me_gustas.contenido_gustado?(contenido) }
   end
 end
