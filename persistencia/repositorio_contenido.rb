@@ -49,6 +49,10 @@ class RepositorioContenido < AbstractRepository
     dataset.where(id_autor: autor.id).map { |fila| load_object(fila) }
   end
 
+  def ultimos_contenidos(cantidad)
+    load_collection(dataset.order(Sequel.desc(:created_on)).limit(cantidad).all)
+  end
+
   protected
 
   def get_contenido_de_genero(genero, tipo_contenido)

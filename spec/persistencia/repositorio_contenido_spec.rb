@@ -117,6 +117,17 @@ describe RepositorioContenido do
 
     expect(described_class.new.get(contenido.id).created_on).not_to be nil
   end
+
+  it 'Puedo obtener las ultimas canciones' do
+    contenido1 = Cancion.new(info_cancion, 1, Date.new(2021, 1, 10))
+    contenido2 = Cancion.new(info_cancion, 2, Date.new(2021, 1, 9))
+    contenido3 = Cancion.new(info_cancion, 3, Date.new(2021, 1, 8))
+    described_class.new.save(contenido1)
+    described_class.new.save(contenido2)
+    described_class.new.save(contenido3)
+
+    expect(described_class.new.ultimos_contenidos(2).map(&:id)).to eq([1, 2])
+  end
 end
 
 def crear_y_guardar_cancion_de_genero(genero, autor)
