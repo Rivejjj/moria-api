@@ -27,6 +27,20 @@ Entonces('obtiene un podcast de genero {string} al que no le dio me gusta') do |
   expect(me_gustas_podcast.contenido.genero).to eq(genero)
 end
 
+Entonces('obtiene una cancion de las ultimas cargadas a la que no le dio me gusta') do
+  cancion = JSON.parse(@response.body)['recomendacion'][0]
+  me_gustas_cancion = RepositorioMeGustasContenido.new.get(cancion['id_contenido'])
+  expect(me_gustas_cancion.usuarios).not_to include(@usuario)
+  expect(me_gustas_cancion.contenido.genero).not_to eq(genero)
+end
+
+Entonces('obtiene un podcast de los ultimos cargados al que no le dio me gusta') do
+  podcast = JSON.parse(@response.body)['recomendacion'][1]
+  me_gustas_podcast = RepositorioMeGustasContenido.new.get(podcast['id_contenido'])
+  expect(me_gustas_podcast.usuarios).not_to include(@usuario)
+  expect(me_gustas_podcast.contenido.genero).not_to eq(genero)
+end
+
 def crear_y_guardar_autor(nombre)
   Faraday.post('/autores', { nombre:, id_externo: '12345' }.to_json, { 'Content-Type' => 'application/json' })
 end
