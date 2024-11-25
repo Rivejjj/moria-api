@@ -162,3 +162,11 @@ get '/autores/relacionados' do
 rescue AutorNoEncontradoError
   status 404
 end
+
+get '/autores/contenidos' do
+  nombre_autor = @params[:nombre_autor]
+  contenidos_de_autor = sistema.obtener_contenidos_de_autor(nombre_autor)
+  presentacion_contenidos_de_autor = PresentacionContenidosDeAutor.new(contenidos_de_autor)
+  status 200
+  presentacion_contenidos_de_autor.obtener_json
+end

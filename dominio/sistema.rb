@@ -20,16 +20,14 @@ class Sistema
 
   def crear_cancion(nombre, nombre_autor, anio, duracion, genero)
     autor = @repositorio_autores.get_by_nombre(nombre_autor)
-    info_cancion = InformacionContenido.new(nombre, autor, anio, duracion, genero)
-    cancion = Cancion.new(info_cancion)
+    cancion = Cancion.new(InformacionContenido.new(nombre, autor, anio, duracion, genero))
     @repositorio_contenido.save(cancion)
     cancion.id
   end
 
   def crear_podcast(nombre, nombre_autor, anio, duracion, genero)
     autor = @repositorio_autores.get_by_nombre(nombre_autor)
-    info_podcast = InformacionContenido.new(nombre, autor, anio, duracion, genero)
-    podcast = Podcast.new(info_podcast)
+    podcast = Podcast.new(InformacionContenido.new(nombre, autor, anio, duracion, genero))
     @repositorio_contenido.save(podcast)
     podcast.id
   end
@@ -98,6 +96,11 @@ class Sistema
   def obtener_autores_relacionados_a(nombre_autor)
     autor = @repositorio_autores.get_by_nombre(nombre_autor)
     @adaptador_plataforma_musica.obtener_autores_relacionados_a(autor)
+  end
+
+  def obtener_contenidos_de_autor(nombre_autor)
+    autor = @repositorio_autores.get_by_nombre(nombre_autor)
+    @repositorio_contenido.get_contenidos_de_autor(autor)
   end
 
   def usuarios

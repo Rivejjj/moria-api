@@ -1,8 +1,7 @@
 # language: es
 Característica: Obtener contenidos de autor
 
-  @wip
-  Escenario: US48:1 - Usuario intenta obtener lo contenidos de un autor
+  Escenario: US48:1 - Usuario intenta obtener los contenidos de un autor
     Dado que existe un autor con nombre "Michael Jackson"
     Y que existe una cancion de "Michael Jackson"
     Y que existe un podcast de "Michael Jackson"

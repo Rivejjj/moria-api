@@ -23,6 +23,6 @@ Entonces('obtiene los contenidos del autor') do
   expect(@respuesta.status).to eq 200
   contenidos = JSON.parse(@respuesta.body, symbolize_names: true)[:contenidos]
   expect(contenidos.size).to eq 2
-  expect(contenidos).to include({ id_contenido: @cancion.id, nombre_contenido: @cancion.nombre })
-  expect(contenidos).to include({ id_contenido: @podcast.id, nombre_contenido: @podcast.nombre })
+  expect(contenidos).to include({ id_contenido: @cancion.id, nombre: @cancion.nombre })
+  expect(contenidos).to include({ id_contenido: @podcast.id, nombre: @podcast.nombre })
 end
