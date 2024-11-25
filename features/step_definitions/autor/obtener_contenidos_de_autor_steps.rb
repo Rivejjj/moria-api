@@ -26,3 +26,7 @@ Entonces('obtiene los contenidos del autor') do
   expect(contenidos).to include({ id_contenido: @cancion.id, nombre: @cancion.nombre })
   expect(contenidos).to include({ id_contenido: @podcast.id, nombre: @podcast.nombre })
 end
+
+Entonces('no obtiene los contenidos del autor') do
+  expect(@respuesta.status).to eq 404
+end

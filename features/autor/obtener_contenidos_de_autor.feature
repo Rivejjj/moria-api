@@ -7,3 +7,8 @@ Característica: Obtener contenidos de autor
     Y que existe un podcast de "Michael Jackson"
     Cuando un usuario intenta obtener los contenidos del autor "Michael Jackson"
     Entonces obtiene los contenidos del autor
+
+  @wip
+  Escenario: US48:2 - Usuario intenta obtener lo contenidos de un autor que no existe
+    Cuando un usuario intenta obtener los contenidos del autor "Michael Jackson"
+    Entonces no obtiene los contenidos del autor
