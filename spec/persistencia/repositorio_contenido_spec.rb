@@ -120,13 +120,24 @@ describe RepositorioContenido do
 
   it 'Puedo obtener las ultimas canciones' do
     contenido1 = Cancion.new(info_cancion, 1, Date.new(2021, 1, 10))
-    contenido2 = Cancion.new(info_cancion, 2, Date.new(2021, 1, 9))
+    contenido2 = Podcast.new(info_podcast, 2, Date.new(2021, 1, 9))
     contenido3 = Cancion.new(info_cancion, 3, Date.new(2021, 1, 8))
     described_class.new.save(contenido1)
     described_class.new.save(contenido2)
     described_class.new.save(contenido3)
 
-    expect(described_class.new.ultimas_canciones(2).map(&:id)).to eq([1, 2])
+    expect(described_class.new.ultimas_canciones(1).map(&:id)).to eq([1])
+  end
+
+  it 'Puedo obtener los ultimos podcasts' do
+    contenido1 = Podcast.new(info_podcast, 1, Date.new(2021, 1, 10))
+    contenido2 = Cancion.new(info_cancion, 2, Date.new(2021, 1, 9))
+    contenido3 = Podcast.new(info_podcast, 3, Date.new(2021, 1, 8))
+    described_class.new.save(contenido1)
+    described_class.new.save(contenido2)
+    described_class.new.save(contenido3)
+
+    expect(described_class.new.ultimos_podcasts(1).map(&:id)).to eq([1])
   end
 end
 

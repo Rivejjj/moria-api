@@ -50,10 +50,18 @@ class RepositorioContenido < AbstractRepository
   end
 
   def ultimas_canciones(cantidad)
-    load_collection(dataset.where(tipo: TIPO_CANCION).order(Sequel.desc(:created_on)).limit(cantidad).all)
+    ultimos_contenidos(TIPO_CANCION, cantidad)
+  end
+
+  def ultimos_podcasts(cantidad)
+    ultimos_contenidos(TIPO_PODCAST, cantidad)
   end
 
   protected
+
+  def ultimos_contenidos(tipo_contenido, cantidad)
+    load_collection(dataset.where(tipo: tipo_contenido).order(Sequel.desc(:created_on)).limit(cantidad).all)
+  end
 
   def get_contenido_de_genero(genero, tipo_contenido)
     contenido_de_genero = dataset.where(genero:, tipo: tipo_contenido)
