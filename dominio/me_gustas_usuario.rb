@@ -5,10 +5,11 @@ class MeGustasUsuario
   end
 
   def genero_mas_gustado
-    @contenidos.map(&:genero)
+    genero = @contenidos.map(&:genero)
                .tally
                .max_by(&:last)
-               .first
+    genero = genero.first if genero
+    genero
   end
 
   def contenido_gustado?(otro_contenido)

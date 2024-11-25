@@ -18,6 +18,11 @@ describe MeGustasUsuario do
       me_gustas_usuario = described_class.new(usuario, me_gustas)
       expect(me_gustas_usuario.genero_mas_gustado).to eq('Pop')
     end
+
+    it 'deberia devolver nil si no tiene me gusta' do
+      me_gustas_usuario = described_class.new(instance_double('Usuario'), [])
+      expect(me_gustas_usuario.genero_mas_gustado).to be_nil
+    end
   end
 
   describe 'contenido_gustado?' do

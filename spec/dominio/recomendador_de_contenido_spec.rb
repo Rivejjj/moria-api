@@ -42,6 +42,18 @@ describe RecomendadorDeContenido do
     recomendacion = recomendador.recomendar_contenido(me_gustas)
     expect(recomendacion).to eq([canciones[1], podcasts[1]])
   end
+
+  xit 'si no encuentra podcast o cancion del genero mas gustado, devuelve de las ultimas agregadas que no haya gustado el usuario' do
+    podcast = crear_mock_contenido
+    cancion = crear_mock_contenido
+    repo_contenido = instance_double('RepositorioContenido', get_podcasts_de_genero: [], get_canciones_de_genero: [], ultimos_contenidos: [podcast, cancion])
+    me_gustas = MeGustasUsuario.new(instance_double('Usuario'), [])
+
+    recomendador = described_class.new(repo_contenido)
+    recomendacion = recomendador.recomendar_contenido(me_gustas)
+    expect(recomendacion).to eq([cancion, podcast])
+  end
+
 end
 
 def crear_mock_contenido
