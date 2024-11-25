@@ -26,3 +26,9 @@ Entonces('obtiene las ultimas {int} canciones de su playlist') do |cantidad_canc
     expect(id_cancion).to eq @usuario.playlist.length - i
   end
 end
+
+Entonces('obtiene una recomendacion vacia') do
+  expect(@response.status).to eq 200
+  recomendacion = JSON.parse(@response.body)['recomendacion']
+  expect(recomendacion.length).to eq 0
+end
