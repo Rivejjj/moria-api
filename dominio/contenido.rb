@@ -2,7 +2,8 @@ class Contenido
   attr_reader :updated_on, :created_on
   attr_accessor :id
 
-  def initialize(info_contenido, id = nil)
+  def initialize(info_contenido, id = nil, created_on = nil)
+    @created_on = created_on
     @info_contenido = info_contenido
     @id = id
   end

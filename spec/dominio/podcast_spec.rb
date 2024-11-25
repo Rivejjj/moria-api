@@ -39,6 +39,12 @@ describe Podcast do
     expect(podcast.genero).to eq(info_podcast.genero)
   end
 
+  it 'se puede obtener la fecha de creacion del podcast' do
+    info_podcast = InformacionContenido.new('nombre', 'autor', 2021, 180, 'rock')
+    podcast = described_class.new(info_podcast, 1, Date.new(2021, 1, 1))
+    expect(podcast.created_on).to eq(Date.new(2021, 1, 1))
+  end
+
   it 'es_una_cancion? deberia devolver false' do
     info_podcast = InformacionContenido.new('nombre', 'autor', 2021, 180, 'rock')
     podcast = described_class.new(info_podcast)
