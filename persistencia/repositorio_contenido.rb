@@ -76,11 +76,11 @@ class RepositorioContenido < AbstractRepository
   end
 
   def load_cancion(a_hash, info_contenido)
-    Cancion.new(info_contenido, a_hash[:id])
+    Cancion.new(info_contenido, a_hash[:id], a_hash[:created_on])
   end
 
   def load_podcast(a_hash, info_contenido)
-    podcast = Podcast.new(info_contenido, a_hash[:id])
+    podcast = Podcast.new(info_contenido, a_hash[:id], a_hash[:created_on])
     episodios = RepositorioEpisodiosPodcast.new.find_by_id_podcast(a_hash[:id])
     episodios.each do |episodio|
       podcast.agregar_episodio(episodio)

@@ -101,6 +101,13 @@ describe RepositorioContenido do
 
     expect(contenidos.all? { |contenido| contenido.autor.id == autor.id }).to be true
   end
+
+  it 'deberia obtener el contenido con su fecha de creacion' do
+    contenido = Cancion.new(info_cancion)
+    described_class.new.save(contenido)
+
+    expect(described_class.new.get(contenido.id).created_on).not_to be nil
+  end
 end
 
 def crear_y_guardar_cancion_de_genero(genero, autor)
