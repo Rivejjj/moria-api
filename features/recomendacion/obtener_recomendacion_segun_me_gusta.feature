@@ -9,7 +9,7 @@ Característica: Obtener recomendacion
     Entonces obtiene una cancion de genero "rock" a la que no le dio me gusta
     Y obtiene un podcast de genero "rock" al que no le dio me gusta
 
-  @wip
+  
   Escenario: US45:2 - Usuario intenta obtener una una recomendación de contenido según el género que más le gusta habiendo dado me gusta a todos los contenidos de ese genero
     Dado que existe un usuario "Kevin"
     Y que existen 2 canciones del genero "rock" y a 2 le dio me gusta
