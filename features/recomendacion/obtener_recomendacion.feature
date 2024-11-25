@@ -1,7 +1,6 @@
 # language: es
 Característica: Obtener recomendacion
 
-  @wip
   Escenario: US9:2 - Recomendacion sin contenido
     Dado que existe un usuario "Kevin"
     Y que no hay canciones registradas
