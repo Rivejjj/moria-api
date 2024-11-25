@@ -6,7 +6,7 @@ class RecomendadorDeContenido
   end
 
   def recomendar_contenido(me_gustas)
-    [recomendar_cancion_de_genero_mas_gustado(me_gustas), recomendar_podcast_de_genero_mas_gustado(me_gustas)]
+    [recomendar_cancion_de_genero_mas_gustado(me_gustas), recomendar_podcast_de_genero_mas_gustado(me_gustas)].compact
   end
 
   def recomendar_cancion_de_genero_mas_gustado(me_gustas)
