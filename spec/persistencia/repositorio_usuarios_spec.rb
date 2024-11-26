@@ -9,14 +9,6 @@ describe RepositorioUsuarios do
     expect(juan.id).not_to be_nil
   end
 
-  it 'deberia recuperar todos' do
-    repositorio = described_class.new
-    cantidad_de_usuarios_iniciales = repositorio.all.size
-    juan = Usuario.new('juan', 'juan@test.com', '1')
-    repositorio.save(juan)
-    expect(repositorio.all.size).to be(cantidad_de_usuarios_iniciales + 1)
-  end
-
   it 'deberia recuperar todos los datos del usuario' do
     repositorio = described_class.new
     juan = Usuario.new('juan', 'juan@test.com', '1')
@@ -77,7 +69,7 @@ describe RepositorioUsuarios do
     expect(juan.playlist.last.id).to eq cancion1.id
   end
 
-  xit 'deberia recuperar todos los usuarios' do
+  it 'deberia recuperar todos los usuarios' do
     cancion1 = guardar_cancion(1)
     usuario1 = Usuario.new('juan', 'juan@test.com', '1')
     usuario2 = Usuario.new('juan2', 'juan2@test.com', '2')

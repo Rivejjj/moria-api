@@ -15,6 +15,14 @@ class RepositorioUsuarios < AbstractRepository
     usuario
   end
 
+  def all
+    usuarios = dataset.all.map do |fila|
+      crear_usuario(fila)
+    end
+    RepositorioPlaylistsDeUsuario.new.load_all(usuarios)
+    usuarios
+  end
+
   def delete_all
     RepositorioPlaylistsDeUsuario.new.delete_all
     dataset.delete
@@ -35,9 +43,13 @@ class RepositorioUsuarios < AbstractRepository
   protected
 
   def load_object(a_hash)
-    usuario = Usuario.new(a_hash[:nombre], a_hash[:email], a_hash[:id_plataforma], a_hash[:id])
+    usuario = crear_usuario(a_hash)
     RepositorioPlaylistsDeUsuario.new.load(usuario)
     usuario
+  end
+
+  def crear_usuario(a_hash)
+    Usuario.new(a_hash[:nombre], a_hash[:email], a_hash[:id_plataforma], a_hash[:id])
   end
 
   def changeset(usuario)
