@@ -49,6 +49,19 @@ describe RepositorioEpisodiosPodcast do
 
     expect(described_class.new.get_episodios_de_podcasts([podcast1.id, podcast2.id]).size).to eq 5
   end
+
+  it 'deberia cargar los episodios de un podcast' do
+    podcast = crear_podcast_con_n_episodios(3, autor)
+    podcast2 = crear_podcast_con_n_episodios(2, autor)
+
+    podcast_nuevo = Podcast.new(info_contenido, podcast.id)
+    podcast_nuevo2 = Podcast.new(info_contenido, podcast2.id)
+
+    described_class.new.cargar_episodios([podcast_nuevo, podcast_nuevo2])
+
+    expect(podcast_nuevo.episodios.size).to eq 3
+    expect(podcast_nuevo2.episodios.size).to eq 2
+  end
 end
 
 def crear_podcast_con_n_episodios(cantidad_episodios, autor)

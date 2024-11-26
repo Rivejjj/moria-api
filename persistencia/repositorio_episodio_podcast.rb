@@ -26,6 +26,15 @@ class RepositorioEpisodiosPodcast < AbstractRepository
     load_collection(dataset.where(id_podcast: ids))
   end
 
+  def cargar_episodios(podcasts)
+    filas = dataset.where(id_podcast: podcasts.map(&:id))
+    podcasts = podcasts.map { |podcast| [podcast.id, podcast] }.to_h
+    filas.each do |fila|
+      episodio, id_podcast = load_episodio_con_id_podcast(fila)
+      podcasts[id_podcast].agregar_episodio(episodio)
+    end
+  end
+
   protected
 
   def insert(episodio, id_podcast)
@@ -62,5 +71,9 @@ class RepositorioEpisodiosPodcast < AbstractRepository
       nombre: episodio.nombre,
       duracion: episodio.duracion
     }
+  end
+
+  def load_episodio_con_id_podcast(a_hash)
+    [load_object(a_hash), a_hash[:id_podcast]]
   end
 end
