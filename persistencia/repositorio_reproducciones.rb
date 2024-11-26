@@ -110,10 +110,6 @@ class RepositorioReproducciones
     reproducciones
   end
 
-  def load_collection(rows)
-    rows.map { |a_record| load_object(a_record) }
-  end
-
   def add_created_on(changeset)
     changeset.merge(created_on: Date.today)
   end

@@ -12,11 +12,22 @@ class RepositorioPlaylistsDeUsuario
     end
   end
 
+  def load_all(usuarios)
+    contenidos = RepositorioContenido.new.all
+    contenidos = contenidos.map { |contenido| [contenido.id, contenido] }.to_h
+    usuarios = usuarios.map { |usuario| [usuario.id, usuario] }.to_h
+    agregar_playist_a_usuarios(usuarios, contenidos)
+  end
+
   def delete_all
-    DB[:playlists_usuarios_contenido].delete
+    dataset.delete
   end
 
   protected
+
+  def dataset
+    DB[:playlists_usuarios_contenido]
+  end
 
   def filtrar_contenido_nuevo_playlist(usuario)
     ids_contenido_playlist_guardada = obtener_ids_contenido_playlist_guardada(usuario)
@@ -24,20 +35,28 @@ class RepositorioPlaylistsDeUsuario
   end
 
   def obtener_ids_contenido_playlist_guardada(usuario)
-    DB[:playlists_usuarios_contenido].where(id_usuario: usuario.id).select_map(:id_contenido)
+    dataset.where(id_usuario: usuario.id).select_map(:id_contenido)
   end
 
   def obtener_max_orden_playlist(usuario)
-    DB[:playlists_usuarios_contenido].where(id_usuario: usuario.id).max(:orden) || 0
+    dataset.where(id_usuario: usuario.id).max(:orden) || 0
   end
 
   def insertar_contenido_nuevo(usuario, contenido_nuevo_playlist, max_orden)
     contenido_nuevo_playlist.each_with_index do |contenido, i|
-      DB[:playlists_usuarios_contenido].insert(
+      dataset.insert(
         id_usuario: usuario.id,
         id_contenido: contenido.id,
         orden: max_orden + i + 1
       )
+    end
+  end
+
+  def agregar_playist_a_usuarios(usuarios, contenidos)
+    dataset.each do |fila|
+      usuario = usuarios[fila[:id_usuario]]
+      contenido = contenidos[fila[:id_contenido]]
+      usuario.agregar_a_playlist(contenido)
     end
   end
 end

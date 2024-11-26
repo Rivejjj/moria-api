@@ -67,14 +67,27 @@ describe RepositorioUsuarios do
   it 'deberia recuperar al usuario con su playlist en orden' do
     cancion1 = guardar_cancion(1)
     cancion2 = guardar_cancion(2)
-
     juan = Usuario.new('juan', 'juan@test.com', '1')
+
     agregar_a_playlist_y_guardar(juan, cancion2)
     agregar_a_playlist_y_guardar(juan, cancion1)
     juan = described_class.new.find(juan.id)
 
     expect(juan.playlist.first.id).to eq cancion2.id
     expect(juan.playlist.last.id).to eq cancion1.id
+  end
+
+  xit 'deberia recuperar todos los usuarios' do
+    cancion1 = guardar_cancion(1)
+    usuario1 = Usuario.new('juan', 'juan@test.com', '1')
+    usuario2 = Usuario.new('juan2', 'juan2@test.com', '2')
+
+    agregar_a_playlist_y_guardar(usuario1, cancion1)
+    described_class.new.save(usuario2)
+
+    usuarios = described_class.new.all
+    expect(usuarios[0].playlist.first.id).to eq cancion1.id
+    expect(usuarios.map(&:id)).to include(usuario1.id, usuario2.id)
   end
 end
 
