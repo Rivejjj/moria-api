@@ -1,4 +1,5 @@
 require_relative 'repositorio_contenido'
+require_relative './abstract_repository'
 
 class RepositorioEpisodiosPodcast < AbstractRepository
   self.table_name = :episodios_podcast
