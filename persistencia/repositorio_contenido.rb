@@ -1,6 +1,6 @@
 require_relative './abstract_repository'
 
-class RepositorioContenido < AbstractRepository # rubocop:disable Metrics/ClassLength
+class RepositorioContenido < AbstractRepository
   TIPO_CANCION = 'c'.freeze
   TIPO_PODCAST = 'p'.freeze
   self.table_name = :contenido
@@ -30,16 +30,6 @@ class RepositorioContenido < AbstractRepository # rubocop:disable Metrics/ClassL
 
   def get_contenidos(ids_contenido)
     load_collection(dataset.where(id: ids_contenido))
-  end
-
-  def find_playlist_by_usuario(usuario)
-    playlists_usuarios_contenido = DB[:playlists_usuarios_contenido]
-    playlists_usuarios_contenido_filtrado = playlists_usuarios_contenido.where(id_usuario: usuario.id).order(:orden)
-    playlist = []
-    playlists_usuarios_contenido_filtrado.each do |fila|
-      playlist << find(fila[:id_contenido])
-    end
-    playlist
   end
 
   def get_canciones_de_genero(genero)

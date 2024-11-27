@@ -6,7 +6,7 @@ class RepositorioPlaylistsDeUsuario
   end
 
   def load(usuario)
-    playlist = RepositorioContenido.new.find_playlist_by_usuario(usuario)
+    playlist = find_by_usuario(usuario)
     playlist.each do |contenido|
       usuario.agregar_a_playlist(contenido)
     end
@@ -50,6 +50,15 @@ class RepositorioPlaylistsDeUsuario
         orden: max_orden + i + 1
       )
     end
+  end
+
+  def find_by_usuario(usuario)
+    playlists_usuarios_contenido_filtrado = dataset.where(id_usuario: usuario.id).order(:orden)
+    playlist = []
+    playlists_usuarios_contenido_filtrado.each do |fila|
+      playlist << RepositorioContenido.new.find(fila[:id_contenido])
+    end
+    playlist
   end
 
   def agregar_playist_a_usuarios(usuarios, contenidos)
