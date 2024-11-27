@@ -19,3 +19,10 @@ Entonces('se agrega el podcast {string} a la playlist') do |nombre_podcast|
   usuario = repo_usuarios.get_by_id_plataforma(ID_PLATAFORMA_PRUEBA)
   expect(usuario.playlist.any? { |contenido| contenido.nombre == nombre_podcast }).to eq true
 end
+
+Entonces('no se agrega el podcast a la playlist') do
+  expect(@response.status).to eq(404)
+  repo_usuarios = RepositorioUsuarios.new
+  usuario = repo_usuarios.get_by_id_plataforma(ID_PLATAFORMA_PRUEBA)
+  expect(usuario.playlist.size).to eq 0
+end
