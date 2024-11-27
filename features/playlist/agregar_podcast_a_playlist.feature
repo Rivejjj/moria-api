@@ -11,3 +11,10 @@ Característica: Agregar podcast a playlist
     Dado que existe un usuario "Kevin"
     Cuando el usuario agrega el podcast con id 1 a su playlist
     Entonces no se agrega el podcast a la playlist
+
+  Escenario: US49:3 - Persona no registrada agrega un podcast a su playlist
+    Dado que una persona no esta registrada
+    Y existe un podcast "JRE" con id 1
+    Cuando la persona agrega el podcast con id 1 a su playlist
+    Entonces la persona debe registrarse
+

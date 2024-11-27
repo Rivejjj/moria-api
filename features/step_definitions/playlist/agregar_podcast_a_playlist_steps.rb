@@ -12,6 +12,11 @@ Cuando('el usuario agrega el podcast con id {int} a su playlist') do |id_podcast
   @response = Faraday.post("/usuarios/#{ID_PLATAFORMA_PRUEBA}/playlist", request_body, { 'Content-Type' => 'application/json' })
 end
 
+Cuando('la persona agrega el podcast con id {int} a su playlist') do |id_podcast|
+  request_body = { 'id_contenido' => id_podcast }.to_json
+  @response = Faraday.post("/usuarios/#{ID_PLATAFORMA_PRUEBA}/playlist", request_body, { 'Content-Type' => 'application/json' })
+end
+
 Entonces('se agrega el podcast {string} a la playlist') do |nombre_podcast|
   expect(@response.status).to eq(201)
   expect(JSON.parse(@response.body)['nombre']).to eq nombre_podcast
