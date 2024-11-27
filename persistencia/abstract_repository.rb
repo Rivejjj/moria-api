@@ -71,7 +71,11 @@ class AbstractRepository
   end
 
   def insert_changeset(a_record)
-    changeset_with_timestamps(a_record).merge(created_on: Date.today)
+    if a_record.created_on.nil?
+      changeset_with_timestamps(a_record).merge(created_on: Date.today)
+    else
+      changeset_with_timestamps(a_record)
+    end
   end
 
   def update_changeset(a_record)

@@ -126,7 +126,7 @@ describe RepositorioContenido do
     described_class.new.save(contenido2)
     described_class.new.save(contenido3)
 
-    expect(described_class.new.ultimas_canciones(1).map(&:id)).to eq([1])
+    expect(described_class.new.ultimas_canciones(1).map(&:created_on)).to eq([Date.new(2021, 1, 10)])
   end
 
   it 'Puedo obtener los ultimos podcasts' do
@@ -137,7 +137,7 @@ describe RepositorioContenido do
     described_class.new.save(contenido2)
     described_class.new.save(contenido3)
 
-    expect(described_class.new.ultimos_podcasts(1).map(&:id)).to eq([1])
+    expect(described_class.new.ultimos_podcasts(1).map(&:created_on)).to eq([Date.new(2021, 1, 10)])
   end
 
   it 'No deberia perder la fecha de creacion al actualizar' do
