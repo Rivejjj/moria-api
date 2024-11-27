@@ -53,7 +53,7 @@ describe RepositorioUsuarios do
     juan.agregar_a_playlist(cancion)
     repositorio.save(juan)
     juan = repositorio.find(juan.id)
-    expect(juan.tiene_cancion_en_playlist('cancion1')).to eq true
+    expect(juan.playlist.any? { |contenido| contenido.nombre == 'cancion1' }).to eq true
   end
 
   it 'deberia recuperar al usuario con su playlist en orden' do

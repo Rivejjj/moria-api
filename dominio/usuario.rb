@@ -14,10 +14,6 @@ class Usuario
     @playlist << contenido
   end
 
-  def tiene_cancion_en_playlist(nombre_cancion)
-    @playlist.any? { |cancion| cancion.nombre == nombre_cancion }
-  end
-
   def es_el_mismo_usuario_que?(otro_usuario)
     @id == otro_usuario.id
   end

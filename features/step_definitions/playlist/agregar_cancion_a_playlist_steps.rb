@@ -12,7 +12,7 @@ Entonces('se agrega la cancion {string} a la playlist') do |nombre_cancion|
   expect(JSON.parse(@response.body)['nombre']).to eq nombre_cancion
   repo_usuarios = RepositorioUsuarios.new
   usuario = repo_usuarios.get_by_id_plataforma(ID_PLATAFORMA_PRUEBA)
-  expect(usuario.tiene_cancion_en_playlist(nombre_cancion)).to eq true
+  expect(usuario.playlist.any? { |contenido| contenido.nombre == nombre_cancion }).to eq true
 end
 
 Entonces('no se agrega la cancion a la playlist') do

@@ -16,13 +16,6 @@ describe Usuario do
     expect(usuario.playlist).to include(cancion)
   end
 
-  it 'puede verificar si una cancion esta en su playlist' do
-    usuario = described_class.new('nombre', 'email@email.com', '1')
-    cancion = instance_double('Cancion', nombre: 'cancion')
-    usuario.agregar_a_playlist(cancion)
-    expect(usuario.tiene_cancion_en_playlist('cancion')).to eq(true)
-  end
-
   it 'dos usuarios con el mismo id deberian considerarse el mismo usuario' do
     usuario1 = described_class.new('nombre', 'email@email.com', '1', 1)
     usuario2 = described_class.new('nombre', 'email@email.com', '1', 1)
