@@ -238,4 +238,7 @@ get '/usuarios/:id_plataforma/playlist' do |id_plataforma|
   logger.debug "Respondiendo con #{respuesta} - status 200"
   status 200
   respuesta
+rescue UsuarioNoEncontradoError
+  logger.debug 'Respondiendo con status 401'
+  status 401
 end
