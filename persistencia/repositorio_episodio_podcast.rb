@@ -18,14 +18,6 @@ class RepositorioEpisodiosPodcast < AbstractRepository
     episodio
   end
 
-  def find_by_id_podcast(id_podcast)
-    get_episodios_de_podcasts([id_podcast])
-  end
-
-  def get_episodios_de_podcasts(ids)
-    load_collection(dataset.where(id_podcast: ids))
-  end
-
   def cargar_episodios(podcasts)
     filas = dataset.where(id_podcast: podcasts.map(&:id))
     podcasts = podcasts.map { |podcast| [podcast.id, podcast] }.to_h

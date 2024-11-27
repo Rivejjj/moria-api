@@ -1,6 +1,6 @@
 require_relative './abstract_repository'
 
-class RepositorioContenido < AbstractRepository
+class RepositorioContenido < AbstractRepository # rubocop:disable Metrics/ClassLength
   TIPO_CANCION = 'c'.freeze
   TIPO_PODCAST = 'p'.freeze
   self.table_name = :contenido
@@ -14,6 +14,11 @@ class RepositorioContenido < AbstractRepository
         RepositorioEpisodiosPodcast.new.save(episodio, contenido.id)
       end
     end
+  end
+
+  def all
+    autores = RepositorioAutores.new.all
+    load_objects(autores, dataset)
   end
 
   def get(id_contenido)
@@ -78,26 +83,33 @@ class RepositorioContenido < AbstractRepository
 
   def load_object(a_hash)
     autor = RepositorioAutores.new.get(a_hash[:id_autor])
-    info_contenido = InformacionContenido.new(a_hash[:nombre], autor, a_hash[:anio], a_hash[:duracion], a_hash[:genero])
-    case a_hash[:tipo]
-    when TIPO_CANCION
-      load_cancion(a_hash, info_contenido)
-    when TIPO_PODCAST
-      load_podcast(a_hash, info_contenido)
-    end
+    load_objects([autor], [a_hash])[0]
   end
 
-  def load_cancion(a_hash, info_contenido)
-    Cancion.new(info_contenido, a_hash[:id], a_hash[:created_on])
+  def load_objects(autores, hashes)
+    autores = autores.map { |autor| [autor.id, autor] }.to_h
+    canciones, podcasts = crear_contenidos(autores, hashes)
+    RepositorioEpisodiosPodcast.new.cargar_episodios(podcasts)
+    canciones + podcasts
   end
 
-  def load_podcast(a_hash, info_contenido)
-    podcast = Podcast.new(info_contenido, a_hash[:id], a_hash[:created_on])
-    episodios = RepositorioEpisodiosPodcast.new.find_by_id_podcast(a_hash[:id])
-    episodios.each do |episodio|
-      podcast.agregar_episodio(episodio)
+  def crear_contenidos(autores, hashes)
+    canciones = []
+    podcasts = []
+    hashes.each do |a_hash|
+      info_contenido = InformacionContenido.new(a_hash[:nombre], autores[a_hash[:id_autor]], a_hash[:anio], a_hash[:duracion], a_hash[:genero])
+      case a_hash[:tipo]
+      when TIPO_CANCION
+        canciones << load_contenido(Cancion, a_hash, info_contenido)
+      when TIPO_PODCAST
+        podcasts << load_contenido(Podcast, a_hash, info_contenido)
+      end
     end
-    podcast
+    [canciones, podcasts]
+  end
+
+  def load_contenido(tipo_contenido, a_hash, info_contenido)
+    tipo_contenido.new(info_contenido, a_hash[:id], a_hash[:created_on])
   end
 
   def changeset(contenido)

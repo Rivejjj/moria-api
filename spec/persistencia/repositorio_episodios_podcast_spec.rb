@@ -42,14 +42,6 @@ describe RepositorioEpisodiosPodcast do
     expect(described_class.new.find(episodio_podcast.id).id).to eq 33
   end
 
-  it 'deberia devolver todos los episodios de una lista de podcasts' do
-    podcast1 = crear_podcast_con_n_episodios(3, autor)
-    podcast2 = crear_podcast_con_n_episodios(2, autor)
-    crear_podcast_con_n_episodios(1, autor)
-
-    expect(described_class.new.get_episodios_de_podcasts([podcast1.id, podcast2.id]).size).to eq 5
-  end
-
   it 'deberia cargar los episodios de un podcast' do
     podcast = crear_podcast_con_n_episodios(3, autor)
     podcast2 = crear_podcast_con_n_episodios(2, autor)

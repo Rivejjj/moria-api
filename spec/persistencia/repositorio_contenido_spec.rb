@@ -147,6 +147,15 @@ describe RepositorioContenido do
 
     expect(described_class.new.get(contenido.id).created_on).not_to be nil
   end
+
+  it 'Puedo obtener todos los contenidos' do
+    contenido1 = Podcast.new(info_podcast, 1, Date.new(2021, 1, 10))
+    contenido2 = Cancion.new(info_cancion, 2, Date.new(2021, 1, 9))
+    described_class.new.save(contenido1)
+    described_class.new.save(contenido2)
+
+    expect(described_class.new.all.map(&:id)).to include(contenido1.id, contenido2.id)
+  end
 end
 
 def crear_y_guardar_cancion_de_genero(genero, autor)
