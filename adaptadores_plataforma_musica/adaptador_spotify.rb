@@ -38,6 +38,7 @@ class AdaptadorSpotify
       obtener_autores_relacionados_de_respuesta(autor, response)
     else
       @logger.error "Error al obtener autores relacionados: #{response.body}"
+      raise AutorNoEncontradoError
     end
   end
 

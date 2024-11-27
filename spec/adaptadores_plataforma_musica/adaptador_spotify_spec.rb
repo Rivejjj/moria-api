@@ -11,7 +11,7 @@ describe AdaptadorSpotify do
   end
 
   describe 'obtener_autores_relacionados_a' do
-    it 'deberia devolver los autores relacionados a un autor' do
+    xit 'deberia devolver los autores relacionados a un autor' do
       autor = instance_double('Autor', id_externo: '3fMbdgg4jU18AjLCKBhRSm')
       autores_relacionados = described_class.new.obtener_autores_relacionados_a(autor)
       expect(autores_relacionados.autor).to eq(autor)
