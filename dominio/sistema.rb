@@ -42,9 +42,8 @@ class Sistema
 
   def recomendar_contenido(id_plataforma)
     usuario = @repositorio_usuarios.get_by_id_plataforma(id_plataforma)
-    recomendador_de_contenido = RecomendadorDeContenido.new(@repositorio_contenido)
     me_gustas = @repositorio_me_gustas_contenido.obtener_me_gustas_de(usuario)
-    contenido_recomendado = recomendador_de_contenido.recomendar_contenido(me_gustas)
+    contenido_recomendado = RecomendadorDeContenido.new(@repositorio_contenido).recomendar_contenido(me_gustas)
     contenido_recomendado.map { |contenido| [contenido.id, contenido.nombre] }
   end
 
@@ -79,8 +78,7 @@ class Sistema
   end
 
   def obtener_detalles_contenido(id_contenido)
-    contenido = @repositorio_contenido.get(id_contenido)
-    DetallesContenido.new(contenido)
+    DetallesContenido.new(@repositorio_contenido.get(id_contenido))
   end
 
   def obtener_top_semanal
@@ -101,6 +99,10 @@ class Sistema
   def obtener_contenidos_de_autor(nombre_autor)
     autor = @repositorio_autores.get_by_nombre(nombre_autor)
     @repositorio_contenido.get_contenidos_de_autor(autor)
+  end
+
+  def obtener_playlist(id_plataforma)
+    @repositorio_usuarios.get_by_id_plataforma(id_plataforma).playlist
   end
 
   def usuarios

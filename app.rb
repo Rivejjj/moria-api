@@ -230,3 +230,12 @@ rescue AutorNoEncontradoError
   logger.debug 'Respondiendo con status 404'
   status 404
 end
+
+get '/usuarios/:id_plataforma/playlist' do |id_plataforma|
+  logger.debug "Recibido GET /usuarios/#{id_plataforma}/playlist"
+  playlist = sistema.obtener_playlist(id_plataforma)
+  respuesta = PresentacionPlaylist.new(playlist).obtener_json
+  logger.debug "Respondiendo con #{respuesta} - status 200"
+  status 200
+  respuesta
+end

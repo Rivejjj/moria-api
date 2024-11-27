@@ -14,7 +14,7 @@ Entonces('obtiene todos los contenidos de su playlist') do
   expect(@response.status).to eq 200
   playlist = JSON.parse(@response.body)['playlist']
   expect(playlist.length).to eq @usuario.playlist.length
-  expect(playlist.map(&:id_contenido)).to eq(@usuario.playlist.map(&:id))
+  expect(playlist.map { |contenido| contenido['id_contenido'] }).to eq(@usuario.playlist.map(&:id))
 end
 
 def agregar_contenidos_a_playlist(usuario, cantidad_contenidos, tipo_contenido)
