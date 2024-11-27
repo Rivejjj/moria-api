@@ -187,7 +187,7 @@ end
 
 get '/contenidos/top_semanal' do
   logger.debug 'Recibido GET /contenidos/top_semanal'
-  top_semanal = TopSemanalPresentacion.new(sistema.obtener_top_semanal)
+  top_semanal = PresentacionTopSemanal.new(sistema.obtener_top_semanal)
   respuesta = top_semanal.obtener_json
   logger.debug "Respondiendo con #{respuesta} - status 200"
   status 200

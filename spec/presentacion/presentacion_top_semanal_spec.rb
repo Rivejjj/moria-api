@@ -1,7 +1,7 @@
 require 'spec_helper'
-require_relative '../../presentacion/top_semanal_presentacion'
+require_relative '../../presentacion/presentacion_top_semanal'
 
-describe TopSemanalPresentacion do
+describe PresentacionTopSemanal do
   json_esperado = {
     top_semanal: [
       { 'id_contenido': 1, 'nombre': 'cancion_de_juan' },
@@ -16,8 +16,8 @@ describe TopSemanalPresentacion do
       contenido2 = instance_double(Contenido, nombre: 'cancion_de_ivan', id: 2)
       contenido3 = instance_double(Contenido, nombre: 'podcast_de_alan', id: 3)
       top_semanal = [contenido1, contenido2, contenido3]
-      top_semanal_presentacion = described_class.new(top_semanal)
-      expect(top_semanal_presentacion.obtener_json).to eq json_esperado
+      presentacion_top_semanal = described_class.new(top_semanal)
+      expect(presentacion_top_semanal.obtener_json).to eq json_esperado
     end
   end
 end

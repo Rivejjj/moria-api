@@ -1,4 +1,4 @@
-class ListaContenidosPresentacion
+class PresentacionListaContenidos
   def initialize(contenidos, nombre)
     @contenidos = contenidos
     @nombre = nombre

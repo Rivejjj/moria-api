@@ -1,6 +1,6 @@
-require_relative 'lista_contenidos_presentacion'
+require_relative 'presentacion_lista_contenidos'
 
-class PresentacionPlaylist < ListaContenidosPresentacion
+class PresentacionPlaylist < PresentacionListaContenidos
   def initialize(contenidos)
     super(contenidos, :playlist)
   end
