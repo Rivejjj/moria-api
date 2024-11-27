@@ -14,6 +14,7 @@ end
 
 Entonces('se agrega el podcast {string} a la playlist') do |nombre_podcast|
   expect(@response.status).to eq(201)
+  expect(JSON.parse(@response.body)['nombre']).to eq nombre_podcast
   repo_usuarios = RepositorioUsuarios.new
   usuario = repo_usuarios.get_by_id_plataforma(ID_PLATAFORMA_PRUEBA)
   expect(usuario.playlist.any? { |contenido| contenido.nombre == nombre_podcast }).to eq true

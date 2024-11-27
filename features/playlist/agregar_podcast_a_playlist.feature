@@ -1,7 +1,5 @@
 # language: es
 Característica: Agregar podcast a playlist
-
-  @wip
   Escenario: US49:1 - Usuario agrega un podcast a su playlist
     Dado que existe un usuario "Kevin"
     Y existe un podcast "JRE" con id 1

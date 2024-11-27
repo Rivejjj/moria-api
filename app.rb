@@ -90,8 +90,8 @@ end
 
 post '/usuarios/:id_plataforma/playlist' do |id_plataforma|
   logger.debug "Recibido POST /usuarios/#{id_plataforma}/playlist - #{@params.to_json}"
-  nombre_cancion = sistema.agregar_a_playlist(@params[:id_cancion], id_plataforma)
-  respuesta = { nombre_cancion: }
+  nombre = sistema.agregar_a_playlist(@params[:id_contenido], id_plataforma)
+  respuesta = { nombre: }
   logger.debug "Respondiendo con #{respuesta.to_json} - status 201"
   status 201
   json(respuesta)

@@ -3,12 +3,13 @@ Dado('existe una cancion {string} con id {int}') do |nombre_cancion, id_cancion|
 end
 
 Cuando('el usuario agrega la cancion con id {int} a su playlist') do |id_cancion|
-  request_body = { 'id_cancion' => id_cancion }.to_json
+  request_body = { 'id_contenido' => id_cancion }.to_json
   @response = Faraday.post("/usuarios/#{ID_PLATAFORMA_PRUEBA}/playlist", request_body, { 'Content-Type' => 'application/json' })
 end
 
 Entonces('se agrega la cancion {string} a la playlist') do |nombre_cancion|
   expect(@response.status).to eq(201)
+  expect(JSON.parse(@response.body)['nombre']).to eq nombre_cancion
   repo_usuarios = RepositorioUsuarios.new
   usuario = repo_usuarios.get_by_id_plataforma(ID_PLATAFORMA_PRUEBA)
   expect(usuario.tiene_cancion_en_playlist(nombre_cancion)).to eq true
@@ -26,7 +27,7 @@ Dado('que una persona no esta registrada') do
 end
 
 Cuando('la persona agrega la cancion con id {int} a su playlist') do |id_cancion|
-  request_body = { 'id_cancion' => id_cancion }.to_json
+  request_body = { 'id_contenido' => id_cancion }.to_json
   @response = Faraday.post("/usuarios/#{ID_PLATAFORMA_PRUEBA}/playlist", request_body, { 'Content-Type' => 'application/json' })
 end
 
