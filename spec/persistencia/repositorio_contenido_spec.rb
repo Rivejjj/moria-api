@@ -35,7 +35,7 @@ describe RepositorioContenido do
     repo_contenido = described_class.new
     repo_contenido.save(podcast)
     podcast_encontrado = repo_contenido.first
-    expect(podcast_encontrado.es_una_cancion?).to eq(false)
+    expect(podcast_encontrado.is_a?(Podcast)).to eq(true)
   end
 
   it 'deberia encontrar un podcast con sus episodios' do

@@ -103,7 +103,7 @@ class RepositorioContenido < AbstractRepository
   end
 
   def changeset(contenido)
-    tipo = if contenido.es_una_cancion?
+    tipo = if contenido.is_a?(Cancion)
              TIPO_CANCION
            else
              TIPO_PODCAST

@@ -11,9 +11,4 @@ describe EpisodioPodcast do
 
     expect(episodio_podcast).not_to be_nil
   end
-
-  it 'es_una_cancion? deberia devolver false' do
-    episodio = described_class.new(numero_episodio, nombre, duracion)
-    expect(episodio.es_una_cancion?).to eq false
-  end
 end

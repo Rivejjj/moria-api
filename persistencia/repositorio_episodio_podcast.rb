@@ -8,7 +8,7 @@ class RepositorioEpisodiosPodcast < AbstractRepository
   def save(episodio, id_podcast)
     repo_contenido = RepositorioContenido.new
     contenido = repo_contenido.get(id_podcast)
-    raise ContenidoNoEncontradoError if contenido.es_una_cancion?
+    raise ContenidoNoEncontradoError if contenido.is_a?(Cancion)
 
     if find_dataset_by_id(episodio.id).first
       update(episodio, id_podcast)

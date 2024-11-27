@@ -17,7 +17,7 @@ Entonces('se da de alta el podcast') do
   expect(podcast.anio).to eq(@request_body[:anio])
   expect(podcast.duracion).to eq(@request_body[:duracion])
   expect(podcast.genero).to eq(@request_body[:genero])
-  expect(podcast.es_una_cancion?).to eq(false)
+  expect(podcast.is_a?(Podcast)).to eq(true)
 end
 
 Entonces('no se da de alta el podcast') do

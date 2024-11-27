@@ -28,10 +28,6 @@ class Contenido
     @info_contenido.genero
   end
 
-  def es_una_cancion?
-    false
-  end
-
   def es_el_mismo?(otro_contenido)
     otro_contenido.id_igual_a?(@id)
   end
